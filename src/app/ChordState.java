@@ -9,10 +9,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import mutex.suzuki_kasami.SuzukiKasamiMutex;
-import mutex.suzuki_kasami.SuzukiKasamiToken;
 import servent.message.AskGetMessage;
 import servent.message.PutMessage;
 import servent.message.WelcomeMessage;

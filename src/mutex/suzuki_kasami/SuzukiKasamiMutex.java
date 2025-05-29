@@ -83,10 +83,15 @@ public class SuzukiKasamiMutex implements Mutex {
 
             // posalji token onom koji je cekao na token
             if (!token.Q.isEmpty()) {
-                // TODO: naci kome da posaljemo
                 int finalReceiverId = token.Q.poll();
-//                Message tokenMessage = new SuzukiKasamiSendTokenMessage(AppConfig.myServentInfo.getListenerPort(), receiver, token);
-//                MessageUtil.sendMessage(tokenMessage);
+
+                Message tokenMessage = new SuzukiKasamiSendTokenMessage(
+                        AppConfig.myServentInfo.getListenerPort(),
+                        AppConfig.chordState.getNextNodeForKey(finalReceiverId).getListenerPort(),
+                        String.valueOf(finalReceiverId),
+                        AppConfig.chordState.mutex.getToken());
+                MessageUtil.sendMessage(tokenMessage);
+
                 AppConfig.chordState.mutex.setToken(null);
             }
             inCriticalSection.set(false);

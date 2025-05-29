@@ -18,10 +18,11 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
     }
 
     /**
-     * When a site Sj receives the request message REQUEST(i, sn) from site Si, it sets RNj[i] to maximum of RNj[i]
+     * <ul>
+     * <li> When a site Sj receives the request message REQUEST(i, sn) from site Si, it sets RNj[i] to maximum of RNj[i]
      * and sn i.e., RNj[i] = max(RNj[i], sn).
-     * --
-     * After updating RNj[i], Site Sj sends the token to site Si if it has token and RNj[i] = LN[i] + 1
+     * <li> After updating RNj[i], Site Sj sends the token to site Si if it has token and RNj[i] = LN[i] + 1
+     * </ul>
      */
 
     @Override
@@ -56,10 +57,14 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
 
                 // Ako nije u kriticnoj sekciji => Posalji mu token
                 if (!AppConfig.chordState.mutex.inCritialSection()){
-                    // TODO: naci kome da posaljemo
-//                    Message tokenMessage = new SuzukiKasamiSendTokenMessage(AppConfig.myServentInfo.getListenerPort(), receiver,
-//                            AppConfig.chordState.mutex.getToken());
-//                    MessageUtil.sendMessage(tokenMessage);
+
+                    Message tokenMessage = new SuzukiKasamiSendTokenMessage(
+                            AppConfig.myServentInfo.getListenerPort(),
+                            AppConfig.chordState.getNextNodeForKey(ogSender).getListenerPort(),
+                            String.valueOf(ogSender),
+                            AppConfig.chordState.mutex.getToken());
+                    MessageUtil.sendMessage(tokenMessage);
+
                     AppConfig.chordState.mutex.setToken(null);
                 }
                 // Ako jeste => dodaj na queue

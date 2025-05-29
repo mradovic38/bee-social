@@ -1,10 +1,12 @@
 package servent.handler.mutex;
 
 import app.AppConfig;
+import mutex.suzuki_kasami.SuzukiKasamiToken;
 import servent.handler.MessageHandler;
 import servent.message.Message;
 import servent.message.MessageType;
 import servent.message.mutex.SuzukiKasamiRequestTokenMessage;
+import servent.message.mutex.SuzukiKasamiSendTokenMessage;
 import servent.message.util.MessageUtil;
 
 public class SuzukiKasamiSendTokenHandler implements MessageHandler {
@@ -18,63 +20,42 @@ public class SuzukiKasamiSendTokenHandler implements MessageHandler {
 
     /**
      * <ul>
-     * <li> When a site Sj receives the request message REQUEST(i, sn) from site Si, it sets RNj[i] to maximum of RNj[i]
-     * and sn i.e., RNj[i] = max(RNj[i], sn).
-     * <li> After updating RNj[i], Site Sj sends the token to site Si if it has token and RNj[i] = LN[i] + 1
+     * <li> Site Si executes the critical section if it has acquired the token.
      * </ul>
      */
 
     @Override
     public void run() {
         try {
-            if (clientMessage.getMessageType() == MessageType.TOKEN_REQUEST) {
+            if (clientMessage.getMessageType() == MessageType.TOKEN_SEND) {
                 AppConfig.timestampedErrorPrint("Token request handler received: " + clientMessage.getMessageType());
                 return;
             }
 
-            // dohvati podatke iz poruke
-            SuzukiKasamiRequestTokenMessage reqMessage = (SuzukiKasamiRequestTokenMessage) clientMessage;
+            SuzukiKasamiSendTokenMessage sendMsg = (SuzukiKasamiSendTokenMessage) clientMessage;
+            int finalReceiverId = Integer.parseInt(sendMsg.getMessageText());
+            SuzukiKasamiToken token =  new SuzukiKasamiToken();
 
-            // uzmi originalno sendera i njegov RN iz teksta poruke
-            String[] msgText = reqMessage.getMessageText().split(":");
-            int ogSender =  Integer.parseInt(msgText[0]);
-            int senderRNVal = Integer.parseInt(msgText[1]);
-
-            // azuriraj sender RN
-            /* When a site Sj receives the request message REQUEST(i, sn) from site Si, it sets RNj[i] to maximum of
-               RNj[i] and sn i.e RNj[i] = max(RNj[i], sn).
-             */
-            int oldVal = AppConfig.chordState.mutex.RN.get(ogSender);
-            AppConfig.chordState.mutex.RN.set(ogSender, Math.max(oldVal, senderRNVal));
-
-
-            // After updating RNj[i], Site Sj sends the token to site Si if it has token and RNj[i] = LN[i] + 1
-            if (AppConfig.chordState.mutex.hasToken() &&
-                    AppConfig.chordState.mutex.RN.get(ogSender) == AppConfig.chordState.mutex.getToken().LN.get(ogSender) + 1) {
-                // Dodaj na queue
-
-
-                // Ako nije u kriticnoj sekciji => Posalji mu token
-                if (!AppConfig.chordState.mutex.inCritialSection()){
-                    // TODO: naci kome da posaljemo
-//                    Message tokenMessage = new SuzukiKasamiSendTokenMessage(AppConfig.myServentInfo.getListenerPort(), receiver,
-//                            AppConfig.chordState.mutex.getToken());
-//                    MessageUtil.sendMessage(tokenMessage);
-                    AppConfig.chordState.mutex.setToken(null);
-                }
-                // Ako jeste => dodaj na queue
-                else{
-                    AppConfig.chordState.mutex.getToken().Q.add(ogSender);
-                }
+            // ako sam ja trazio token => ulazim u kriticnu sekciju
+            if(AppConfig.chordState.isKeyMine(finalReceiverId)){
+                AppConfig.chordState.mutex.setToken(token);
             }
 
+            // nisam ja trazio token => nadji jos jednog blizeg i prosledi mu
             else{
-                // prosledi poruku dalje jer nemamo token
-                Message newMsg = new SuzukiKasamiRequestTokenMessage(AppConfig.myServentInfo.getListenerPort(),
-                                                                     AppConfig.chordState.getNextNodePort(),
-                                                                     reqMessage.getMessageText());
+                int nextNodePort = AppConfig.chordState.getNextNodeForKey(finalReceiverId).getListenerPort();
+
+                SuzukiKasamiSendTokenMessage newMsg = new SuzukiKasamiSendTokenMessage(
+                        AppConfig.myServentInfo.getListenerPort(),
+                        nextNodePort,
+                        sendMsg.getMessageText(),
+                        token
+                );
                 MessageUtil.sendMessage(newMsg);
+
             }
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
