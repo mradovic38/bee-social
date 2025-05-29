@@ -1,18 +1,6 @@
-20:25:08 - Starting servent [0|localhost|1600]
-20:25:08 - Pausing for 10000 ms
-20:25:09 - Sending message [0|1600|0||NEW_NODE|1200|48]
-20:25:11 - Got message [4|1300|3||WELCOME|1600|0]
-20:25:12 - Sending message [0|1600|1||UPDATE|1300|4]
-20:25:15 - Got message [0|1600|5|1300,1400,1100,1200|UPDATE|1600|0]
-20:25:18 - Pausing for 4000 ms
-20:25:19 - Sending message [0|1600|2|25:3|PUT|1400|24]
-20:25:20 - Got message [48|1200|6|2:5|PUT|1600|0]
-20:25:21 - Sending message [0|1600|3|2:5|PUT|1300|4]
-20:25:22 - Please wait...
-20:25:22 - Pausing for 6000 ms
-20:25:23 - Sending message [0|1600|4|25|ASK_GET|1400|24]
-20:25:24 - Got message [48|1200|7|2|ASK_GET|1600|0]
-20:25:25 - Got message [28|1100|8|25:3|TELL_GET|1600|0]
-20:25:25 - 25:3
-20:25:25 - Sending message [48|1200|5|2|ASK_GET|1300|4]
-20:25:28 - Stopping...
+00:01:59 - Starting servent [0|localhost|1600]
+00:01:59 - Pausing for 10000 ms
+00:01:59 - Waining for token...
+00:02:09 - Pausing for 4000 ms
+00:02:13 - 25: 3
+00:02:13 - Pausing for 6000 ms

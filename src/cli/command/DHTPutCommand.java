@@ -3,6 +3,8 @@ package cli.command;
 import app.AppConfig;
 import app.ChordState;
 
+import java.io.File;
+
 public class DHTPutCommand implements CLICommand {
 
 	@Override
@@ -37,6 +39,16 @@ public class DHTPutCommand implements CLICommand {
 			AppConfig.timestampedErrorPrint("Invalid arguments for put");
 		}
 
+	}
+
+	public static boolean checkFile(String fileName) {
+		try {
+			File file = new File(AppConfig.rootDir + "/" + fileName);
+			return file.exists() && !file.isDirectory();
+		} catch (Exception e) {
+			AppConfig.timestampedErrorPrint(fileName + " could not be added. Check if file is valid.");
+			return false;
+		}
 	}
 
 }

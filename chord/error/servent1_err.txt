@@ -1,0 +1,5 @@
+Exception in thread "Thread-2" java.lang.NullPointerException: Cannot invoke "app.ServentInfo.getListenerPort()" because "this.successorTable[0]" is null
+	at app.ChordState.getNextNodePort(ChordState.java:115)
+	at mutex.suzuki_kasami.SuzukiKasamiMutex.lock(SuzukiKasamiMutex.java:53)
+	at app.ServentInitializer.run(ServentInitializer.java:58)
+	at java.base/java.lang.Thread.run(Thread.java:1447)

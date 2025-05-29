@@ -108,8 +108,6 @@ public class BootstrapServer {
 					System.out.println("quitting" + quitterPort);
 					activeServents.remove(quitterPort);
 					newServentSocket.close();
-
-
 				}
 				
 			} catch (SocketTimeoutException e) {

@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * This class contains all the global application configuration stuff.
@@ -41,10 +42,14 @@ public class AppConfig {
 		
 		System.err.println(timeFormat.format(now) + " - " + message);
 	}
+
+	public static AtomicBoolean didQuit = new AtomicBoolean(false);
 	
 	public static boolean INITIALIZED = false;
 	public static int BOOTSTRAP_PORT;
 	public static int SERVENT_COUNT;
+
+	public static String rootDir;
 	
 	public static ChordState chordState;
 	
@@ -103,7 +108,15 @@ public class AppConfig {
 			timestampedErrorPrint("Problem reading chord_size. Must be a number that is a power of 2. Exiting...");
 			System.exit(0);
 		}
-		
+
+		try {
+			rootDir = properties.getProperty("root");
+		} catch (NullPointerException e) {
+			timestampedErrorPrint("Problem reading root dir. Exiting...");
+			System.exit(0);
+		}
+
+
 		String portProperty = "servent"+serventId+".port";
 		
 		int serventPort = -1;

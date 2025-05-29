@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import mutex.suzuki_kasami.SuzukiKasamiMutex;
 import servent.message.AskGetMessage;
@@ -220,6 +216,7 @@ public class ChordState {
 	}
 
 	private void updateSuccessorTable() {
+		mutex.lock();
 		//first node after me has to be successorTable[0]
 		
 		int currentNodeIndex = 0;
@@ -269,6 +266,8 @@ public class ChordState {
 				}
 			}
 		}
+
+		mutex.unlock();
 		
 	}
 
@@ -313,10 +312,60 @@ public class ChordState {
 		updateSuccessorTable();
 	}
 
+	public void removeNode(int nodeToRemove) {
+		// ukloni iz allnodeinfo
+//		allNodeInfo.removeIf(node -> node.getListenerPort() == nodeToRemove.getListenerPort());
+		allNodeInfo.removeIf(node -> node.getChordId() == nodeToRemove);
+
+		//region kopirano iz addNodes
+		allNodeInfo.sort(new Comparator<ServentInfo>() {
+			@Override
+			public int compare(ServentInfo o1, ServentInfo o2) {
+				return o1.getChordId() - o2.getChordId();
+			}
+		});
+
+		List<ServentInfo> newList = new ArrayList<>();
+		List<ServentInfo> newList2 = new ArrayList<>();
+
+		int myId = AppConfig.myServentInfo.getChordId();
+		for (ServentInfo serventInfo : allNodeInfo) {
+			if (serventInfo.getChordId() < myId) {
+				newList2.add(serventInfo);
+			} else {
+				newList.add(serventInfo);
+			}
+		}
+
+		allNodeInfo.clear();
+		allNodeInfo.addAll(newList);
+		allNodeInfo.addAll(newList2);
+
+
+
+		// namestanje predecessor info-a
+		if (!newList2.isEmpty()) {
+			predecessorInfo = newList2.getLast();
+		} else if(!newList.isEmpty()) {
+			predecessorInfo = newList.getLast();
+		}
+		//endregion
+
+		// edge case kad smo jedini node u sistemu => gasi prede
+		else {
+			predecessorInfo = null;
+			Arrays.fill(successorTable, 0, chordLevel, null);
+			return;
+		}
+
+		updateSuccessorTable();
+	}
+
 	/**
 	 * The Chord put operation. Stores locally if key is ours, otherwise sends it on.
 	 */
 	public void putValue(int key, int value) {
+
 		if (isKeyMine(key)) {
 			valueMap.put(key, value);
 		} else {
@@ -335,18 +384,23 @@ public class ChordState {
 	 *		   </ul>
 	 */
 	public int getValue(int key) {
+		//TODO: proveriti mutex.lock();
 		if (isKeyMine(key)) {
+			//TODO: proveriti mutex.unlock();
+
 			if (valueMap.containsKey(key)) {
 				return valueMap.get(key);
 			} else {
 				return -1;
 			}
 		}
-		
+
 		ServentInfo nextNode = getNextNodeForKey(key);
 		AskGetMessage agm = new AskGetMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), String.valueOf(key));
 		MessageUtil.sendMessage(agm);
-		
+
+
+
 		return -2;
 	}
 

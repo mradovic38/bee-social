@@ -1,7 +1,12 @@
 package cli.command;
 
+import app.AppConfig;
+import app.ServentInfo;
 import cli.CLIParser;
+import mutex.suzuki_kasami.SuzukiKasamiToken;
 import servent.SimpleServentListener;
+import servent.message.QuitMessage;
+import servent.message.util.MessageUtil;
 
 public class QuitCommand implements CLICommand{
 
@@ -22,6 +27,37 @@ public class QuitCommand implements CLICommand{
 
     @Override
     public void execute(String args) {
+        // recurrency
+        if(AppConfig.didQuit.get())
+            return;
 
+        // flag za simple servent listener
+        AppConfig.didQuit.set(true);
+
+        cliParser.stop();
+
+        // ako je node sam onda nema kome da se salju poruke -> sam je ako nema nikog ni pre ni posle
+        if (AppConfig.chordState.getPredecessor() == null && AppConfig.chordState.getSuccessorTable()[0] == null){
+            AppConfig.timestampedStandardPrint("Quitting the system...");
+            simpleServentListener.stop();
+            return;
+        }
+
+
+        // udji u kriticnu sekciju
+        AppConfig.chordState.mutex.lock();
+
+        // Sad je token kod nas, treba da ga se otarasimo tako sto cemo ga poslati kroz poruku
+        SuzukiKasamiToken token = AppConfig.chordState.mutex.getToken();
+        AppConfig.chordState.mutex.setInCriticalSection(false);
+        AppConfig.chordState.mutex.setToken(null);
+
+        // Salji sledecem da si quitovao, mora da se radi reorganizacija
+        QuitMessage quitMsg = new QuitMessage(
+                AppConfig.myServentInfo.getListenerPort(),
+                AppConfig.chordState.getNextNodePort(),
+                AppConfig.myServentInfo.getChordId() + ":" + AppConfig.chordState.getPredecessor().getChordId(),
+                token);
+        MessageUtil.sendMessage(quitMsg);
     }
 }
