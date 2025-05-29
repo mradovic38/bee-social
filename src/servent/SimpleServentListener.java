@@ -18,8 +18,12 @@ import servent.handler.SorryHandler;
 import servent.handler.TellGetHandler;
 import servent.handler.UpdateHandler;
 import servent.handler.WelcomeHandler;
+import servent.handler.mutex.SuzukiKasamiRequestTokenHandler;
+import servent.handler.mutex.SuzukiKasamiSendTokenHandler;
 import servent.message.Message;
 import servent.message.util.MessageUtil;
+
+import static servent.message.MessageType.TOKEN_SEND;
 
 public class SimpleServentListener implements Runnable, Cancellable {
 
@@ -66,30 +70,42 @@ public class SimpleServentListener implements Runnable, Cancellable {
 				 * because that way is much simpler and less error prone.
 				 */
 				switch (clientMessage.getMessageType()) {
-				case NEW_NODE:
-					messageHandler = new NewNodeHandler(clientMessage);
-					break;
-				case WELCOME:
-					messageHandler = new WelcomeHandler(clientMessage);
-					break;
-				case SORRY:
-					messageHandler = new SorryHandler(clientMessage);
-					break;
-				case UPDATE:
-					messageHandler = new UpdateHandler(clientMessage);
-					break;
-				case PUT:
-					messageHandler = new PutHandler(clientMessage);
-					break;
-				case ASK_GET:
-					messageHandler = new AskGetHandler(clientMessage);
-					break;
-				case TELL_GET:
-					messageHandler = new TellGetHandler(clientMessage);
-					break;
-				case POISON:
-					break;
+					case TOKEN_REQUEST:
+						messageHandler = new SuzukiKasamiRequestTokenHandler(clientMessage);
+						break;
+					case TOKEN_SEND:
+						messageHandler = new SuzukiKasamiSendTokenHandler(clientMessage);
+						break;
+
+
+					case NEW_NODE:
+						messageHandler = new NewNodeHandler(clientMessage);
+						break;
+					case WELCOME:
+						messageHandler = new WelcomeHandler(clientMessage);
+						break;
+					case SORRY:
+						messageHandler = new SorryHandler(clientMessage);
+						break;
+					case UPDATE:
+						messageHandler = new UpdateHandler(clientMessage);
+						break;
+					case PUT:
+						messageHandler = new PutHandler(clientMessage);
+						break;
+					case ASK_GET:
+						messageHandler = new AskGetHandler(clientMessage);
+						break;
+					case TELL_GET:
+						messageHandler = new TellGetHandler(clientMessage);
+						break;
+					case POISON:
+						break;
+
 				}
+
+
+
 				
 				threadPool.submit(messageHandler);
 			} catch (SocketTimeoutException timeoutEx) {

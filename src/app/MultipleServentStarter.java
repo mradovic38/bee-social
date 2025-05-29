@@ -72,6 +72,10 @@ public class MultipleServentStarter {
 		
 		Process bsProcess = null;
 		ProcessBuilder bsBuilder = new ProcessBuilder("java", "-cp", "out/production/bee-social", "app.BootstrapServer", String.valueOf(AppConfig.BOOTSTRAP_PORT));
+		// dodato zbog debuga
+		bsBuilder.redirectOutput(new File(testName+"/output/bootstrap" + "_out.txt"));
+		bsBuilder.redirectError(new File(testName+"/error/bootstrap" + "_err.txt"));
+
 		try {
 			bsProcess = bsBuilder.start();
 		} catch (IOException e1) {
