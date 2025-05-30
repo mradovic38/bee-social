@@ -2,6 +2,7 @@ package servent.handler.mutex;
 
 import app.AppConfig;
 import app.ChordState;
+import app.ServentInfo;
 import servent.handler.MessageHandler;
 import servent.message.Message;
 import servent.message.MessageType;
@@ -11,6 +12,10 @@ import servent.message.util.MessageUtil;
 
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
 
@@ -42,7 +47,6 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
 
             // uzmi originalno sendera i njegov RN iz teksta poruke
             String[] msgText = reqMessage.getMessageText().split(":");
-            AppConfig.timestampedStandardPrint(msgText[0]);
             int ogSender = ChordState.chordHash(Integer.parseInt(msgText[0]));
             int senderRNVal;
             Integer bsPort = null;
@@ -62,6 +66,21 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
             int oldVal = AppConfig.chordState.mutex.RN.get(ogSender);
             AppConfig.chordState.mutex.RN.set(ogSender, Math.max(oldVal, senderRNVal));
 
+            if(AppConfig.chordState.getSuccessorTable()[0] == null && !AppConfig.chordState.mutex.hasToken()){
+                System.out.println("Token request waiting...");
+                System.out.println(reqMessage);
+                while(AppConfig.chordState.getSuccessorTable()[0] == null &&  !AppConfig.chordState.mutex.hasToken()){
+                    try{
+                        Thread.sleep(200);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+
+                System.out.println("Token request finished waiting!");
+
+            }
 
             // After updating RNj[i], Site Sj sends the token to site Si if it has token and RNj[i] = LN[i] + 1
             if (AppConfig.chordState.mutex.hasToken() &&
@@ -101,26 +120,31 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
 
             else{
 
-//                while(AppConfig.chordState.getSuccessorTable()[0] == null){
-//                    System.out.println("Cekamo..." + AppConfig.chordState.mutex.hasToken() + " " + bsPort);
-//                    try{
-//                        Thread.sleep(200);
-//                    }
-//                    catch (InterruptedException e){
-//                        e.printStackTrace();
-//                    }
-//                }
+                Set<Integer> newVisitedIds = new HashSet<>(reqMessage.getVisitedIds());
+                newVisitedIds.add(AppConfig.myServentInfo.getChordId());
 
-                System.out.println("Request token got from");
+                Set<ServentInfo> sendTo = new HashSet<>();
 
-                Message newMsg = new SuzukiKasamiRequestTokenMessage(AppConfig.myServentInfo.getListenerPort(),
-                        AppConfig.chordState.getNextNodePort(),
-                        reqMessage.getMessageText());
+                for(ServentInfo nb: AppConfig.chordState.getSuccessorTable()){
+                    if(!newVisitedIds.contains(nb.getChordId())){
+                        sendTo.add(nb);
+                        newVisitedIds.add(nb.getChordId());
+                    }
+                }
+
+                for(ServentInfo nb: sendTo){
+                    Message newMsg = new SuzukiKasamiRequestTokenMessage(AppConfig.myServentInfo.getListenerPort(),
+                            nb.getListenerPort(),
+                            reqMessage.getMessageText(),
+                            newVisitedIds);
+
+                    // prosledi poruku dalje jer nemamo token
+
+                    MessageUtil.sendMessage(newMsg);
+                }
 
 
-                // prosledi poruku dalje jer nemamo token
 
-                MessageUtil.sendMessage(newMsg);
             }
 
         } catch (Exception e) {

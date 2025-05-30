@@ -15,6 +15,10 @@ public class TellGetHandler implements MessageHandler {
 	@Override
 	public void run() {
 		if (clientMessage.getMessageType() == MessageType.TELL_GET) {
+
+			// unlock
+			AppConfig.chordState.mutex.unlock();
+
 			String parts[] = clientMessage.getMessageText().split(":");
 			
 			if (parts.length == 2) {

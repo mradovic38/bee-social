@@ -9,6 +9,8 @@ import servent.message.util.MessageUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -67,7 +69,8 @@ public class SuzukiKasamiMutex implements Mutex {
                     Message tokenRequestMessage =
                             new SuzukiKasamiRequestTokenMessage(AppConfig.myServentInfo.getListenerPort(),
                                     nextNode,
-                                    messageText);
+                                    messageText,
+                                    new HashSet<>());
                     MessageUtil.sendMessage(tokenRequestMessage);
                 }
 

@@ -8,8 +8,10 @@ import java.util.*;
 
 import mutex.suzuki_kasami.SuzukiKasamiMutex;
 import servent.message.AskGetMessage;
+import servent.message.Message;
 import servent.message.PutMessage;
 import servent.message.WelcomeMessage;
+import servent.message.mutex.PutUnlockMessage;
 import servent.message.util.MessageUtil;
 
 /**
@@ -217,7 +219,6 @@ public class ChordState {
 	}
 
 	private void updateSuccessorTable() {
-		mutex.lock();
 		//first node after me has to be successorTable[0]
 		
 		int currentNodeIndex = 0;
@@ -267,8 +268,6 @@ public class ChordState {
 				}
 			}
 		}
-
-		mutex.unlock();
 		
 	}
 
@@ -365,13 +364,28 @@ public class ChordState {
 	/**
 	 * The Chord put operation. Stores locally if key is ours, otherwise sends it on.
 	 */
-	public void putValue(int key, int value) {
+	public void putValue(int key, int value, int storerId) {
 
 		if (isKeyMine(key)) {
 			valueMap.put(key, value);
+			AppConfig.timestampedStandardPrint("added: " + value + " at key " + key );
+			System.out.println("VALUE MAP AFTER PUT: " + valueMap.toString());
+
+			// nasa slika => unlock
+			if(storerId == AppConfig.myServentInfo.getChordId()) {
+				mutex.unlock();
+			}
+			// nije nasa slika => put unlock i to ga propagiraj da dodje najbrzim putem
+			else{
+				AppConfig.timestampedStandardPrint("Sent put unlock to " + getNextNodeForKey(storerId));
+				Message puMsg = new PutUnlockMessage(AppConfig.myServentInfo.getListenerPort(),
+						getNextNodeForKey(storerId).getListenerPort(), String.valueOf(storerId));
+				MessageUtil.sendMessage(puMsg);
+			}
 		} else {
+			AppConfig.timestampedStandardPrint("Sent put to " + getNextNodeForKey(storerId));
 			ServentInfo nextNode = getNextNodeForKey(key);
-			PutMessage pm = new PutMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), key, value);
+			PutMessage pm = new PutMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), key, value, storerId);
 			MessageUtil.sendMessage(pm);
 		}
 	}
@@ -385,9 +399,15 @@ public class ChordState {
 	 *		   </ul>
 	 */
 	public int getValue(int key) {
-		//TODO: proveriti mutex.lock();
+		// udji u kriticnu sekciju
+		AppConfig.timestampedStandardPrint("Get value requesting lock...");
+		mutex.lock();
+		AppConfig.timestampedStandardPrint("Get value got lock...");
 		if (isKeyMine(key)) {
-			//TODO: proveriti mutex.unlock();
+			// izadji iz nje
+			mutex.unlock();
+
+			System.out.println("VALUE MAP AFTER GET: " + valueMap.toString());
 
 			if (valueMap.containsKey(key)) {
 				return valueMap.get(key);

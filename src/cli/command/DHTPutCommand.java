@@ -29,8 +29,11 @@ public class DHTPutCommand implements CLICommand {
 				if (value < 0) {
 					throw new NumberFormatException();
 				}
+
+				// LOCK
+				AppConfig.chordState.mutex.lock();
 				
-				AppConfig.chordState.putValue(key, value);
+				AppConfig.chordState.putValue(key, value, AppConfig.myServentInfo.getChordId());
 			} catch (NumberFormatException e) {
 				AppConfig.timestampedErrorPrint("Invalid key and value pair. Both should be ints. 0 <= key <= " + ChordState.CHORD_SIZE
 						+ ". 0 <= value.");

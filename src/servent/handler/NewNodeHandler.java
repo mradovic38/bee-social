@@ -93,6 +93,8 @@ public class NewNodeHandler implements MessageHandler {
 				NewNodeMessage nnm = new NewNodeMessage(newNodePort, nextNode.getListenerPort());
 				MessageUtil.sendMessage(nnm);
 			}
+
+
 			
 		} else {
 			AppConfig.timestampedErrorPrint("NEW_NODE handler got something that is not new node message.");

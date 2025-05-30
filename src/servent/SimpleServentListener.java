@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import app.AppConfig;
 import app.Cancellable;
 import servent.handler.*;
+import servent.handler.mutex.PutUnlockHandler;
 import servent.handler.mutex.SuzukiKasamiRequestTokenHandler;
 import servent.handler.mutex.SuzukiKasamiSendTokenHandler;
 import servent.message.Message;
@@ -82,7 +83,9 @@ public class SimpleServentListener implements Runnable, Cancellable {
 						case QUIT:
 							messageHandler = new QuitHandler(clientMessage);
 							break;
-
+						case PUT_UNLOCK:
+							messageHandler = new PutUnlockHandler(clientMessage);
+							break;
 
 						case NEW_NODE:
 							messageHandler = new NewNodeHandler(clientMessage);

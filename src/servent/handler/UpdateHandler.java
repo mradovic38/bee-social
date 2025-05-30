@@ -36,7 +36,9 @@ public class UpdateHandler implements MessageHandler {
 				Message nextUpdate = new UpdateMessage(clientMessage.getSenderPort(), AppConfig.chordState.getNextNodePort(),
 						newMessageText);
 				MessageUtil.sendMessage(nextUpdate);
-			} else {
+			}
+			// do mene stigla poruka => unlock
+			else {
 				String messageText = clientMessage.getMessageText();
 				String[] ports = messageText.split(",");
 				
@@ -45,6 +47,7 @@ public class UpdateHandler implements MessageHandler {
 					allNodes.add(new ServentInfo("localhost", Integer.parseInt(port)));
 				}
 				AppConfig.chordState.addNodes(allNodes);
+				AppConfig.chordState.mutex.unlock();
 			}
 		} else {
 			AppConfig.timestampedErrorPrint("Update message handler got message that is not UPDATE");

@@ -153,7 +153,6 @@ public class BootstrapServer {
 					 * When a servent is confirmed not to be a collider, we add him to the list.
 					 */
 					int newServentPort = socketScanner.nextInt();
-					System.out.println("adding " + newServentPort);
 
 					serventListLock.writeLock().lock();
 					try {
@@ -163,6 +162,7 @@ public class BootstrapServer {
 					} finally {
 						serventListLock.writeLock().unlock();
 					}
+					System.out.println("Added " +  newServentPort);
 
 					newServentSocket.close();
 
@@ -222,7 +222,8 @@ public class BootstrapServer {
 						Message requestTokenMessage = new SuzukiKasamiRequestTokenMessage(
 										AppConfig.BOOTSTRAP_PORT,
 										receiverPort,
-										wantTokenPort + ":0" + "#" + bsPort
+										wantTokenPort + ":0" + "#" + bsPort,
+										new HashSet<>()
 								);
 						MessageUtil.sendMessage(requestTokenMessage);
 					}

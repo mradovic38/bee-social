@@ -1,10 +1,18 @@
-03:41:14 - Starting servent [0|localhost|1600]
-03:41:14 - Pausing for 10000 ms
-03:41:14 - Waiting for token...
-03:41:16 - Got message [0|13|-1|TOKEN_SEND|1600]
-03:41:16 - Got token
-03:41:17 - Sending message [1600|0||NEW_NODE|1100]
-03:41:24 - Pausing for 4000 ms
-03:41:28 - 25: 3
-03:41:28 - Pausing for 6000 ms
-03:41:34 - Stopping...
+17:31:57 - Starting servent [0|localhost|1600]
+17:31:57 - Pausing for 10000 ms
+17:31:57 - Waiting for token...
+17:31:59 - Got token
+17:32:07 - Locked
+17:32:07 - added: 3 at key 25
+VALUE MAP AFTER PUT: {25=3}
+17:32:07 - Unlocked
+17:32:07 - Pausing for 4000 ms
+17:32:07 - Unlocked
+17:32:11 - Get value requesting lock...
+17:32:15 - Locked
+17:32:15 - Get value got lock...
+17:32:15 - Please wait...
+17:32:15 - Pausing for 6000 ms
+17:32:17 - Unlocked
+17:32:17 - No such key: 25
+17:32:21 - Stopping...

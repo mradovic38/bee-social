@@ -1,8 +1,7 @@
-03:43:14 - Starting servent [24|localhost|1400]
-03:43:14 - Pausing for 20000 ms
-03:43:14 - Waiting for token...
-03:43:16 - Got message [0|8|-1|TOKEN_SEND|1400]
-03:43:16 - Got token
-03:43:17 - Sending message [1400|0||NEW_NODE|1100]
-03:43:18 - Got message [1100|1||WELCOME|1400]
-03:43:19 - Sending message [1400|1||UPDATE|1100]
+17:31:47 - Starting servent [24|localhost|1400]
+17:31:47 - Pausing for 20000 ms
+17:31:47 - Waiting for token...
+17:31:49 - Got token
+17:31:57 - Unlocked
+17:32:07 - Pausing for 10000 ms
+17:32:17 - Stopping...
