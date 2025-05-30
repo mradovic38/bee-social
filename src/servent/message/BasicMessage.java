@@ -3,6 +3,7 @@ package servent.message;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import app.AppConfig;
 import app.ChordState;
 
 /**
@@ -103,9 +104,9 @@ public class BasicMessage implements Message {
 	 */
 	@Override
 	public String toString() {
-		return "[" + ChordState.chordHash(getSenderPort()) + "|" + getSenderPort() + "|" + getMessageId() + "|" +
-					getMessageText() + "|" + getMessageType() + "|" +
-					getReceiverPort() + "|" + ChordState.chordHash(getReceiverPort()) + "]";
+			return "["  + getSenderPort() + "|" + getMessageId() + "|" +
+						getMessageText() + "|" + getMessageType() + "|" +
+						getReceiverPort() + "]";
 	}
 
 }

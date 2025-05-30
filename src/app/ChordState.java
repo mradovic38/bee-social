@@ -85,6 +85,7 @@ public class ChordState {
 	public void init(WelcomeMessage welcomeMsg) {
 		//set a temporary pointer to next node, for sending of update message
 		successorTable[0] = new ServentInfo("localhost", welcomeMsg.getSenderPort());
+
 		this.valueMap = welcomeMsg.getValues();
 		
 		//tell bootstrap this node is not a collider

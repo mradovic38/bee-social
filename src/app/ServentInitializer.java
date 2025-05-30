@@ -54,8 +54,8 @@ public class ServentInitializer implements Runnable {
 		} else { //bootstrap gave us something else - let that node tell our successor that we are here
 
 			// novi node -> lock
-			AppConfig.timestampedStandardPrint("Waining for token...");
-			AppConfig.chordState.mutex.lock();
+			AppConfig.timestampedStandardPrint("Waiting for token...");
+			AppConfig.chordState.mutex.lock(true);
 			AppConfig.timestampedStandardPrint("Got token");
 
 			NewNodeMessage nnm = new NewNodeMessage(AppConfig.myServentInfo.getListenerPort(), someServentPort);

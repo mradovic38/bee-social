@@ -1,3 +1,10 @@
-00:05:34 - Starting servent [4|localhost|1300]
-00:05:34 - Pausing for 30000 ms
-00:05:34 - Waining for token...
+03:43:04 - Starting servent [4|localhost|1300]
+03:43:04 - Pausing for 30000 ms
+03:43:04 - Waiting for token...
+03:43:06 - Got message [0|4|-1|TOKEN_SEND|1300]
+03:43:06 - Got token
+03:43:07 - Sending message [1300|0||NEW_NODE|1200]
+03:43:08 - Got message [1200|2||WELCOME|1300]
+03:43:09 - Sending message [1300|1||UPDATE|1200]
+03:43:15 - Got message [0|7|1400:0#2000|TOKEN_REQUEST|1300]
+03:43:15 - 1400

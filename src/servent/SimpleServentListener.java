@@ -63,9 +63,12 @@ public class SimpleServentListener implements Runnable, Cancellable {
 				 * If we can get away with stateless handlers, we will,
 				 * because that way is much simpler and less error prone.
 				 */
-				if(AppConfig.didQuit.get() && clientMessage.getMessageType() == CONFIRM_QUIT){
-					messageHandler = new ConfirmQuitHandler(clientMessage);
-					working = false;
+
+				if(AppConfig.didQuit.get()){
+					if(clientMessage.getMessageType() == CONFIRM_QUIT){
+						messageHandler = new ConfirmQuitHandler(clientMessage);
+						working = false;
+					}
 				}
 				else {
 

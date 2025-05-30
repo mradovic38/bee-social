@@ -29,6 +29,7 @@ public class ConfirmQuitHandler implements MessageHandler{
 
             PrintWriter bsWriter = new PrintWriter(bsSocket.getOutputStream());
             bsWriter.write("Quit\n" + AppConfig.myServentInfo.getListenerPort() + "\n");
+            bsWriter.flush();
 
             AppConfig.timestampedStandardPrint("Quit finalized!");
 

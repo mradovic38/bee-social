@@ -27,8 +27,8 @@ public class SuzukiKasamiSendTokenHandler implements MessageHandler {
     @Override
     public void run() {
         try {
-            if (clientMessage.getMessageType() == MessageType.TOKEN_SEND) {
-                AppConfig.timestampedErrorPrint("Token request handler received: " + clientMessage.getMessageType());
+            if (clientMessage.getMessageType() != MessageType.TOKEN_SEND) {
+                AppConfig.timestampedErrorPrint("Token send handler received: " + clientMessage.getMessageType());
                 return;
             }
 
@@ -37,7 +37,7 @@ public class SuzukiKasamiSendTokenHandler implements MessageHandler {
             SuzukiKasamiToken token =  new SuzukiKasamiToken();
 
             // ako sam ja trazio token => ulazim u kriticnu sekciju
-            if(AppConfig.chordState.isKeyMine(finalReceiverId)){
+            if(finalReceiverId == -1 || AppConfig.chordState.isKeyMine(finalReceiverId)){
                 AppConfig.chordState.mutex.setToken(token);
             }
 

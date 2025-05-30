@@ -1,5 +1,24 @@
-00:05:12 - Bootstrap server started on port: 2000
+03:42:42 - Bootstrap server started on port: 2000
 got 1100
+Added first servent: 1100
 got 1200
+Got Want Token from: 1200
+03:42:55 - Sending message [0|0|1200:0#2000|TOKEN_REQUEST|1100]
+sending token to 1200
+03:42:56 - Sending message [0|1|-1|TOKEN_SEND|1200]
+adding 1200
 got 1300
+Got Want Token from: 1300
+03:43:05 - Sending message [0|3|1300:0#2000|TOKEN_REQUEST|1200]
+sending token to 1300
+03:43:06 - Sending message [0|2|1300:0#2000|TOKEN_REQUEST|1100]
+03:43:06 - Sending message [0|4|-1|TOKEN_SEND|1300]
+adding 1300
 got 1400
+Got Want Token from: 1400
+03:43:15 - Sending message [0|7|1400:0#2000|TOKEN_REQUEST|1300]
+sending token to 1400
+03:43:15 - Sending message [0|5|1400:0#2000|TOKEN_REQUEST|1100]
+03:43:15 - Sending message [0|6|1400:0#2000|TOKEN_REQUEST|1200]
+03:43:16 - Sending message [0|8|-1|TOKEN_SEND|1400]
+adding 1400
