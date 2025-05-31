@@ -49,7 +49,7 @@ public class DHTPutCommand implements CLICommand {
 
 	public static boolean checkFile(String fileName) {
 		try {
-			File file = new File(AppConfig.rootDir + "/" + fileName);
+			File file = new File(AppConfig.ROOT_DIR + "/" + fileName);
 			return file.exists() && !file.isDirectory();
 		} catch (Exception e) {
 			AppConfig.timestampedErrorPrint(fileName + " could not be added. Check if file is valid.");

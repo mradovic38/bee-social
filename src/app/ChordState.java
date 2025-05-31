@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.*;
 
+import fault_tolerance.Heartbeat;
 import mutex.suzuki_kasami.SuzukiKasamiMutex;
 import servent.message.AskGetMessage;
 import servent.message.Message;
@@ -56,6 +57,8 @@ public class ChordState {
 
 	public SuzukiKasamiMutex mutex = new SuzukiKasamiMutex();
 
+	public Heartbeat heartbeat = new Heartbeat();
+
 
 
 	public ChordState() {
@@ -99,6 +102,10 @@ public class ChordState {
 			
 			bsWriter.flush();
 			bsSocket.close();
+
+
+			Thread heartbeatThread = new Thread(heartbeat);
+			heartbeatThread.start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

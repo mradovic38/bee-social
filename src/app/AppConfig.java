@@ -49,7 +49,10 @@ public class AppConfig {
 	public static int BOOTSTRAP_PORT;
 	public static int SERVENT_COUNT;
 
-	public static String rootDir;
+	public static String ROOT_DIR;
+
+	public static int STRONG_LIMIT;
+	public static int WEAK_LIMIT;
 	
 	public static ChordState chordState;
 
@@ -110,9 +113,17 @@ public class AppConfig {
 		}
 
 		try {
-			rootDir = properties.getProperty("root");
+			ROOT_DIR = properties.getProperty("root");
 		} catch (NullPointerException e) {
 			timestampedErrorPrint("Problem reading root dir. Exiting...");
+			System.exit(0);
+		}
+
+		try {
+			STRONG_LIMIT = Integer.parseInt(properties.getProperty("strong_limit"));
+			WEAK_LIMIT = Integer.parseInt(properties.getProperty("weak_limit"));
+		} catch (NullPointerException e) {
+			timestampedErrorPrint("Problem reading strong_limit and hard_limit. Exiting...");
 			System.exit(0);
 		}
 

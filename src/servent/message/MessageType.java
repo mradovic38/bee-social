@@ -5,4 +5,5 @@ public enum MessageType {
 	QUIT, CONFIRM_QUIT,
 	TOKEN_REQUEST, TOKEN_SEND,
 	PUT_UNLOCK,
+	PING, PONG
 }
