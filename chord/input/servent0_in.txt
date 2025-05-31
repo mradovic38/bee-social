@@ -1,4 +1,5 @@
-pause 50000
+pause 5000
 dht_put 2 5
 pause 10000
+pause 100000
 stop

@@ -183,50 +183,6 @@ public class BootstrapServer {
 
 					newServentSocket.close();
 
-				} else if (message.equals("Token")) {
-					// prosledi token onome ko je trazio
-					int wantTokenPort = socketScanner.nextInt();
-
-					String lnStr = socketScanner.nextLine();
-					String qStr = socketScanner.nextLine();
-
-					List<Integer> LN = new CopyOnWriteArrayList<>(
-							Arrays.stream(lnStr.split(","))
-									.filter(s -> !s.isEmpty())
-									.map(Integer::parseInt)
-									.toList()
-					);
-					Queue<Integer> Q = new LinkedList<>(
-							Arrays.stream(qStr.split(","))
-									.filter(s -> !s.isEmpty())
-									.map(Integer::parseInt)
-									.toList()
-					);
-
-					System.out.println("sending token to " + wantTokenPort);
-					Message sendTokenMessage = new SuzukiKasamiSendTokenMessage(
-							AppConfig.BOOTSTRAP_PORT,
-							wantTokenPort,
-							"-1",
-							new SuzukiKasamiToken(LN, Q)
-					);
-					MessageUtil.sendMessage(sendTokenMessage);
-					newServentSocket.close();
-				}
-				else if(message.equals("WantToken")){
-
-					int wantTokenPort = socketScanner.nextInt();
-					System.out.println("Got Want Token from: " + wantTokenPort);
-
-					for(Integer receiverPort : activeServents) {
-						Message requestTokenMessage = new SuzukiKasamiRequestTokenMessage(
-										AppConfig.BOOTSTRAP_PORT,
-										receiverPort,
-										wantTokenPort + ":0" + "#" + bsPort,
-										new HashSet<>()
-								);
-						MessageUtil.sendMessage(requestTokenMessage);
-					}
 				}
 
 			} catch (SocketTimeoutException e) {

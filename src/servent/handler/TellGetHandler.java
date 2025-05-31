@@ -19,7 +19,7 @@ public class TellGetHandler implements MessageHandler {
 			// unlock
 			AppConfig.chordState.mutex.unlock();
 
-			String parts[] = clientMessage.getMessageText().split(":");
+			String[] parts = clientMessage.getMessageText().split(":");
 			
 			if (parts.length == 2) {
 				try {

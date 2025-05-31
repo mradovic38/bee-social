@@ -1,7 +1,5 @@
-17:31:47 - Starting servent [24|localhost|1400]
-17:31:47 - Pausing for 20000 ms
-17:31:47 - Waiting for token...
-17:31:49 - Got token
-17:31:57 - Unlocked
-17:32:07 - Pausing for 10000 ms
-17:32:17 - Stopping...
+02:13:25 - Starting servent [24|localhost|1400]
+02:13:25 - Pausing for 5000 ms
+02:13:25 - Waiting for token...
+02:13:30 - Pausing for 10000 ms
+02:13:40 - Pausing for 100000 ms

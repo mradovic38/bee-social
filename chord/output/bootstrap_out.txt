@@ -1,20 +1,8 @@
-17:31:15 - Bootstrap server started on port: 2000
+02:13:23 - Bootstrap server started on port: 2000
 got 1100
 Added first servent: 1100
-got 1200
-Got Want Token from: 1200
-sending token to 1200
-Added 1200
 got 1300
-Got Want Token from: 1300
-sending token to 1300
-Added 1300
+got 1200
 got 1400
-Got Want Token from: 1400
-sending token to 1400
-Added 1400
 got 1600
-Got Want Token from: 1600
-sending token to 1600
-Added 1600
 No more input. Exiting CLIWorker.

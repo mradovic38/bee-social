@@ -1,3 +1,9 @@
-17:31:17 - Starting servent [28|localhost|1100]
-17:31:17 - Pausing for 50000 ms
-17:31:17 - First node in Chord system.
+02:13:25 - Starting servent [28|localhost|1100]
+02:13:25 - Pausing for 5000 ms
+02:13:25 - First node in Chord system.
+02:13:25 - =================JA IMAM TOKEN SADA==================
+02:13:30 - added: 5 at key 2
+VALUE MAP AFTER PUT: {2=5}
+02:13:30 - Unlocked
+02:13:30 - Pausing for 10000 ms
+02:13:40 - Pausing for 100000 ms

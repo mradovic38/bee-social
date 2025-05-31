@@ -109,11 +109,11 @@ public class MultipleServentStarter {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			try { //give each node 10s to start up
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try { //give each node 10s to start up
+//				Thread.sleep(10000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 		
 		Thread t = new Thread(new ServentCLI(serventProcesses, bsProcess));

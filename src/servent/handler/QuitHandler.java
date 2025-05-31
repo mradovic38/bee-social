@@ -5,6 +5,10 @@ import mutex.suzuki_kasami.SuzukiKasamiToken;
 import servent.message.*;
 import servent.message.util.MessageUtil;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 public class QuitHandler implements MessageHandler{
 
     private Message clientMessage;
@@ -41,6 +45,10 @@ public class QuitHandler implements MessageHandler{
                     AppConfig.chordState.mutex.unlock();
                 }
 
+                if(AppConfig.chordState.getSuccessorTable()[0] == null){
+                    confirmQuitFirstNode();
+                    return;
+                }
                 // salji cvoru da moze da quituje (ovo sme jer je on nas sledbenik pa smo povezani sa njim)
                 newMsg = new ConfirmQuitMessage(AppConfig.myServentInfo.getListenerPort(),
                         AppConfig.chordState.getNextNodePort());
@@ -64,5 +72,15 @@ public class QuitHandler implements MessageHandler{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void confirmQuitFirstNode() throws IOException {
+        Socket bsSocket = new Socket("localhost", AppConfig.BOOTSTRAP_PORT);
+
+        PrintWriter bsWriter = new PrintWriter(bsSocket.getOutputStream());
+        bsWriter.write("Quit\n" + AppConfig.myServentInfo.getListenerPort() + "\n");
+        bsWriter.flush();
+        bsSocket.close();
+        AppConfig.timestampedStandardPrint("Quit finalized!");
     }
 }

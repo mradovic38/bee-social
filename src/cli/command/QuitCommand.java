@@ -8,6 +8,10 @@ import servent.SimpleServentListener;
 import servent.message.QuitMessage;
 import servent.message.util.MessageUtil;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 public class QuitCommand implements CLICommand{
 
     // ova dva thread-a gasiti kad cvor izlazi iz sistema
@@ -22,7 +26,7 @@ public class QuitCommand implements CLICommand{
 
     @Override
     public String commandName() {
-        return "quit";
+        return "stop";
     }
 
     @Override
@@ -52,6 +56,16 @@ public class QuitCommand implements CLICommand{
         AppConfig.chordState.mutex.setInCriticalSection(false);
         AppConfig.chordState.mutex.setToken(null);
 
+        if(AppConfig.chordState.getSuccessorTable()[0] == null){
+            try {
+                confirmQuitFirstNode();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
         // Salji sledecem da si quitovao, mora da se radi reorganizacija
         QuitMessage quitMsg = new QuitMessage(
                 AppConfig.myServentInfo.getListenerPort(),
@@ -59,5 +73,15 @@ public class QuitCommand implements CLICommand{
                 AppConfig.myServentInfo.getChordId() + ":" + AppConfig.chordState.getPredecessor().getChordId(),
                 token);
         MessageUtil.sendMessage(quitMsg);
+    }
+
+    private void confirmQuitFirstNode() throws IOException {
+        Socket bsSocket = new Socket("localhost", AppConfig.BOOTSTRAP_PORT);
+
+        PrintWriter bsWriter = new PrintWriter(bsSocket.getOutputStream());
+        bsWriter.write("Quit\n" + AppConfig.myServentInfo.getListenerPort() + "\n");
+        bsWriter.flush();
+        bsSocket.close();
+        AppConfig.timestampedStandardPrint("Quit finalized!");
     }
 }

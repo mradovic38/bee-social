@@ -20,7 +20,7 @@ public class ConfirmQuitHandler implements MessageHandler{
     @Override
     public void run() {
         try {
-            if (clientMessage.getMessageType() == MessageType.CONFIRM_QUIT){
+            if (clientMessage.getMessageType() != MessageType.CONFIRM_QUIT){
                 AppConfig.timestampedErrorPrint("Confirm Quit Handler got: " + clientMessage.getMessageType());
                 return;
             }
@@ -30,7 +30,7 @@ public class ConfirmQuitHandler implements MessageHandler{
             PrintWriter bsWriter = new PrintWriter(bsSocket.getOutputStream());
             bsWriter.write("Quit\n" + AppConfig.myServentInfo.getListenerPort() + "\n");
             bsWriter.flush();
-
+            bsSocket.close();
             AppConfig.timestampedStandardPrint("Quit finalized!");
 
 

@@ -65,54 +65,51 @@ public class SimpleServentListener implements Runnable, Cancellable {
 				 * because that way is much simpler and less error prone.
 				 */
 
-				if(AppConfig.didQuit.get()){
-					if(clientMessage.getMessageType() == CONFIRM_QUIT){
+
+
+				switch (clientMessage.getMessageType()) {
+					case TOKEN_REQUEST:
+						messageHandler = new SuzukiKasamiRequestTokenHandler(clientMessage);
+						break;
+					case TOKEN_SEND:
+						messageHandler = new SuzukiKasamiSendTokenHandler(clientMessage);
+						break;
+					case QUIT:
+						messageHandler = new QuitHandler(clientMessage);
+						break;
+					case PUT_UNLOCK:
+						messageHandler = new PutUnlockHandler(clientMessage);
+						break;
+					case CONFIRM_QUIT:
 						messageHandler = new ConfirmQuitHandler(clientMessage);
-						working = false;
-					}
+						break;
+
+					case NEW_NODE:
+						messageHandler = new NewNodeHandler(clientMessage);
+						break;
+					case WELCOME:
+						messageHandler = new WelcomeHandler(clientMessage);
+						break;
+					case SORRY:
+						messageHandler = new SorryHandler(clientMessage);
+						break;
+					case UPDATE:
+						messageHandler = new UpdateHandler(clientMessage);
+						break;
+					case PUT:
+						messageHandler = new PutHandler(clientMessage);
+						break;
+					case ASK_GET:
+						messageHandler = new AskGetHandler(clientMessage);
+						break;
+					case TELL_GET:
+						messageHandler = new TellGetHandler(clientMessage);
+						break;
+					case POISON:
+						break;
+
 				}
-				else {
 
-					switch (clientMessage.getMessageType()) {
-						case TOKEN_REQUEST:
-							messageHandler = new SuzukiKasamiRequestTokenHandler(clientMessage);
-							break;
-						case TOKEN_SEND:
-							messageHandler = new SuzukiKasamiSendTokenHandler(clientMessage);
-							break;
-						case QUIT:
-							messageHandler = new QuitHandler(clientMessage);
-							break;
-						case PUT_UNLOCK:
-							messageHandler = new PutUnlockHandler(clientMessage);
-							break;
-
-						case NEW_NODE:
-							messageHandler = new NewNodeHandler(clientMessage);
-							break;
-						case WELCOME:
-							messageHandler = new WelcomeHandler(clientMessage);
-							break;
-						case SORRY:
-							messageHandler = new SorryHandler(clientMessage);
-							break;
-						case UPDATE:
-							messageHandler = new UpdateHandler(clientMessage);
-							break;
-						case PUT:
-							messageHandler = new PutHandler(clientMessage);
-							break;
-						case ASK_GET:
-							messageHandler = new AskGetHandler(clientMessage);
-							break;
-						case TELL_GET:
-							messageHandler = new TellGetHandler(clientMessage);
-							break;
-						case POISON:
-							break;
-
-					}
-				}
 
 
 

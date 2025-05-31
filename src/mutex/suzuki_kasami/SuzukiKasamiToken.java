@@ -19,9 +19,4 @@ public class SuzukiKasamiToken implements Serializable {
             LN.add(0);
         }
     }
-
-    public SuzukiKasamiToken(List<Integer> LN, Queue<Integer> q) {
-        this.LN = LN;
-        Q = q;
-    }
 }
