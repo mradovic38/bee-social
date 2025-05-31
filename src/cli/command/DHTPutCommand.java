@@ -14,6 +14,7 @@ public class DHTPutCommand implements CLICommand {
 
 	@Override
 	public void execute(String args) {
+		System.out.println("Sada cu da odradim dht_put");
 		String[] splitArgs = args.split(" ");
 		
 		if (splitArgs.length == 2) {

@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class BootstrapServer {
@@ -20,12 +21,12 @@ public class BootstrapServer {
 	private volatile boolean working = true;
 	private final List<Integer> activeServents;
 
-	// Use ReadWriteLock for better concurrency - multiple reads, exclusive writes
-	private final ReentrantReadWriteLock serventListLock = new ReentrantReadWriteLock();
 
 	// Separate lock for CLI synchronization
 	private final Object cliLock = new Object();
 	private boolean cliReady = false;
+
+	private final AtomicBoolean joinLock = new AtomicBoolean(false);
 
 	private class CLIWorker implements Runnable {
 		@Override
@@ -112,83 +113,93 @@ public class BootstrapServer {
 				 */
 				if (message.equals("Hail")) {
 					int newServentPort = socketScanner.nextInt();
-					System.out.println("got " + newServentPort);
+//					AppConfig.timestampedStandardPrint("got " + newServentPort);
 
 					PrintWriter socketWriter = new PrintWriter(newServentSocket.getOutputStream());
 
-					// Use read lock to check size and get random servent
-					serventListLock.readLock().lock();
-					try {
+					// za sinhronizaciju
+					boolean canJoin = joinLock.compareAndSet(false, true);
+
+
+					if(!canJoin) {
+						// -3 da bi on procitao da treba da ceka
+						StringBuilder msgBuilder = new StringBuilder().append("-3").append(":");
+						for (Integer s : activeServents) {
+							msgBuilder.append(s);
+							msgBuilder.append("|");
+						}
+						// brise poslednji | i dodaje newline
+						String msg = msgBuilder.substring(0, msgBuilder.length() - 1) + ("\n");
+						socketWriter.write(msg);
+					}
+					else {
+
+						// First node
 						if (activeServents.isEmpty()) {
 							socketWriter.write(String.valueOf(-1) + "\n");
 
-							// Release read lock and acquire write lock to add first servent
-							serventListLock.readLock().unlock();
-							serventListLock.writeLock().lock();
-							try {
-								// Double-check after acquiring write lock
-								if (activeServents.isEmpty()) {
-									activeServents.add(newServentPort); // first one doesn't need to confirm
-									System.out.println("Added first servent: " + newServentPort);
-								}
-							} finally {
-								serventListLock.writeLock().unlock();
-							}
-							// Re-acquire read lock (will be released in outer finally)
-							serventListLock.readLock().lock();
-						} else {
+							activeServents.add(newServentPort); // first one doesn't need to confirm
+							AppConfig.timestampedStandardPrint("Added first servent: " + newServentPort);
+
+						}
+						// neki drugi node
+						else {
 							int randServent = activeServents.get(rand.nextInt(activeServents.size()));
 
 							StringBuilder msgBuilder = new StringBuilder().append(randServent).append(":");
-							for(Integer s: activeServents) {
+							for (Integer s : activeServents) {
 								msgBuilder.append(s);
 								msgBuilder.append("|");
 							}
 							// brise poslednji | i dodaje newline
-							String msg = msgBuilder.substring(0, msgBuilder.length()-1) + ("\n");
+							String msg = msgBuilder.substring(0, msgBuilder.length() - 1) + ("\n");
 							socketWriter.write(msg);
+
+							AppConfig.timestampedStandardPrint("join lock acquired for node on port: " + newServentPort);
 						}
-					} finally {
-						serventListLock.readLock().unlock();
+
+
 					}
+
+
+
 					socketWriter.flush();
 					newServentSocket.close();
 
-				} else if (message.equals("New")) {
-					/**
-					 * When a servent is confirmed not to be a collider, we add him to the list.
-					 */
-					int newServentPort = socketScanner.nextInt();
+				}
+				else {
+					if (message.equals("New")) {
+						/**
+						 * When a servent is confirmed not to be a collider, we add him to the list.
+						 */
+						int newServentPort = socketScanner.nextInt();
 
-					serventListLock.writeLock().lock();
-					try {
 						if (!activeServents.contains(newServentPort)) {
 							activeServents.add(newServentPort);
 						}
-					} finally {
-						serventListLock.writeLock().unlock();
-					}
-					System.out.println("Added " +  newServentPort);
+						AppConfig.timestampedStandardPrint("Added " + newServentPort);
 
-					newServentSocket.close();
+						newServentSocket.close();
 
-				} else if (message.equals("Quit")) {
-					/*
-					 * Cvor izlazi iz sistema -
-					 * Javiti bootstrap-u da je neki cvor napustio sistem, bootstrap ga ukloni iz spiska aktivnih
-					 */
-					int quitterPort = socketScanner.nextInt();
-					System.out.println("quitting " + quitterPort);
 
-					serventListLock.writeLock().lock();
-					try {
+					} else if (message.equals("Quit")) {
+						/*
+						 * Cvor izlazi iz sistema -
+						 * Javiti bootstrap-u da je neki cvor napustio sistem, bootstrap ga ukloni iz spiska aktivnih
+						 */
+						int quitterPort = socketScanner.nextInt();
+						AppConfig.timestampedStandardPrint("Quitting " + quitterPort);
+
 						activeServents.remove(Integer.valueOf(quitterPort));
-					} finally {
-						serventListLock.writeLock().unlock();
+
+
+						newServentSocket.close();
+
 					}
+					AppConfig.timestampedStandardPrint("join lock released");
 
-					newServentSocket.close();
 
+					joinLock.set(false);
 				}
 
 			} catch (SocketTimeoutException e) {

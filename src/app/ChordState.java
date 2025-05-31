@@ -365,7 +365,7 @@ public class ChordState {
 	 * The Chord put operation. Stores locally if key is ours, otherwise sends it on.
 	 */
 	public void putValue(int key, int value, int storerId) {
-
+		AppConfig.timestampedStandardPrint("Sada cu da putujem");
 		if (isKeyMine(key)) {
 			valueMap.put(key, value);
 			AppConfig.timestampedStandardPrint("added: " + value + " at key " + key );
@@ -400,14 +400,12 @@ public class ChordState {
 	 */
 	public int getValue(int key) {
 		// udji u kriticnu sekciju
-		AppConfig.timestampedStandardPrint("Get value requesting lock...");
+//		AppConfig.timestampedStandardPrint("Get value requesting lock...");
 		mutex.lock();
 		AppConfig.timestampedStandardPrint("Get value got lock...");
 		if (isKeyMine(key)) {
 			// izadji iz nje
 			mutex.unlock();
-
-			System.out.println("VALUE MAP AFTER GET: " + valueMap.toString());
 
 			if (valueMap.containsKey(key)) {
 				return valueMap.get(key);
@@ -417,10 +415,8 @@ public class ChordState {
 		}
 
 		ServentInfo nextNode = getNextNodeForKey(key);
-		AskGetMessage agm = new AskGetMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), String.valueOf(key));
-		MessageUtil.sendMessage(agm);
-
-
+		AskGetMessage agMsg = new AskGetMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), String.valueOf(key));
+		MessageUtil.sendMessage(agMsg);
 
 		return -2;
 	}

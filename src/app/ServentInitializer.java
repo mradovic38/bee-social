@@ -62,7 +62,16 @@ public class ServentInitializer implements Runnable {
 	@Override
 	public void run() {
 		int someServentPort = getSomeServentPort();
-		
+		// moras da cekas
+		while(someServentPort == -3) {
+			try {
+				Thread.sleep(200);
+				someServentPort = getSomeServentPort();
+
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		if (someServentPort == -2) {
 			AppConfig.timestampedErrorPrint("Error in contacting bootstrap. Exiting...");
 			System.exit(0);
@@ -73,12 +82,23 @@ public class ServentInitializer implements Runnable {
 			// Inicijalizuj suzuki kasami token
 			AppConfig.chordState.mutex.setToken(new SuzukiKasamiToken());
 
+            try {
+				Socket bsSocket = new Socket("localhost", AppConfig.BOOTSTRAP_PORT);
+				PrintWriter bsWriter = new PrintWriter(bsSocket.getOutputStream());
+				bsWriter.write("FirstInit\n");
+				bsWriter.flush();
+				bsSocket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
 		} else { //bootstrap gave us something else - let that node tell our successor that we are here
 
 			// novi node -> lock
-			AppConfig.timestampedStandardPrint("Waiting for token...");
+
 			AppConfig.chordState.mutex.lock(broadcastPorts);
-			AppConfig.timestampedStandardPrint("Got token");
+
 
 			NewNodeMessage nnm = new NewNodeMessage(AppConfig.myServentInfo.getListenerPort(), someServentPort);
 			MessageUtil.sendMessage(nnm);

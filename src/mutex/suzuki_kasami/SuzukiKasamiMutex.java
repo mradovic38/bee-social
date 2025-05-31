@@ -1,13 +1,13 @@
 package mutex.suzuki_kasami;
 
 import app.AppConfig;
+import app.ChordState;
 import app.ServentInfo;
 import servent.message.Message;
 import servent.message.mutex.SuzukiKasamiRequestTokenMessage;
 import servent.message.mutex.SuzukiKasamiSendTokenMessage;
 import servent.message.util.MessageUtil;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +34,7 @@ public class SuzukiKasamiMutex implements Mutex {
     }
 
     public void lock(){
+
         lock(new HashSet<>());
     }
 
@@ -47,8 +48,10 @@ public class SuzukiKasamiMutex implements Mutex {
      */
     public void lock(Set<Integer> broadcastToPorts){
         synchronized (recurrencyLock) {
+            AppConfig.timestampedStandardPrint("Waiting for lock");
             // ako nema token, a zeli da udje u kriticku sekciju
             if (token == null) {
+
 
                 // inkrementiraj broj requestova
                 int myId = AppConfig.myServentInfo.getChordId();
@@ -56,7 +59,7 @@ public class SuzukiKasamiMutex implements Mutex {
 
                 int newVal = RN.get(myId);
 
-                String messageText = AppConfig.myServentInfo.getChordId() + ":" + newVal; // da bi se sacuvalo to ko je zatrazio
+                String messageText = ChordState.chordHash(AppConfig.myServentInfo.getListenerPort())+ ":" + newVal; // da bi se sacuvalo to ko je zatrazio
 
 
                 Set<Integer> newVisitedIds = new HashSet<>();
@@ -73,8 +76,9 @@ public class SuzukiKasamiMutex implements Mutex {
                 }
                 else{
                     sendTo = broadcastToPorts;
+                    messageText += "#";
                 }
-
+                System.out.println("Will send token request to: " + sendTo.toString());
                 for(Integer nb: sendTo){
                     Message newMsg = new SuzukiKasamiRequestTokenMessage(AppConfig.myServentInfo.getListenerPort(),
                             nb,
@@ -90,7 +94,7 @@ public class SuzukiKasamiMutex implements Mutex {
             // cekaj dok ne dobijes
             while (!hasToken.get()) {
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -99,9 +103,12 @@ public class SuzukiKasamiMutex implements Mutex {
             // udji u kriticnu sekciju
             inCriticalSection.set(true);
 
+            AppConfig.timestampedStandardPrint("Acquired lock");
         }
 
     }
+
+
 
 
 
@@ -117,44 +124,65 @@ public class SuzukiKasamiMutex implements Mutex {
      */
     public void unlock(){
         synchronized (recurrencyLock) {
-            if(token == null){
-                inCriticalSection.set(false);
-                AppConfig.chordState.mutex.setToken(null);
-                return;
-            }
 
-
-            // azuriraj LN[i]
-            int myId = AppConfig.myServentInfo.getChordId();
-            token.LN.set(myId, RN.get(myId));
-
-            // za svaki node Sj ciji id nije prisutan u Q appenduj njegov id na Q ako RNi[j] = LN[j] + 1
-            for (int i = 0; i < CHORD_SIZE; i++) {
-                if (!token.Q.contains(i) && RN.get(i) == token.LN.get(i) + 1) {
-                    token.Q.add(i);
+                if(token == null){
+                    inCriticalSection.set(false);
+                    AppConfig.chordState.mutex.setToken(null);
+                    return;
                 }
+
+
+                // azuriraj LN[i]
+                int myId = AppConfig.myServentInfo.getChordId();
+                token.LN.set(myId, RN.get(myId));
+
+                // za svaki node Sj ciji id nije prisutan u Q appenduj njegov id na Q ako RNi[j] = LN[j] + 1
+                for (int i = 0; i < CHORD_SIZE; i++) {
+                    if (!token.Q.contains(i) && RN.get(i) == token.LN.get(i) + 1) {
+                        token.Q.add(i);
+                    }
+                }
+
+                // posalji token onom koji je cekao na token
+                checkQueue();
+                inCriticalSection.set(false);
             }
 
-            // posalji token onom koji je cekao na token
-            if (!token.Q.isEmpty()) {
-
-                Integer finalReceiverId = token.Q.poll();
-                AppConfig.timestampedStandardPrint("==============FORWARDUJEM TOKEN CVORU: " + finalReceiverId + "===============");
-
-                Message tokenMessage = new SuzukiKasamiSendTokenMessage(
-                        AppConfig.myServentInfo.getListenerPort(),
-                        AppConfig.chordState.getNextNodeForKey(finalReceiverId).getListenerPort(),
-                        String.valueOf(finalReceiverId),
-                        AppConfig.chordState.mutex.getToken());
-                MessageUtil.sendMessage(tokenMessage);
-
-                AppConfig.chordState.mutex.setToken(null);
-            }
-            inCriticalSection.set(false);
-        }
         AppConfig.timestampedStandardPrint("Unlocked");
     }
 
+
+    public void checkQueue(){
+//        AppConfig.timestampedStandardPrint("OVO JE MOJ QUEUE: " + token.Q.toString());
+        if(!token.Q.isEmpty()){
+            Integer finalReceiverIdOrPort = token.Q.poll();
+            // Ako nije u kriticnoj sekciji => Posalji mu token
+                Message tokenMessage;
+                if(finalReceiverIdOrPort <= ChordState.CHORD_SIZE) {
+//                    AppConfig.timestampedStandardPrint("==============FORWARDUJEM TOKEN CVORU SA IDJEM: " + finalReceiverIdOrPort + "===============");
+                    tokenMessage = new SuzukiKasamiSendTokenMessage(
+                            AppConfig.myServentInfo.getListenerPort(),
+                            AppConfig.chordState.getNextNodeForKey(finalReceiverIdOrPort).getListenerPort(),
+                            String.valueOf(finalReceiverIdOrPort),
+                            AppConfig.chordState.mutex.getToken());
+                }
+                else{
+//                    AppConfig.timestampedStandardPrint("==============FORWARDUJEM TOKEN CVORU SA PORTOM: " + finalReceiverIdOrPort + "===============");
+                    tokenMessage = new SuzukiKasamiSendTokenMessage(
+                            AppConfig.myServentInfo.getListenerPort(),
+                            finalReceiverIdOrPort,
+                            String.valueOf(ChordState.chordHash(finalReceiverIdOrPort)),
+                            AppConfig.chordState.mutex.getToken());
+                }
+
+                AppConfig.timestampedStandardPrint("Sending token to: " + finalReceiverIdOrPort);
+
+                MessageUtil.sendMessage(tokenMessage);
+
+                AppConfig.chordState.mutex.setToken(null);
+
+        }
+    }
 
     // region GETTERS AND SETTERS
 
@@ -170,12 +198,12 @@ public class SuzukiKasamiMutex implements Mutex {
 
     public void setToken(SuzukiKasamiToken token){
         if (token != null){
-            AppConfig.timestampedStandardPrint("=================JA IMAM TOKEN SADA==================");
+//            AppConfig.timestampedStandardPrint("=================JA IMAM TOKEN SADA==================");
             this.token = token;
             this.hasToken.set(true);
         }
         else{
-            AppConfig.timestampedStandardPrint("=================NEMAM VISE TOKEN==================");
+//            AppConfig.timestampedStandardPrint("=================NEMAM VISE TOKEN==================");
             this.token = null;
             this.hasToken.set(false);
             this.inCriticalSection.set(false);

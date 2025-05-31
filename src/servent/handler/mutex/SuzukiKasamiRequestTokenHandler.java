@@ -10,6 +10,7 @@ import servent.message.mutex.SuzukiKasamiRequestTokenMessage;
 import servent.message.mutex.SuzukiKasamiSendTokenMessage;
 import servent.message.util.MessageUtil;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,13 +39,22 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
                 return;
             }
 
+
+
             // dohvati podatke iz poruke
             SuzukiKasamiRequestTokenMessage reqMessage = (SuzukiKasamiRequestTokenMessage) clientMessage;
-
+            boolean isNew = false;
+            String ogText = reqMessage.getMessageText();
+            if(ogText.contains("#")){
+                isNew = true;
+                ogText = ogText.replace("#", "");
+            }
             // uzmi originalno sendera i njegov RN iz teksta poruke
-            String[] msgText = reqMessage.getMessageText().split(":");
-            int ogSender = ChordState.chordHash(Integer.parseInt(msgText[0]));
+            String[] msgText = ogText.split(":");
+            int ogSender = Integer.parseInt(msgText[0]);
             int senderRNVal = Integer.parseInt(msgText[1]);
+
+
 
 
             // azuriraj sender RN
@@ -56,27 +66,20 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
 
             // After updating RNj[i], Site Sj sends the token to site Si if it has token and RNj[i] = LN[i] + 1
             if (AppConfig.chordState.mutex.hasToken() && AppConfig.chordState.mutex.RN.get(ogSender) == AppConfig.chordState.mutex.getToken().LN.get(ogSender) + 1) {
-
-                // Ako nije u kriticnoj sekciji => Posalji mu token
-                if (!AppConfig.chordState.mutex.inCritialSection()){
-
-                    Message tokenMessage = new SuzukiKasamiSendTokenMessage(
-                            AppConfig.myServentInfo.getListenerPort(),
-                            AppConfig.chordState.getNextNodeForKey(ogSender).getListenerPort(),
-                            String.valueOf(ogSender),
-                            AppConfig.chordState.mutex.getToken());
-
-                    MessageUtil.sendMessage(tokenMessage);
-
-                    AppConfig.chordState.mutex.setToken(null);
-                }
-                // Ako jeste => dodaj na queue
-                else{
+                // dodaj na queue -> ako je novi dodaj port, ako je vec tu dodaj id
+                if(!isNew)
                     AppConfig.chordState.mutex.getToken().Q.add(ogSender);
+                else
+                    AppConfig.chordState.mutex.getToken().Q.add(reqMessage.getSenderPort());
+
+                // Ako nije u kriticnoj => salji sledecem na queue
+                if (!AppConfig.chordState.mutex.inCritialSection()){
+                    AppConfig.chordState.mutex.checkQueue();
                 }
             }
             // prosledi poruku dalje
-            else{
+            else if (!isNew && !AppConfig.chordState.mutex.hasToken()){
+
 
                 Set<Integer> newVisitedIds = new HashSet<>(reqMessage.getVisitedIds());
                 newVisitedIds.add(AppConfig.myServentInfo.getChordId());
@@ -89,6 +92,8 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
                         newVisitedIds.add(nb.getChordId());
                     }
                 }
+
+                AppConfig.timestampedStandardPrint("Dont have token, Forwarding to: " + sendTo + " new visited: " + newVisitedIds);
 
                 for(ServentInfo nb: sendTo){
                     Message newMsg = new SuzukiKasamiRequestTokenMessage(AppConfig.myServentInfo.getListenerPort(),

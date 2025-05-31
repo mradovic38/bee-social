@@ -28,7 +28,7 @@ public class TellGetHandler implements MessageHandler {
 					if (value == -1) {
 						AppConfig.timestampedStandardPrint("No such key: " + key);
 					} else {
-						AppConfig.timestampedStandardPrint(clientMessage.getMessageText());
+						AppConfig.timestampedStandardPrint("DHT_GET Response: " + clientMessage.getMessageText());
 					}
 				} catch (NumberFormatException e) {
 					AppConfig.timestampedErrorPrint("Got TELL_GET message with bad text: " + clientMessage.getMessageText());

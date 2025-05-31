@@ -1,7 +1,9 @@
 package servent.handler;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import app.AppConfig;
 import app.ServentInfo;
@@ -21,6 +23,8 @@ public class UpdateHandler implements MessageHandler {
 	@Override
 	public void run() {
 		if (clientMessage.getMessageType() == MessageType.UPDATE) {
+			UpdateMessage updateMessage = (UpdateMessage) clientMessage;
+
 			// dodavanje novog cvora
 			if (clientMessage.getSenderPort() != AppConfig.myServentInfo.getListenerPort()) {
 				ServentInfo newNodInfo = new ServentInfo("localhost", clientMessage.getSenderPort());
@@ -29,31 +33,61 @@ public class UpdateHandler implements MessageHandler {
 				newNodes.add(newNodInfo);
 				AppConfig.chordState.addNodes(newNodes);
 
-				// TODO: AZURIRATI U PORUCI RN I TO - RN KOJI SE SALJE = MAX(RN, RN KOJI JE PRIMLJEN)
-				// TODO: UMESTO OVOG BESKORISNOG SRANJA AZURIRATI FAJLOVE I PROSLEDITI KROZ UPDATEMESSAGE
-				String newMessageText = "";
-				if (clientMessage.getMessageText().equals("")) {
-					newMessageText = String.valueOf(AppConfig.myServentInfo.getListenerPort());
-				} else {
-					newMessageText = clientMessage.getMessageText() + "," + AppConfig.myServentInfo.getListenerPort();
+				// dodaj mene kao port
+				List<Integer> newPorts = new ArrayList<>(updateMessage.getPorts());
+				newPorts.add(AppConfig.myServentInfo.getListenerPort());
+
+				// azuriraj rn-ove RN KOJI SE SALJE = MAX(RN, RN KOJI JE PRIMLJEN)
+				List<Integer> rns = updateMessage.getRns();
+				List<Integer> newRns = new ArrayList<>();
+				for(int i = 0; i < rns.size(); i++) {
+					int rn = AppConfig.chordState.mutex.RN.get(i);
+					int rnReceived = rns.get(i);
+					newRns.add(Math.max(rn, rnReceived));
 				}
+
+				// Azuriraj fajlove TODO: izmeniti svuda da valuemap ima image
+				Map<Integer, Integer> updatedFiles =  AppConfig.chordState.getValueMap();
+
+				for (Map.Entry<Integer, Integer> entry : updateMessage.getFiles().entrySet()){
+					if (updatedFiles.containsKey(entry.getKey())) {
+						updatedFiles.put(entry.getKey(), entry.getValue());
+					} else {
+						updatedFiles.put(entry.getKey(), entry.getValue());
+					}
+				}
+
+				// prosledi update message
 				Message nextUpdate = new UpdateMessage(clientMessage.getSenderPort(), AppConfig.chordState.getNextNodePort(),
-						newMessageText);
+						 updatedFiles, newPorts, newRns);
+
 				MessageUtil.sendMessage(nextUpdate);
 			}
 			// do mene stigla poruka, znaci sve smo ih obavestili da dolazimo => unlock
 			else {
-				// TODO: SACUVAJ SLIKE KOJE SU MOJE
-				// TODO: Splitovati poruku na listu portova i rn-ove
-				// TODO: Azurirati jebene rn-ove
-				String messageText = clientMessage.getMessageText();
-				String[] ports = messageText.split(",");
-				
+
+				// napravi servent info-e iz portova i pozovi addNodes
 				List<ServentInfo> allNodes = new ArrayList<>();
-				for (String port : ports) {
-					allNodes.add(new ServentInfo("localhost", Integer.parseInt(port)));
+				for (Integer port : updateMessage.getPorts()) {
+					allNodes.add(new ServentInfo("localhost", port));
 				}
 				AppConfig.chordState.addNodes(allNodes);
+
+				// azuriraj rn-ove, opet ista formula kao gore
+				List<Integer> rns = updateMessage.getRns();
+				for (int i = 0; i < rns.size(); i++) {
+					int rn = AppConfig.chordState.mutex.RN.get(i);
+					int rnReceived = rns.get(i);
+					AppConfig.chordState.mutex.RN.set(i, Math.max(rn, rnReceived));
+				}
+
+				// sacuvaj slike koje su moje, TODO: izmeniti svuda da valuemap ima image
+				for (Map.Entry<Integer, Integer> entry : updateMessage.getFiles().entrySet()) {
+					if(AppConfig.chordState.isKeyMine(entry.getKey()))
+						AppConfig.chordState.getValueMap().put(entry.getKey(), entry.getValue());
+
+				}
+
 				AppConfig.chordState.mutex.unlock();
 			}
 		} else {

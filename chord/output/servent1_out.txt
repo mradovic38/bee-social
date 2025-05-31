@@ -1,6 +1,16 @@
-03:03:15 - Starting servent [48|localhost|1200]
-03:03:15 - Pausing for 5000 ms
-03:03:15 - Waiting for token...
-03:03:16 - Sending message [1200|0|48:1|TOKEN_REQUEST|1400]
-03:03:20 - Pausing for 5000 ms
-03:03:25 - Get value requesting lock...
+17:57:54 - Starting servent [48|localhost|1200]
+17:57:54 - Pausing for 5000 ms
+17:57:54 - First node in Chord system.
+17:57:54 - Sending token to: 1400
+17:57:59 - Pausing for 10000 ms
+17:57:59 - Dont have token, Forwarding to: [[24|localhost|1400]] new visited: [48, 0, 24, 28]
+17:58:09 - Waiting for lock
+Will send token request to: [1600, 1400]
+17:58:09 - Acquired lock
+17:58:09 - Get value got lock...
+17:58:09 - Please wait...
+17:58:09 - Pausing for 5000 ms
+17:58:09 - Sending token to: 0
+17:58:09 - Unlocked
+17:58:09 - No such key: 2
+17:58:14 - Pausing for 100000 ms

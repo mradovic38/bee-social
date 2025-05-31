@@ -28,6 +28,7 @@ public class PutUnlockHandler implements MessageHandler {
 
             // to smo mi -> unlock
             if(AppConfig.chordState.isKeyMine(storerId)){
+                AppConfig.timestampedStandardPrint("-------" + storerId + " key is mine -> unlock--------");
                 AppConfig.chordState.mutex.unlock();
             }
             // nismo mi -> propagiraj dalje

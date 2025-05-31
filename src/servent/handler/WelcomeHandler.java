@@ -7,6 +7,8 @@ import servent.message.UpdateMessage;
 import servent.message.WelcomeMessage;
 import servent.message.util.MessageUtil;
 
+import java.util.ArrayList;
+
 public class WelcomeHandler implements MessageHandler {
 
 	private Message clientMessage;
@@ -22,7 +24,8 @@ public class WelcomeHandler implements MessageHandler {
 			
 			AppConfig.chordState.init(welcomeMsg);
 			
-			UpdateMessage um = new UpdateMessage(AppConfig.myServentInfo.getListenerPort(), AppConfig.chordState.getNextNodePort(), "");
+			UpdateMessage um = new UpdateMessage(AppConfig.myServentInfo.getListenerPort(), AppConfig.chordState.getNextNodePort(),
+					AppConfig.chordState.getValueMap(), new ArrayList<>(), new ArrayList<>());
 			MessageUtil.sendMessage(um);
 			
 		} else {

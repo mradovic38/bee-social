@@ -11,7 +11,7 @@ public class SuzukiKasamiToken implements Serializable {
     // LN[i] je broj requestova koji su skoro izvrseni od strane node-a i
     public List<Integer> LN = new CopyOnWriteArrayList<>();
 
-    // cuva ID-jeve node-ova koji cekaju na token
+    // cuva portove node-ova koji cekaju na token
     public Queue<Integer> Q = new LinkedList<>();
 
     public SuzukiKasamiToken() {

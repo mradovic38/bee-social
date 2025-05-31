@@ -30,7 +30,6 @@ public class AskGetHandler implements MessageHandler {
 					if (valueMap.containsKey(key)) {
 						value = valueMap.get(key);
 					}
-					AppConfig.timestampedStandardPrint("MAP is: " +  valueMap.toString());
 					
 					TellGetMessage tgm = new TellGetMessage(AppConfig.myServentInfo.getListenerPort(), clientMessage.getSenderPort(),
 															key, value);

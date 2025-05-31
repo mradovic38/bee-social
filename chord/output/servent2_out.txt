@@ -1,6 +1,9 @@
-03:03:15 - Starting servent [4|localhost|1300]
-03:03:15 - Pausing for 5000 ms
-03:03:15 - Waiting for token...
-03:03:16 - Sending message [1300|0|4:1|TOKEN_REQUEST|1400]
-03:03:20 - Pausing for 10000 ms
-03:03:30 - Pausing for 100000 ms
+17:57:54 - Starting servent [4|localhost|1300]
+17:57:54 - Pausing for 5000 ms
+17:57:54 - Waiting for lock
+Will send token request to: [1200, 1400]
+17:57:55 - Acquired lock
+17:57:55 - Sending token to: 1100
+17:57:55 - Unlocked
+17:57:59 - Pausing for 10000 ms
+17:58:09 - Pausing for 100000 ms

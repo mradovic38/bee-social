@@ -1,4 +1,15 @@
-03:03:15 - Starting servent [28|localhost|1100]
-03:03:15 - Pausing for 5000 ms
-03:03:15 - Waiting for token...
-03:03:16 - Sending message [1100|0|28:1|TOKEN_REQUEST|1400]
+17:57:54 - Starting servent [28|localhost|1100]
+17:57:54 - Pausing for 5000 ms
+17:57:55 - Waiting for lock
+Will send token request to: [1200, 1300, 1400]
+17:57:55 - Acquired lock
+17:57:56 - Sending token to: 1600
+17:57:56 - Unlocked
+Sada cu da odradim dht_put
+17:57:59 - Waiting for lock
+Will send token request to: [1200, 1600]
+17:57:59 - Sada cu da putujem
+17:57:59 - added: 3 at key 25
+VALUE MAP AFTER PUT: {25=3}
+17:57:59 - Sent put unlock to [48|localhost|1200]
+17:58:09 - Dont have token, Forwarding to: [] new visited: [48, 0, 24, 28]
