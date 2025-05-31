@@ -1,13 +1,9 @@
-17:57:54 - Starting servent [24|localhost|1400]
-17:57:54 - Pausing for 5000 ms
-17:57:54 - Waiting for lock
-Will send token request to: [1200]
-17:57:54 - Acquired lock
-17:57:54 - Unlocked
-17:57:54 - Sending token to: 1300
-17:57:59 - Pausing for 10000 ms
-17:57:59 - Sada cu da putujem
-17:57:59 - Sent put to [28|localhost|1100]
-17:57:59 - Dont have token, Forwarding to: [] new visited: [48, 0, 24, 28]
-17:58:09 - Pausing for 100000 ms
-17:58:09 - Dont have token, Forwarding to: [[28|localhost|1100]] new visited: [48, 0, 24, 28]
+19:05:19 - Starting servent [24|localhost|1400]
+19:05:19 - Pausing for 5000 ms
+19:05:19 - Waiting for lock
+19:05:19 - Acquired lock
+19:05:20 - Unlocked
+19:05:24 - Pausing for 10000 ms
+19:05:24 - Sada cu da putujem
+19:05:24 - Sent put to [28|localhost|1100]
+19:05:34 - Pausing for 100000 ms

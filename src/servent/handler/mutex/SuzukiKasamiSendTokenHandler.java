@@ -33,27 +33,10 @@ public class SuzukiKasamiSendTokenHandler implements MessageHandler {
             }
 
             SuzukiKasamiSendTokenMessage sendMsg = (SuzukiKasamiSendTokenMessage) clientMessage;
-            int finalReceiverId = Integer.parseInt(sendMsg.getMessageText());
-            SuzukiKasamiToken token =  new SuzukiKasamiToken();
+            SuzukiKasamiToken token =  sendMsg.getToken();
 
-            // ako sam ja trazio token => ulazim u kriticnu sekciju
-            if(finalReceiverId == -1 || AppConfig.chordState.isKeyMine(finalReceiverId)){
-                AppConfig.chordState.mutex.setToken(token);
-            }
-
-            // nisam ja trazio token => nadji jos jednog blizeg i prosledi mu
-            else{
-                int nextNodePort = AppConfig.chordState.getNextNodeForKey(finalReceiverId).getListenerPort();
-
-                SuzukiKasamiSendTokenMessage newMsg = new SuzukiKasamiSendTokenMessage(
-                        AppConfig.myServentInfo.getListenerPort(),
-                        nextNodePort,
-                        sendMsg.getMessageText(),
-                        token
-                );
-                MessageUtil.sendMessage(newMsg);
-
-            }
+            // setuj token
+            AppConfig.chordState.mutex.setToken(token);
 
 
 

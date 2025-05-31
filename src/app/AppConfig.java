@@ -52,7 +52,7 @@ public class AppConfig {
 	public static String rootDir;
 	
 	public static ChordState chordState;
-	
+
 	/**
 	 * Reads a config file. Should be called once at start of app.
 	 * The config file should be of the following format:
@@ -129,6 +129,8 @@ public class AppConfig {
 		}
 		
 		myServentInfo = new ServentInfo("localhost", serventPort);
+
+
 	}
 	
 }

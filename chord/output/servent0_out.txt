@@ -1,15 +1,16 @@
-17:57:54 - Starting servent [28|localhost|1100]
-17:57:54 - Pausing for 5000 ms
-17:57:55 - Waiting for lock
-Will send token request to: [1200, 1300, 1400]
-17:57:55 - Acquired lock
-17:57:56 - Sending token to: 1600
-17:57:56 - Unlocked
+19:05:19 - Starting servent [28|localhost|1100]
+19:05:19 - Pausing for 5000 ms
+19:05:19 - First node in Chord system.
 Sada cu da odradim dht_put
-17:57:59 - Waiting for lock
-Will send token request to: [1200, 1600]
-17:57:59 - Sada cu da putujem
-17:57:59 - added: 3 at key 25
+19:05:24 - Waiting for lock
+19:05:24 - Sada cu da putujem
+19:05:24 - added: 3 at key 25
 VALUE MAP AFTER PUT: {25=3}
-17:57:59 - Sent put unlock to [48|localhost|1200]
-17:58:09 - Dont have token, Forwarding to: [] new visited: [48, 0, 24, 28]
+19:05:24 - Sent put unlock to [48|localhost|1200]
+19:05:25 - Acquired lock
+19:05:25 - Sada cu da putujem
+19:05:25 - Sent put to [28|localhost|1100]
+19:05:25 - Pausing for 10000 ms
+19:05:25 - -------28 key is mine -> unlock--------
+19:05:25 - Unlocked
+19:05:35 - Pausing for 100000 ms

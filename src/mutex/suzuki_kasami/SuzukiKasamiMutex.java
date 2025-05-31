@@ -33,13 +33,6 @@ public class SuzukiKasamiMutex implements Mutex {
         }
     }
 
-    public void lock(){
-
-        lock(new HashSet<>());
-    }
-
-
-
     /**
      * <ul>
      * <li> When a site Si wants to enter the critical section and it does not have the token then it increments its sequence number RNi[i] and sends a request message REQUEST(i, sn) to all other sites in order to request the token.
@@ -52,39 +45,16 @@ public class SuzukiKasamiMutex implements Mutex {
             // ako nema token, a zeli da udje u kriticku sekciju
             if (token == null) {
 
-
                 // inkrementiraj broj requestova
                 int myId = AppConfig.myServentInfo.getChordId();
                 RN.set(myId, RN.get(myId) + 1);
 
                 int newVal = RN.get(myId);
 
-                String messageText = ChordState.chordHash(AppConfig.myServentInfo.getListenerPort())+ ":" + newVal; // da bi se sacuvalo to ko je zatrazio
-
-
-                Set<Integer> newVisitedIds = new HashSet<>();
-                newVisitedIds.add(AppConfig.myServentInfo.getChordId());
-                Set<Integer> sendTo = new HashSet<>();
-
-                if(broadcastToPorts.isEmpty()) {
-                    for (ServentInfo nb : AppConfig.chordState.getSuccessorTable()) {
-                        if (nb != null) {
-                            sendTo.add(nb.getListenerPort());
-                            newVisitedIds.add(nb.getChordId());
-                        }
-                    }
-                }
-                else{
-                    sendTo = broadcastToPorts;
-                    messageText += "#";
-                }
-                System.out.println("Will send token request to: " + sendTo.toString());
-                for(Integer nb: sendTo){
+                for(Integer nb: broadcastToPorts){
                     Message newMsg = new SuzukiKasamiRequestTokenMessage(AppConfig.myServentInfo.getListenerPort(),
                             nb,
-                            messageText,
-                            newVisitedIds);
-
+                            newVal);
                     // prosledi poruku dalje jer nemamo token
                     MessageUtil.sendMessage(newMsg);
                 }
@@ -110,8 +80,6 @@ public class SuzukiKasamiMutex implements Mutex {
 
 
 
-
-
     /**
      * <ul>
      * <li> sets LN[i] = RNi[i] to indicate that its critical section request RNi[i] has been executed
@@ -124,7 +92,7 @@ public class SuzukiKasamiMutex implements Mutex {
      */
     public void unlock(){
         synchronized (recurrencyLock) {
-
+                // sigurica ako pozovemo slucajno vise puta unlock
                 if(token == null){
                     inCriticalSection.set(false);
                     AppConfig.chordState.mutex.setToken(null);
@@ -138,9 +106,14 @@ public class SuzukiKasamiMutex implements Mutex {
 
                 // za svaki node Sj ciji id nije prisutan u Q appenduj njegov id na Q ako RNi[j] = LN[j] + 1
                 for (int i = 0; i < CHORD_SIZE; i++) {
-                    if (!token.Q.contains(i) && RN.get(i) == token.LN.get(i) + 1) {
-                        token.Q.add(i);
+                    Integer nodeIPort = AppConfig.chordState.getPortOfNode(i);
+
+                    if(nodeIPort != null){
+                        if (!token.Q.contains(nodeIPort) && RN.get(i) == token.LN.get(i) + 1) {
+                            token.Q.add(nodeIPort);
+                        }
                     }
+
                 }
 
                 // posalji token onom koji je cekao na token
@@ -153,34 +126,22 @@ public class SuzukiKasamiMutex implements Mutex {
 
 
     public void checkQueue(){
-//        AppConfig.timestampedStandardPrint("OVO JE MOJ QUEUE: " + token.Q.toString());
+        // uzmi poslednjeg sa queue i salji mu token
         if(!token.Q.isEmpty()){
-            Integer finalReceiverIdOrPort = token.Q.poll();
-            // Ako nije u kriticnoj sekciji => Posalji mu token
-                Message tokenMessage;
-                if(finalReceiverIdOrPort <= ChordState.CHORD_SIZE) {
-//                    AppConfig.timestampedStandardPrint("==============FORWARDUJEM TOKEN CVORU SA IDJEM: " + finalReceiverIdOrPort + "===============");
-                    tokenMessage = new SuzukiKasamiSendTokenMessage(
-                            AppConfig.myServentInfo.getListenerPort(),
-                            AppConfig.chordState.getNextNodeForKey(finalReceiverIdOrPort).getListenerPort(),
-                            String.valueOf(finalReceiverIdOrPort),
-                            AppConfig.chordState.mutex.getToken());
-                }
-                else{
-//                    AppConfig.timestampedStandardPrint("==============FORWARDUJEM TOKEN CVORU SA PORTOM: " + finalReceiverIdOrPort + "===============");
-                    tokenMessage = new SuzukiKasamiSendTokenMessage(
-                            AppConfig.myServentInfo.getListenerPort(),
-                            finalReceiverIdOrPort,
-                            String.valueOf(ChordState.chordHash(finalReceiverIdOrPort)),
-                            AppConfig.chordState.mutex.getToken());
-                }
 
-                AppConfig.timestampedStandardPrint("Sending token to: " + finalReceiverIdOrPort);
+            int sendTo = token.Q.poll();
 
-                MessageUtil.sendMessage(tokenMessage);
+            Message tokenMessage = new SuzukiKasamiSendTokenMessage(
+                    AppConfig.myServentInfo.getListenerPort(),
+                    sendTo,
+                    token
+            );
 
-                AppConfig.chordState.mutex.setToken(null);
+//            AppConfig.timestampedStandardPrint("Sending token to: " + receiverPort);
 
+            MessageUtil.sendMessage(tokenMessage);
+
+            AppConfig.chordState.mutex.setToken(null);
         }
     }
 

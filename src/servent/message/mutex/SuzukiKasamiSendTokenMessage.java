@@ -9,8 +9,8 @@ public class SuzukiKasamiSendTokenMessage extends BasicMessage {
     private static final long serialVersionUID = -2558031124520335033L;
     private final SuzukiKasamiToken token;
 
-    public SuzukiKasamiSendTokenMessage(int senderPort, int receiverPort, String text, SuzukiKasamiToken token) {
-        super(MessageType.TOKEN_SEND, senderPort, receiverPort, text);
+    public SuzukiKasamiSendTokenMessage(int senderPort, int receiverPort, SuzukiKasamiToken token) {
+        super(MessageType.TOKEN_SEND, senderPort, receiverPort);
         this.token = token;
     }
 

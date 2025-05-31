@@ -401,7 +401,11 @@ public class ChordState {
 	public int getValue(int key) {
 		// udji u kriticnu sekciju
 //		AppConfig.timestampedStandardPrint("Get value requesting lock...");
-		mutex.lock();
+		Set<Integer> broadcastTo = new HashSet<>();
+		for (ServentInfo serventInfo : allNodeInfo) {
+			broadcastTo.add(serventInfo.getListenerPort());
+		}
+		mutex.lock(broadcastTo);
 		AppConfig.timestampedStandardPrint("Get value got lock...");
 		if (isKeyMine(key)) {
 			// izadji iz nje
@@ -421,10 +425,15 @@ public class ChordState {
 		return -2;
 	}
 
+	public Integer getPortOfNode(int nodeId){
+		for (ServentInfo info : allNodeInfo) {
+			if (info.getChordId() == nodeId)
+				return info.getListenerPort();
+		}
+		return null;
+	}
 
-
-
-
-
-
+	public List<ServentInfo> getAllNodeInfo() {
+		return allNodeInfo;
+	}
 }

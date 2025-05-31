@@ -2,8 +2,10 @@ package cli.command;
 
 import app.AppConfig;
 import app.ChordState;
+import app.ServentInfo;
 
 import java.io.File;
+import java.util.HashSet;
 
 public class DHTPutCommand implements CLICommand {
 
@@ -32,7 +34,7 @@ public class DHTPutCommand implements CLICommand {
 				}
 
 				// LOCK
-				AppConfig.chordState.mutex.lock();
+				AppConfig.chordState.mutex.lock(new HashSet<>(AppConfig.chordState.getAllNodeInfo().stream().map(ServentInfo::getListenerPort).toList()));
 				
 				AppConfig.chordState.putValue(key, value, AppConfig.myServentInfo.getChordId());
 			} catch (NumberFormatException e) {
