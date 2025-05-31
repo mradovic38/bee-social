@@ -21,12 +21,16 @@ public class UpdateHandler implements MessageHandler {
 	@Override
 	public void run() {
 		if (clientMessage.getMessageType() == MessageType.UPDATE) {
+			// dodavanje novog cvora
 			if (clientMessage.getSenderPort() != AppConfig.myServentInfo.getListenerPort()) {
 				ServentInfo newNodInfo = new ServentInfo("localhost", clientMessage.getSenderPort());
+
 				List<ServentInfo> newNodes = new ArrayList<>();
 				newNodes.add(newNodInfo);
-				
 				AppConfig.chordState.addNodes(newNodes);
+
+				// TODO: AZURIRATI U PORUCI RN I TO - RN KOJI SE SALJE = MAX(RN, RN KOJI JE PRIMLJEN)
+				// TODO: UMESTO OVOG BESKORISNOG SRANJA AZURIRATI FAJLOVE I PROSLEDITI KROZ UPDATEMESSAGE
 				String newMessageText = "";
 				if (clientMessage.getMessageText().equals("")) {
 					newMessageText = String.valueOf(AppConfig.myServentInfo.getListenerPort());
@@ -37,8 +41,11 @@ public class UpdateHandler implements MessageHandler {
 						newMessageText);
 				MessageUtil.sendMessage(nextUpdate);
 			}
-			// do mene stigla poruka => unlock
+			// do mene stigla poruka, znaci sve smo ih obavestili da dolazimo => unlock
 			else {
+				// TODO: SACUVAJ SLIKE KOJE SU MOJE
+				// TODO: Splitovati poruku na listu portova i rn-ove
+				// TODO: Azurirati jebene rn-ove
 				String messageText = clientMessage.getMessageText();
 				String[] ports = messageText.split(",");
 				

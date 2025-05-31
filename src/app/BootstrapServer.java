@@ -119,16 +119,15 @@ public class BootstrapServer {
 					// Use read lock to check size and get random servent
 					serventListLock.readLock().lock();
 					try {
-						if (activeServents.size() == 0) {
+						if (activeServents.isEmpty()) {
 							socketWriter.write(String.valueOf(-1) + "\n");
-							socketWriter.flush();
 
 							// Release read lock and acquire write lock to add first servent
 							serventListLock.readLock().unlock();
 							serventListLock.writeLock().lock();
 							try {
 								// Double-check after acquiring write lock
-								if (activeServents.size() == 0) {
+								if (activeServents.isEmpty()) {
 									activeServents.add(newServentPort); // first one doesn't need to confirm
 									System.out.println("Added first servent: " + newServentPort);
 								}
@@ -139,13 +138,20 @@ public class BootstrapServer {
 							serventListLock.readLock().lock();
 						} else {
 							int randServent = activeServents.get(rand.nextInt(activeServents.size()));
-							socketWriter.write(String.valueOf(randServent) + "\n");
-							socketWriter.flush();
+
+							StringBuilder msgBuilder = new StringBuilder().append(randServent).append(":");
+							for(Integer s: activeServents) {
+								msgBuilder.append(s);
+								msgBuilder.append("|");
+							}
+							// brise poslednji | i dodaje newline
+							String msg = msgBuilder.substring(0, msgBuilder.length()-1) + ("\n");
+							socketWriter.write(msg);
 						}
 					} finally {
 						serventListLock.readLock().unlock();
 					}
-
+					socketWriter.flush();
 					newServentSocket.close();
 
 				} else if (message.equals("New")) {

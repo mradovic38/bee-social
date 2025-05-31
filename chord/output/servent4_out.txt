@@ -1,3 +1,4 @@
-02:13:25 - Starting servent [0|localhost|1600]
-02:13:25 - Pausing for 5000 ms
-02:13:25 - Waiting for token...
+03:03:15 - Starting servent [0|localhost|1600]
+03:03:15 - Pausing for 5000 ms
+03:03:15 - Waiting for token...
+03:03:17 - Sending message [1600|0|0:1|TOKEN_REQUEST|1400]

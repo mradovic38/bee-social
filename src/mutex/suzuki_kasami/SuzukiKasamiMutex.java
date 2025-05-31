@@ -7,6 +7,7 @@ import servent.message.mutex.SuzukiKasamiRequestTokenMessage;
 import servent.message.mutex.SuzukiKasamiSendTokenMessage;
 import servent.message.util.MessageUtil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +33,10 @@ public class SuzukiKasamiMutex implements Mutex {
         }
     }
 
+    public void lock(){
+        lock(new HashSet<>());
+    }
+
 
 
     /**
@@ -40,7 +45,7 @@ public class SuzukiKasamiMutex implements Mutex {
      * Here sn is update value of RNi[i]
      * </ul>
      */
-    public void lock(){
+    public void lock(Set<Integer> broadcastToPorts){
         synchronized (recurrencyLock) {
             // ako nema token, a zeli da udje u kriticku sekciju
             if (token == null) {
@@ -53,21 +58,26 @@ public class SuzukiKasamiMutex implements Mutex {
 
                 String messageText = AppConfig.myServentInfo.getChordId() + ":" + newVal; // da bi se sacuvalo to ko je zatrazio
 
+
                 Set<Integer> newVisitedIds = new HashSet<>();
                 newVisitedIds.add(AppConfig.myServentInfo.getChordId());
-                Set<ServentInfo> sendTo = new HashSet<>();
+                Set<Integer> sendTo = new HashSet<>();
 
-                for(ServentInfo nb: AppConfig.chordState.getSuccessorTable()){
-                    if(nb!= null){
-                        sendTo.add(nb);
-                        newVisitedIds.add(nb.getChordId());
+                if(broadcastToPorts.isEmpty()) {
+                    for (ServentInfo nb : AppConfig.chordState.getSuccessorTable()) {
+                        if (nb != null) {
+                            sendTo.add(nb.getListenerPort());
+                            newVisitedIds.add(nb.getChordId());
+                        }
                     }
-
+                }
+                else{
+                    sendTo = broadcastToPorts;
                 }
 
-                for(ServentInfo nb: sendTo){
+                for(Integer nb: sendTo){
                     Message newMsg = new SuzukiKasamiRequestTokenMessage(AppConfig.myServentInfo.getListenerPort(),
-                            nb.getListenerPort(),
+                            nb,
                             messageText,
                             newVisitedIds);
 

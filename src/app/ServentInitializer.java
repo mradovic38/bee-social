@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 import mutex.suzuki_kasami.SuzukiKasamiToken;
 import servent.message.NewNodeMessage;
 import servent.message.util.MessageUtil;
 
 public class ServentInitializer implements Runnable {
+	private Set<Integer> broadcastPorts = new HashSet<>();
 
 	private int getSomeServentPort() {
 		int bsPort = AppConfig.BOOTSTRAP_PORT;
@@ -25,7 +28,26 @@ public class ServentInitializer implements Runnable {
 			bsWriter.flush();
 
 			Scanner bsScanner = new Scanner(bsSocket.getInputStream());
-			retVal = bsScanner.nextInt();
+			String data = bsScanner.nextLine();
+
+			if(!data.contains(":")){
+				retVal = Integer.parseInt(data);
+			}
+			else {
+
+				// split retval and list of ports
+				String[] fistSplit = data.split(":");
+				retVal = Integer.parseInt(fistSplit[0]);
+
+				// node-ovi (portovi) su razdvojeni sa '|'
+				String[] nodes = fistSplit[1].split("\\|");
+
+				for (String nodeStr : nodes) {
+					broadcastPorts.add(Integer.parseInt(nodeStr));
+				}
+			}
+
+
 			
 			bsSocket.close();
 		} catch (UnknownHostException e) {
@@ -55,7 +77,7 @@ public class ServentInitializer implements Runnable {
 
 			// novi node -> lock
 			AppConfig.timestampedStandardPrint("Waiting for token...");
-			AppConfig.chordState.mutex.lock();
+			AppConfig.chordState.mutex.lock(broadcastPorts);
 			AppConfig.timestampedStandardPrint("Got token");
 
 			NewNodeMessage nnm = new NewNodeMessage(AppConfig.myServentInfo.getListenerPort(), someServentPort);

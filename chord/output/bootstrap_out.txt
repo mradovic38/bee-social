@@ -1,8 +1,8 @@
-02:13:23 - Bootstrap server started on port: 2000
-got 1100
-Added first servent: 1100
-got 1300
-got 1200
+03:03:13 - Bootstrap server started on port: 2000
 got 1400
+Added first servent: 1400
+got 1200
+got 1100
 got 1600
+got 1300
 No more input. Exiting CLIWorker.
