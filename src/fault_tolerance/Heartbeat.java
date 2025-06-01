@@ -95,7 +95,6 @@ public class Heartbeat implements Runnable, Cancellable{
             AppConfig.timestampedStandardPrint(buddyInfo.getListenerPort() + " might be dead !?");
 
             // da li je node koji je nestao imao lock. ako zauvek cekamo moramo da napravimo novi token
-            // TODO: ispraviti broadcast da ne gadja direktno
             int totalCnt = 0;
             noTokenCount = new AtomicInteger(0);
             someoneHasToken = new AtomicBoolean(false);
@@ -155,8 +154,6 @@ public class Heartbeat implements Runnable, Cancellable{
             // clear-uj
             backup.clear();
 
-
-            // TODO: ispraviti broadcast da ne gadja direktno
             // Broadcastuj drugima da urade update
             for (ServentInfo serventInfo : AppConfig.chordState.getAllNodeInfo()) {
                 if (serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort() &&

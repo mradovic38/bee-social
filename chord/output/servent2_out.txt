@@ -1,17 +1,22 @@
-21:52:17 - Starting servent [4|localhost|1300]
-21:52:17 - Pausing for 5000 ms
-21:52:18 - Waiting for lock
-21:52:19 - Acquired lock
-21:52:19 - Unlocked
-21:52:22 - Public set to: true
-21:52:22 - Waiting for lock
-21:52:22 - Acquired lock
-21:52:22 - Upload acquired lock
-21:52:22 - Sent put to [24|localhost|1400] for llama.jpg
-21:52:22 - Pausing for 10000 ms
-21:52:22 - Unlocked
-21:52:22 - Put unlock released lock
-21:52:22 - Sent put to [24|localhost|1400] for brod.jpg
-21:52:23 - Added: brod.jpg to successorBackup
-21:52:23 - Added: tornado.jpg to predecessorBackup
-21:52:32 - Waiting for lock
+22:05:14 - Starting servent [4|localhost|1300]
+22:05:15 - Pausing for 5000 ms
+22:05:17 - Waiting for lock
+22:05:17 - Acquired lock
+22:05:17 - Unlocked
+22:05:20 - Public set to: true
+22:05:20 - Waiting for lock
+22:05:20 - Acquired lock
+22:05:20 - Upload acquired lock
+22:05:20 - Sent put to [24|localhost|1400] for llama.jpg
+22:05:20 - Pausing for 10000 ms
+22:05:20 - Unlocked
+22:05:20 - Put unlock released lock
+22:05:20 - Added: tornado.jpg to predecessorBackup
+22:05:21 - Sent put to [24|localhost|1400] for brod.jpg
+22:05:21 - Added: brod.jpg to successorBackup
+22:05:30 - Waiting for lock
+22:05:30 - Acquired lock
+22:05:30 - Please wait...
+22:05:30 - Pausing for 5000 ms
+22:05:30 - Unlocked
+22:05:35 - Stopping...

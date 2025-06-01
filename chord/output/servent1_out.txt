@@ -1,25 +1,26 @@
-21:52:17 - Starting servent [48|localhost|1200]
-21:52:17 - Pausing for 5000 ms
-21:52:17 - Waiting for lock
-21:52:17 - Acquired lock
-21:52:17 - Unlocked
-21:52:22 - Sent follow request to: 1100
-21:52:22 - Waiting for lock
-21:52:22 - Added: llama.jpg at key 40
-21:52:22 - Sent put unlock to 1300
-21:52:22 - Sent put to [0|localhost|1600] for brod.jpg
-21:52:23 - Added: dog.jpg at key 47
-21:52:23 - Sent put unlock to 1600
-21:52:23 - Acquired lock
-21:52:23 - Upload acquired lock
-21:52:23 - Sent put to [0|localhost|1600] for tornado.jpg
-21:52:23 - Pausing for 10000 ms
-21:52:23 - Unlocked
-21:52:23 - Put unlock released lock
-21:52:23 - Added: tornado.jpg to successorBackup
-21:52:33 - Waiting for lock
-21:52:33 - Acquired lock
-21:52:33 - Unlocked
-21:52:33 - Retrieved the following images: [llama.jpg, dog.jpg]
-21:52:33 - Pausing for 5000 ms
-21:52:38 - Stopping...
+22:05:14 - Starting servent [48|localhost|1200]
+22:05:15 - Pausing for 5000 ms
+22:05:15 - Waiting for lock
+22:05:15 - Acquired lock
+22:05:15 - Unlocked
+22:05:16 - Pong got from node that is neither successor nor predecessor: 1400 (predecessor: [28|localhost|1100], successor: [0|localhost|1600])
+22:05:20 - Sent follow request to: 1100
+22:05:20 - Waiting for lock
+22:05:20 - Added: llama.jpg at key 40
+22:05:20 - Sent put unlock to 1300
+22:05:20 - Acquired lock
+22:05:20 - Upload acquired lock
+22:05:20 - Sent put to [0|localhost|1600] for tornado.jpg
+22:05:20 - Pausing for 10000 ms
+22:05:20 - Unlocked
+22:05:20 - Put unlock released lock
+22:05:20 - Added: tornado.jpg to successorBackup
+22:05:21 - Added: dog.jpg at key 47
+22:05:21 - Sent put unlock to 1600
+22:05:21 - Sent put to [0|localhost|1600] for brod.jpg
+22:05:30 - Waiting for lock
+22:05:30 - Acquired lock
+22:05:30 - Unlocked
+22:05:30 - Retrieved the following images: [llama.jpg, dog.jpg]
+22:05:30 - Pausing for 5000 ms
+22:05:35 - Stopping...
