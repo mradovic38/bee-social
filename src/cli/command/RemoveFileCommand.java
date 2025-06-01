@@ -2,8 +2,10 @@ package cli.command;
 
 
 import app.AppConfig;
+import app.ServentInfo;
 
 import java.io.File;
+import java.util.stream.Collectors;
 
 public class RemoveFileCommand implements CLICommand {
 
@@ -14,19 +16,13 @@ public class RemoveFileCommand implements CLICommand {
 
     @Override
     public void execute(String fileName) {
-        if(checkFile(fileName))
-            AppConfig.chordState.deleteValue(fileName);
+        // lock
+        AppConfig.chordState.mutex.lock(AppConfig.chordState.getAllNodeInfo().stream().map(ServentInfo::getListenerPort).collect(Collectors.toSet()));
+
+        // delete
+        AppConfig.chordState.deleteValue(fileName, AppConfig.myServentInfo.getListenerPort());
 
     }
 
-    public static boolean checkFile(String fileName) {
-        try {
-            File file = new File(AppConfig.ROOT_DIR + "/" + fileName);
-            return file.exists() && !file.isDirectory();
-        } catch (Exception e) {
-            AppConfig.timestampedErrorPrint(fileName + " could not be added. Check if file is valid.");
-            return false;
-        }
-    }
 
 }

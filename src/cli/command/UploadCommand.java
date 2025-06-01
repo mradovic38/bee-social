@@ -21,7 +21,7 @@ public class UploadCommand implements CLICommand {
 		// uzmi hash path-a da bi znali na koji key da ga stavimo
 		
 		if (!path.isBlank() && checkFile(path)) {
-			int key = path.hashCode() % ChordState.CHORD_SIZE;
+			int key = Math.abs(path.hashCode() % ChordState.CHORD_SIZE);
 
 			// LOCK
 			AppConfig.chordState.mutex.lock(new HashSet<>(AppConfig.chordState.getAllNodeInfo().stream().map(ServentInfo::getListenerPort).toList()));

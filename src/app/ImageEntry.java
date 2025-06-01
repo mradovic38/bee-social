@@ -13,6 +13,7 @@ public class ImageEntry implements Serializable {
     private transient Image image; // mora transient slike nisu serializable, ali bajtovi jesu
     private byte[] imageBytes;
 
+
     public ImageEntry(String path, int storerId, Image image) {
         this.path = path;
         this.storerPort = storerId;

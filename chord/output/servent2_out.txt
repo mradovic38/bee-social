@@ -1,7 +1,26 @@
-18:05:25 - Starting servent [4|localhost|1300]
-18:05:25 - Pausing for 5000 ms
-18:05:25 - First node in Chord system.
-18:05:30 - Public set to: false
-18:05:30 - Pausing for 10000 ms
-18:05:31 - Sent put to [24|localhost|1400]
-18:05:40 - Pausing for 100000 ms
+20:10:47 - Starting servent [4|localhost|1300]
+20:10:47 - Pausing for 5000 ms
+20:10:48 - Waiting for lock
+20:10:48 - Acquired lock
+20:10:48 - Unlocked
+20:10:49 - Saljem pong: 1600
+20:10:50 - Saljem pong: 1600
+20:10:50 - Saljem pong: 1400
+20:10:51 - Saljem pong: 1600
+20:10:51 - Saljem pong: 1400
+20:10:52 - Saljem pong: 1600
+20:10:52 - Public set to: true
+20:10:52 - Waiting for lock
+20:10:52 - Saljem pong: 1400
+20:10:53 - Saljem pong: 1600
+20:10:53 - Acquired lock
+20:10:53 - Upload acquired lock
+20:10:53 - Sent put to [24|localhost|1400]
+20:10:53 - Pausing for 10000 ms
+20:10:53 - Saljem pong: 1400
+20:10:53 - Unlocked
+20:10:53 - Put unlock released lock
+20:10:54 - Saljem pong: 1600
+20:10:54 - Sent put to [24|localhost|1400]
+20:10:54 - Saljem pong: 1400
+20:10:55 - Saljem pong: 1600

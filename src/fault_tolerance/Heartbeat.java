@@ -2,6 +2,7 @@ package fault_tolerance;
 
 import app.AppConfig;
 import app.Cancellable;
+import app.ImageEntry;
 import app.ServentInfo;
 import mutex.suzuki_kasami.SuzukiKasamiToken;
 import servent.message.Message;
@@ -11,7 +12,7 @@ import servent.message.fault_tolerance.SusAskMessage;
 import servent.message.fault_tolerance.UpdateAfterDeathMessage;
 import servent.message.util.MessageUtil;
 
-import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -46,8 +47,8 @@ public class Heartbeat implements Runnable, Cancellable{
                 ServentInfo successor = AppConfig.chordState.getSuccessorTable()[0];
 
                 // proveri successor i predecessor-a
-                checkBuddy(predecessor, successor,  predecessorNodeHealthInfo);
-                checkBuddy(successor, successor, predecessorNodeHealthInfo);
+                checkBuddy(predecessor, successor,  predecessorNodeHealthInfo, AppConfig.chordState.predecessorBackup);
+                checkBuddy(successor, successor, predecessorNodeHealthInfo, AppConfig.chordState.successorBackup);
 
                 Thread.sleep(PING_INTERVAL_MS);
             } catch (InterruptedException e) {
@@ -57,7 +58,8 @@ public class Heartbeat implements Runnable, Cancellable{
         }
     }
 
-    private void checkBuddy(ServentInfo checkInfo, ServentInfo buddyInfo, NodeHealthInfo nodeHealthInfo) {
+    private void checkBuddy(ServentInfo checkInfo, ServentInfo buddyInfo, NodeHealthInfo nodeHealthInfo,
+                            Map<Integer, Map<String, ImageEntry>> backup) {
 
         if(checkInfo == null || buddyInfo == null){
             // mrtav :(
@@ -135,6 +137,16 @@ public class Heartbeat implements Runnable, Cancellable{
             // BRISI IZ QUEUE AKO JE BILO
             AppConfig.chordState.mutex.getToken().Q.remove(checkInfo.getListenerPort());
 
+            // salji kao put value
+            for(Integer key: backup.keySet()){
+                for (Map.Entry<String, ImageEntry> entry: backup.get(key).entrySet()){
+                    AppConfig.chordState.putValue(key, entry.getKey(), AppConfig.myServentInfo.getListenerPort());
+                }
+            }
+            // clear-uj
+            backup.clear();
+
+
             // TODO: ispraviti broadcast da ne gadja direktno
             // Broadcastuj drugima da urade update
             for (ServentInfo serventInfo : AppConfig.chordState.getAllNodeInfo()) {
@@ -153,51 +165,6 @@ public class Heartbeat implements Runnable, Cancellable{
             AppConfig.chordState.mutex.unlock();
 
         }
-
-//        long lastSeen = AppConfig.buddyStatus.getLastSeen(target);
-//        long now = System.currentTimeMillis();
-//
-//        // Send PING
-//        MessageUtil.sendMessage(new PingMessage(AppConfig.myServentInfo.getListenerPort(), target.getListenerPort()));
-//
-//        // If >4s since last pong, ask helper to ping
-//        if (now - lastSeen > AppConfig.WEAK_LIMIT && now - lastSeen <= AppConfig.STRONG_LIMIT) {
-//            AppConfig.timestampedStandardPrint("Suspicious node: " + target.getListenerPort() + ". Asking for help from buddy.");
-//
-//            MessageUtil.sendMessage(new ComradeAskMessage(
-//                    AppConfig.myServentInfo.getListenerPort(),
-//                    helper.getListenerPort(),
-//                    target.getListenerPort(),
-//                    AppConfig.myServentInfo.getListenerPort()
-//            ));
-//        }
-//
-//        // If >10s, remove node
-//        if (now - lastSeen > AppConfig.STRONG_LIMIT) {
-//            AppConfig.timestampedStandardPrint("Node " + target.getListenerPort() + " did not respond for 10s. Declaring as DEAD.");
-//
-//            AppConfig.chordState.removeNode(target);
-//            AppConfig.chordState.getSuzukiKasamiUtils().getToken().removeNodeFromTokenQueue(target.getListenerPort());
-//
-//            // Inform others
-//            for (ServentInfo si : AppConfig.chordState.getAllNodeInfo()) {
-//                if (si.getListenerPort() != AppConfig.myServentInfo.getListenerPort()) {
-//                    MessageUtil.sendMessage(new RecoveryMessage(
-//                            AppConfig.myServentInfo.getListenerPort(),
-//                            si.getListenerPort(),
-//                            target
-//                    ));
-//                }
-//            }
-//
-//            // Optionally handle token recreation if necessary
-//            if (AppConfig.chordState.mutex.getToken() == null) {
-//                AppConfig.chordState.getSuzukiKasamiUtils().getToken().tryRecreateToken();
-//            }
-//
-//            // Reset buddy state
-//            AppConfig.buddyStatus.markRemoved(target);
-//        }
     }
 
 

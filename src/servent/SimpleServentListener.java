@@ -17,11 +17,7 @@ import servent.handler.mutex.PutUnlockHandler;
 import servent.handler.mutex.SuzukiKasamiRequestTokenHandler;
 import servent.handler.mutex.SuzukiKasamiSendTokenHandler;
 import servent.message.Message;
-import servent.message.MessageType;
 import servent.message.util.MessageUtil;
-
-import static servent.message.MessageType.CONFIRM_QUIT;
-import static servent.message.MessageType.TOKEN_SEND;
 
 public class SimpleServentListener implements Runnable, Cancellable {
 
@@ -117,6 +113,18 @@ public class SimpleServentListener implements Runnable, Cancellable {
 						break;
 					case FOLLOW_ACC:
 						messageHandler = new FollowAcceptHandler(clientMessage);
+						break;
+					case REMOVE_FILE:
+						messageHandler = new RemoveFileHandler(clientMessage);
+						break;
+					case REMOVE_FILE_UNLOCK:
+						messageHandler = new RemoveFileUnlockHandler(clientMessage);
+						break;
+					case REMOVE_FROM_BACKUP:
+						messageHandler = new RemoveFileFromBackupHandler(clientMessage);
+						break;
+					case BACKUP:
+						messageHandler = new BackupHandler(clientMessage);
 						break;
 
 					case NEW_NODE:

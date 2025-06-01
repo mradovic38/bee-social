@@ -1,7 +1,6 @@
 package app;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,17 +9,13 @@ import java.net.UnknownHostException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 
 import fault_tolerance.Heartbeat;
 import mutex.suzuki_kasami.SuzukiKasamiMutex;
-import servent.message.AskGetMessage;
-import servent.message.Message;
-import servent.message.PutMessage;
-import servent.message.WelcomeMessage;
+import servent.message.*;
+import servent.message.fault_tolerance.BackupMessage;
+import servent.message.fault_tolerance.RemoveFileFromBackupMessage;
 import servent.message.mutex.PutUnlockMessage;
 import servent.message.util.MessageUtil;
 
@@ -75,6 +70,9 @@ public class ChordState {
 	public Map<Integer, Object> followers = new ConcurrentHashMap<>();
 
 	private AtomicBoolean isPublic = new AtomicBoolean(true);
+
+	public Map<Integer, Map<String, ImageEntry>> predecessorBackup = new ConcurrentHashMap<>();
+	public Map<Integer, Map<String, ImageEntry>> successorBackup = new ConcurrentHashMap<>();
 
 
 
@@ -385,6 +383,7 @@ public class ChordState {
 		// zbog reorganizacije dobicemo novog predecessora i successore pa treba resetovati vreme
 		if(predecessorInfo.getChordId() == nodeToRemove){
 			heartbeat.getPredecessorNodeHealthInfo().setTimestamp(System.currentTimeMillis());
+
 		}
 		else if (successorTable[0] == null || successorTable[0].getChordId() == nodeToRemove){
 			heartbeat.getSuccessorNodeHealthInfo().setTimestamp(System.currentTimeMillis());
@@ -421,6 +420,25 @@ public class ChordState {
 		}
 	}
 
+	public boolean putIntoBuddyMap(ImageEntry imageEntry, int buddyPort) {
+		int key = Math.abs(imageEntry.getPath().hashCode() % CHORD_SIZE);
+
+        if(buddyPort == predecessorInfo.getListenerPort()){
+            Map<String, ImageEntry> map = predecessorBackup.computeIfAbsent(key, k -> new HashMap<>());
+            map.putIfAbsent(imageEntry.getPath(), imageEntry);
+
+            return true;
+        }
+        else if(successorTable[0] != null && buddyPort == successorTable[0].getListenerPort()){
+            Map<String, ImageEntry> map = successorBackup.computeIfAbsent(key, k -> new HashMap<>());
+            map.putIfAbsent(imageEntry.getPath(), imageEntry);
+
+            return true;
+        }
+
+        return false;
+    }
+
 	public ImageEntry putIntoMap(int key, String path, int storerId) {
 		try{
 			File imgFile = new File(AppConfig.ROOT_DIR + "/" + path);
@@ -430,7 +448,9 @@ public class ChordState {
 			ImageEntry entry = new ImageEntry(path, storerId, img);
 			map.putIfAbsent(path, entry);
 
-			// TODO: poslati komsijama za backup
+			// posalji komsijama za backup
+			sendPutToBackup(entry);
+
 			return entry;
 
 		} catch (IOException e) {
@@ -438,14 +458,105 @@ public class ChordState {
             throw new RuntimeException(e);
         }
 
+	}
 
+	private void sendPutToBackup(ImageEntry imageEntry) {
+		if(predecessorInfo != null) {
+			Message buMsg = new BackupMessage(AppConfig.myServentInfo.getListenerPort(),
+					predecessorInfo.getListenerPort(), imageEntry);
+			MessageUtil.sendMessage(buMsg);
+		}
+		if (successorTable[0] != null) {
+			BackupMessage buMsg = new BackupMessage(AppConfig.myServentInfo.getListenerPort(),
+					successorTable[0].getListenerPort(), imageEntry);
+			MessageUtil.sendMessage(buMsg);
+		}
 	}
 
 
 
-	public void deleteValue(String path){
-		// TODO: implement
+
+	public void deleteValue(String path, int requestorPort){
+		// uzmi key, path je value
+		int key = Math.abs(path.hashCode() % CHORD_SIZE);
+
+		// pokusaj da izbrises
+		Map<String, ImageEntry> mapEntry = valueMap.get(key);
+		if(mapEntry == null){
+//			AppConfig.timestampedStandardPrint("Map Entry is not present! Don't have anything to delete");
+			// posalji poruku da nisi uspeo da izbrises
+			Message duMsg = new RemoveFileUnlockMessage(AppConfig.myServentInfo.getListenerPort(), requestorPort,path, false);
+			MessageUtil.sendMessage(duMsg);
+			return;
+		}
+
+		// brisi
+		if(isKeyMine(key)){
+			if(mapEntry.get(path) == null){
+//				AppConfig.timestampedStandardPrint("Path is not present! Don't have anything to delete");
+				Message duMsg = new RemoveFileUnlockMessage(AppConfig.myServentInfo.getListenerPort(), requestorPort, path, false);
+				MessageUtil.sendMessage(duMsg);
+				return;
+			}
+			ImageEntry removedImg = valueMap.get(key).remove(path);
+			// izbrisi backup
+			if(removedImg != null){
+				sendRemoveFromBackup(key, path);
+			}
+
+			// mi smo trazili => ne moras poruku
+			if(requestorPort == AppConfig.myServentInfo.getListenerPort()) {
+				AppConfig.timestampedStandardPrint("Deleted: " + path + " at key " + key);
+				mutex.unlock();
+
+			}
+			// inace moras
+			else{
+				Message duMsg = new RemoveFileUnlockMessage(AppConfig.myServentInfo.getListenerPort(), requestorPort, path, true);
+				MessageUtil.sendMessage(duMsg);
+			}
+		}
+		// salji dalje
+		else{
+			ServentInfo nextNode = getNextNodeForKey(key);
+			Message removeFileMessage = new RemoveFileMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(),
+					path, requestorPort);
+			MessageUtil.sendMessage(removeFileMessage);
+		}
 	}
+
+	public void removeFromBackup(int key, String value, int buddyPort) {
+		if(predecessorInfo.getListenerPort() == buddyPort){
+			Map<String, ImageEntry> mapEntry = predecessorBackup.get(key);
+			if(mapEntry != null && isKeyMine(key) && mapEntry.get(value) != null){
+				valueMap.get(key).remove(value);
+			}
+			AppConfig.timestampedStandardPrint("Removed: " + value + " at key " + key + " from backup of predecessor " + buddyPort);
+		}
+
+		if(successorTable[0] != null && successorTable[0].getListenerPort() == buddyPort){
+			Map<String, ImageEntry> mapEntry = predecessorBackup.get(key);
+			if(mapEntry != null && isKeyMine(key) && mapEntry.get(value) != null){
+				valueMap.get(key).remove(value);
+			}
+			AppConfig.timestampedStandardPrint("Removed: " + value + " at key " + key + " from backup of successor " + buddyPort);
+		}
+	}
+
+
+	private void sendRemoveFromBackup(int key, String value) {
+		if(predecessorInfo != null) {
+			Message dbMsg = new RemoveFileFromBackupMessage(AppConfig.myServentInfo.getListenerPort(),
+					predecessorInfo.getListenerPort(), key, value, AppConfig.myServentInfo.getListenerPort());
+			MessageUtil.sendMessage(dbMsg);
+		}
+		if (successorTable[0] != null) {
+			Message dbMsg = new RemoveFileFromBackupMessage(AppConfig.myServentInfo.getListenerPort(),
+					successorTable[0].getListenerPort(), key, value, AppConfig.myServentInfo.getListenerPort());
+			MessageUtil.sendMessage(dbMsg);
+		}
+	}
+
 
 	public Integer getPortOfNode(int nodeId){
 		for (ServentInfo info : allNodeInfo) {

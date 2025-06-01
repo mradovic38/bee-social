@@ -1,7 +1,7 @@
 pause 5000
 follow localhost:1100
+upload tornado.jpg
 pause 10000
 list_files localhost:1100
 pause 5000
-pause 100000
 stop

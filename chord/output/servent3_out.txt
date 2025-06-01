@@ -1,14 +1,21 @@
-18:05:25 - Starting servent [24|localhost|1400]
-18:05:25 - Pausing for 5000 ms
-18:05:26 - Waiting for lock
-18:05:26 - Acquired lock
-18:05:26 - Unlocked
-18:05:30 - Pausing for 10000 ms
-18:05:30 - Sent put to [28|localhost|1100]
-18:05:31 - added: brod.jpg at key 24
-18:05:31 - Sent put unlock to 1100
-18:05:40 - Waiting for lock
-18:05:41 - Acquired lock
-18:05:41 - Unlocked
-18:05:41 - Retrieved the following images: [brod.jpg]
-18:05:41 - Pausing for 100000 ms
+20:10:47 - Starting servent [24|localhost|1400]
+20:10:47 - Pausing for 5000 ms
+20:10:49 - Waiting for lock
+20:10:49 - Acquired lock
+20:10:50 - Saljem pong: 1100
+20:10:50 - Unlocked
+20:10:50 - Saljem pong: 1300
+20:10:51 - Saljem pong: 1100
+20:10:51 - Saljem pong: 1300
+20:10:52 - Saljem pong: 1100
+20:10:52 - Pausing for 10000 ms
+20:10:52 - Saljem pong: 1300
+20:10:53 - Sent put to [28|localhost|1100]
+20:10:53 - Saljem pong: 1100
+20:10:53 - Sent put to [28|localhost|1100]
+20:10:53 - Saljem pong: 1300
+20:10:54 - Saljem pong: 1100
+20:10:54 - added: brod.jpg at key 24
+20:10:54 - Sent put unlock to 1100
+20:10:54 - Saljem pong: 1300
+20:10:55 - Saljem pong: 1100

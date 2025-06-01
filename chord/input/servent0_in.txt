@@ -7,5 +7,4 @@ pause 20
 accept localhost:1200
 list_files localhost:1200
 pause 10000
-pause 100000
 stop

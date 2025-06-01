@@ -1,5 +1,7 @@
 pause 5000
-visibility private
+visibility public
+upload dog.jpg
 pause 10000
-pause 100000
+list_files localhost:1200
+pause 5000
 stop

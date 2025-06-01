@@ -3,5 +3,4 @@ upload dog.jpg
 pause 4000
 list_files localhost:1600
 pause 6000
-pause 100000
 stop
