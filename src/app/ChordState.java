@@ -399,7 +399,7 @@ public class ChordState {
 
 		if (isKeyMine(key)) {
 			putIntoMap(key, path, storerPort);
-			AppConfig.timestampedStandardPrint("added: " + path + " at key " + key );
+			AppConfig.timestampedStandardPrint("Added: " + path + " at key " + key );
 
 			// nasa slika => unlock
 			if(storerPort == AppConfig.myServentInfo.getListenerPort()) {
@@ -413,7 +413,7 @@ public class ChordState {
 				MessageUtil.sendMessage(puMsg);
 			}
 		} else {
-			AppConfig.timestampedStandardPrint("Sent put to " + getNextNodeForKey(key));
+			AppConfig.timestampedStandardPrint("Sent put to " + getNextNodeForKey(key) + " for " + path);
 			ServentInfo nextNode = getNextNodeForKey(key);
 			PutMessage pm = new PutMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), key, path, storerPort);
 			MessageUtil.sendMessage(pm);
@@ -426,12 +426,13 @@ public class ChordState {
         if(buddyPort == predecessorInfo.getListenerPort()){
             Map<String, ImageEntry> map = predecessorBackup.computeIfAbsent(key, k -> new HashMap<>());
             map.putIfAbsent(imageEntry.getPath(), imageEntry);
-
+			AppConfig.timestampedStandardPrint("Added: " + imageEntry.getPath() + " to predecessorBackup");
             return true;
         }
         else if(successorTable[0] != null && buddyPort == successorTable[0].getListenerPort()){
             Map<String, ImageEntry> map = successorBackup.computeIfAbsent(key, k -> new HashMap<>());
             map.putIfAbsent(imageEntry.getPath(), imageEntry);
+			AppConfig.timestampedStandardPrint("Added: " + imageEntry.getPath() + " to successorBackup");
 
             return true;
         }

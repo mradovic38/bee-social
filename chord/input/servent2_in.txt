@@ -1,6 +1,6 @@
 pause 5000
 visibility public
-upload dog.jpg
+upload llama.jpg
 pause 10000
 list_files localhost:1200
 pause 5000

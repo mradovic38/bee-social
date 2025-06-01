@@ -27,7 +27,7 @@ public class QuitCommand implements CLICommand{
 
     @Override
     public String commandName() {
-        return "stop";
+        return "quit";
     }
 
     @Override

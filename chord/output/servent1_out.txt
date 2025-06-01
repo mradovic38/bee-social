@@ -1,32 +1,25 @@
-20:10:47 - Starting servent [48|localhost|1200]
-20:10:47 - Pausing for 5000 ms
-20:10:47 - First node in Chord system.
-20:10:48 - Saljem pong: 1600
-20:10:48 - Saljem pong: 1300
-20:10:49 - Saljem pong: 1600
-20:10:49 - Saljem pong: 1100
-20:10:50 - Saljem pong: 1600
-20:10:50 - Saljem pong: 1100
-20:10:51 - Saljem pong: 1600
-20:10:51 - Saljem pong: 1100
-20:10:52 - Saljem pong: 1600
-20:10:52 - Saljem pong: 1100
-20:10:52 - Sent follow request to: 1100
-20:10:52 - Waiting for lock
-20:10:52 - Acquired lock
-20:10:52 - Upload acquired lock
-20:10:52 - Sent put to [0|localhost|1600]
-20:10:52 - Pausing for 10000 ms
-20:10:52 - Unlocked
-20:10:52 - Put unlock released lock
-20:10:53 - Saljem pong: 1600
-20:10:53 - Saljem pong: 1100
-20:10:53 - added: dog.jpg at key 47
-20:10:53 - Sent put unlock to 1600
-20:10:53 - added: dog.jpg at key 47
-20:10:53 - Sent put unlock to 1300
-20:10:54 - Saljem pong: 1600
-20:10:54 - Sent put to [0|localhost|1600]
-20:10:54 - Saljem pong: 1100
-20:10:55 - Saljem pong: 1600
-20:10:55 - Saljem pong: 1100
+21:10:58 - Starting servent [48|localhost|1200]
+21:10:59 - Pausing for 5000 ms
+21:11:00 - Waiting for lock
+21:11:01 - Acquired lock
+21:11:01 - Unlocked
+21:11:04 - Sent follow request to: 1100
+21:11:04 - Waiting for lock
+21:11:04 - Acquired lock
+21:11:04 - Upload acquired lock
+21:11:04 - Sent put to [0|localhost|1600] for tornado.jpg
+21:11:04 - Pausing for 10000 ms
+21:11:04 - Added: tornado.jpg to successorBackup
+21:11:04 - Unlocked
+21:11:04 - Put unlock released lock
+21:11:04 - Sent put to [0|localhost|1600] for brod.jpg
+21:11:05 - Added: dog.jpg at key 47
+21:11:05 - Sent put unlock to 1600
+21:11:05 - Added: llama.jpg at key 40
+21:11:05 - Sent put unlock to 1300
+21:11:14 - Waiting for lock
+21:11:14 - Acquired lock
+21:11:14 - Unlocked
+21:11:14 - Retrieved the following images: [llama.jpg, dog.jpg]
+21:11:14 - Pausing for 5000 ms
+21:11:19 - Stopping...

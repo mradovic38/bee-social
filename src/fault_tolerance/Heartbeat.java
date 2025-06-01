@@ -12,6 +12,8 @@ import servent.message.fault_tolerance.SusAskMessage;
 import servent.message.fault_tolerance.UpdateAfterDeathMessage;
 import servent.message.util.MessageUtil;
 
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -48,7 +50,7 @@ public class Heartbeat implements Runnable, Cancellable{
 
                 // proveri successor i predecessor-a
                 checkBuddy(predecessor, successor,  predecessorNodeHealthInfo, AppConfig.chordState.predecessorBackup);
-                checkBuddy(successor, successor, predecessorNodeHealthInfo, AppConfig.chordState.successorBackup);
+                checkBuddy(successor, predecessor, predecessorNodeHealthInfo, AppConfig.chordState.successorBackup);
 
                 Thread.sleep(PING_INTERVAL_MS);
             } catch (InterruptedException e) {
@@ -90,6 +92,8 @@ public class Heartbeat implements Runnable, Cancellable{
         if (System.currentTimeMillis() - nodeHealthInfo.getTimestamp() > AppConfig.STRONG_LIMIT
                 && nodeHealthInfo.getNodeStatus() == NodeStatus.SUS) {
 
+            AppConfig.timestampedStandardPrint(buddyInfo.getListenerPort() + " might be dead !?");
+
             // da li je node koji je nestao imao lock. ako zauvek cekamo moramo da napravimo novi token
             // TODO: ispraviti broadcast da ne gadja direktno
             int totalCnt = 0;
@@ -97,17 +101,19 @@ public class Heartbeat implements Runnable, Cancellable{
             someoneHasToken = new AtomicBoolean(false);
 
             for (ServentInfo serventInfo : AppConfig.chordState.getAllNodeInfo()) {
-                if(serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort()){
+                if(serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort()
+                        && serventInfo.getListenerPort() != checkInfo.getListenerPort()){
                     Message askMsg = new AskHasTokenMessage(AppConfig.myServentInfo.getListenerPort(), serventInfo.getListenerPort());
                     MessageUtil.sendMessage(askMsg);
                     totalCnt++;
                 }
             }
+
             // ako se desi neki edge case da se ne ceka zauvek
             int wait = 10000;
             // sacekaj da dobijes odg od svih
             AppConfig.timestampedStandardPrint("Waiting to get if the token is in the system");
-            while(noTokenCount.get() < totalCnt && wait >= 0){
+            while(totalCnt != 0 && noTokenCount.get() < totalCnt && wait >= 0 && !someoneHasToken.get()){
                 try {
                     wait -= 30;
                     Thread.sleep(30);
@@ -127,6 +133,8 @@ public class Heartbeat implements Runnable, Cancellable{
             AppConfig.chordState.mutex.lock(AppConfig.chordState.getAllNodeInfo().stream()
                     .map(ServentInfo::getListenerPort).collect(Collectors.toSet()));
 
+            // SALJI BOOTSTRAPU DA OBRISE
+            informBootstrap(checkInfo.getListenerPort());
 
             AppConfig.timestampedStandardPrint("Node on port: " + checkInfo.getListenerPort() + " has died :(");
 
@@ -136,6 +144,7 @@ public class Heartbeat implements Runnable, Cancellable{
             AppConfig.chordState.removeNode(checkInfo.getChordId());
             // BRISI IZ QUEUE AKO JE BILO
             AppConfig.chordState.mutex.getToken().Q.remove(checkInfo.getListenerPort());
+
 
             // salji kao put value
             for(Integer key: backup.keySet()){
@@ -150,7 +159,8 @@ public class Heartbeat implements Runnable, Cancellable{
             // TODO: ispraviti broadcast da ne gadja direktno
             // Broadcastuj drugima da urade update
             for (ServentInfo serventInfo : AppConfig.chordState.getAllNodeInfo()) {
-                if (serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort()) {
+                if (serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort() &&
+                    checkInfo.getListenerPort() != serventInfo.getListenerPort()) {
                     Message uadMsg = new UpdateAfterDeathMessage(AppConfig.myServentInfo.getListenerPort(), serventInfo.getListenerPort(), checkInfo);
 
                     MessageUtil.sendMessage(uadMsg);
@@ -164,6 +174,21 @@ public class Heartbeat implements Runnable, Cancellable{
             // otkljucaj
             AppConfig.chordState.mutex.unlock();
 
+        }
+    }
+
+    private void informBootstrap(int port){
+        try {
+            Socket bsSocket = new Socket("localhost", AppConfig.BOOTSTRAP_PORT);
+
+            PrintWriter bsWriter = new PrintWriter(bsSocket.getOutputStream());
+            bsWriter.write("Quit\n" + port + "\n");
+            bsWriter.flush();
+            bsSocket.close();
+            AppConfig.timestampedStandardPrint("Quit finalized!");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

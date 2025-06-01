@@ -1,21 +1,23 @@
-20:10:47 - Starting servent [0|localhost|1600]
-20:10:47 - Pausing for 5000 ms
-20:10:47 - Waiting for lock
-20:10:47 - Acquired lock
-20:10:48 - Unlocked
-20:10:49 - Saljem pong: 1300
-20:10:50 - Saljem pong: 1300
-20:10:51 - Saljem pong: 1300
-20:10:52 - Waiting for lock
-20:10:52 - Saljem pong: 1300
-20:10:52 - added: tornado.jpg at key 56
-20:10:52 - Sent put unlock to 1200
-20:10:53 - Acquired lock
-20:10:53 - Upload acquired lock
-20:10:53 - Sent put to [24|localhost|1400]
-20:10:53 - Pausing for 4000 ms
-20:10:53 - Unlocked
-20:10:53 - Put unlock released lock
-20:10:53 - Saljem pong: 1300
-20:10:54 - Sent put to [4|localhost|1300]
-20:10:54 - Saljem pong: 1300
+21:10:58 - Starting servent [0|localhost|1600]
+21:10:59 - Pausing for 5000 ms
+21:11:00 - Waiting for lock
+21:11:00 - Acquired lock
+21:11:01 - Unlocked
+21:11:04 - Waiting for lock
+21:11:04 - Added: tornado.jpg at key 56
+21:11:04 - Sent put unlock to 1200
+21:11:04 - Sent put to [4|localhost|1300] for brod.jpg
+21:11:05 - Acquired lock
+21:11:05 - Upload acquired lock
+21:11:05 - Sent put to [24|localhost|1400] for dog.jpg
+21:11:05 - Pausing for 4000 ms
+21:11:05 - Added: dog.jpg to predecessorBackup
+21:11:05 - Unlocked
+21:11:05 - Put unlock released lock
+21:11:05 - Added: llama.jpg to predecessorBackup
+21:11:09 - Waiting for lock
+21:11:09 - Acquired lock
+21:11:09 - Unlocked
+21:11:09 - Retrieved the following images: [tornado.jpg]
+21:11:09 - Pausing for 6000 ms
+21:11:15 - Stopping...
