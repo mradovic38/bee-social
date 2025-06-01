@@ -1,23 +1,21 @@
-17:57:54 - Starting servent [0|localhost|1600]
-17:57:54 - Pausing for 5000 ms
-17:57:55 - Waiting for lock
-Will send token request to: [1200, 1300, 1400, 1100]
-17:57:56 - Acquired lock
-17:57:57 - Unlocked
-Sada cu da odradim dht_put
-17:57:59 - Waiting for lock
-17:57:59 - Acquired lock
-17:57:59 - Sada cu da putujem
-17:57:59 - Sent put to [0|localhost|1600]
-17:57:59 - Pausing for 4000 ms
-17:57:59 - -------0 key is mine -> unlock--------
-17:57:59 - Unlocked
-17:58:03 - Waiting for lock
-17:58:03 - Acquired lock
-17:58:03 - Get value got lock...
-17:58:03 - Please wait...
-17:58:03 - Pausing for 6000 ms
-17:58:03 - Unlocked
-17:58:03 - DHT_GET Response: 25:3
-17:58:09 - Pausing for 100000 ms
-17:58:09 - Sending token to: 48
+22:05:14 - Starting servent [0|localhost|1600]
+22:05:15 - Pausing for 5000 ms
+22:05:15 - First node in Chord system.
+22:05:20 - Waiting for lock
+22:05:20 - Added: llama.jpg to predecessorBackup
+22:05:20 - Added: tornado.jpg at key 56
+22:05:20 - Sent put unlock to 1200
+22:05:20 - Acquired lock
+22:05:20 - Upload acquired lock
+22:05:20 - Sent put to [24|localhost|1400] for dog.jpg
+22:05:20 - Pausing for 4000 ms
+22:05:21 - Unlocked
+22:05:21 - Put unlock released lock
+22:05:21 - Added: dog.jpg to predecessorBackup
+22:05:21 - Sent put to [4|localhost|1300] for brod.jpg
+22:05:24 - Waiting for lock
+22:05:25 - Acquired lock
+22:05:25 - Unlocked
+22:05:25 - Retrieved the following images: [tornado.jpg]
+22:05:25 - Pausing for 6000 ms
+22:05:31 - Stopping...

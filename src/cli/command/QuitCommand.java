@@ -11,6 +11,7 @@ import servent.message.util.MessageUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashSet;
 
 public class QuitCommand implements CLICommand{
 
@@ -26,7 +27,7 @@ public class QuitCommand implements CLICommand{
 
     @Override
     public String commandName() {
-        return "stop";
+        return "quit";
     }
 
     @Override
@@ -44,12 +45,13 @@ public class QuitCommand implements CLICommand{
         if (AppConfig.chordState.getPredecessor() == null && AppConfig.chordState.getSuccessorTable()[0] == null){
             AppConfig.timestampedStandardPrint("Quitting the system...");
             simpleServentListener.stop();
+            AppConfig.chordState.heartbeat.stop();
             return;
         }
 
 
         // udji u kriticnu sekciju
-        AppConfig.chordState.mutex.lock();
+        AppConfig.chordState.mutex.lock(new HashSet<>(AppConfig.chordState.getAllNodeInfo().stream().map(ServentInfo::getListenerPort).toList()));
 
         // Sad je token kod nas, treba da ga se otarasimo tako sto cemo ga poslati kroz poruku
         SuzukiKasamiToken token = AppConfig.chordState.mutex.getToken();

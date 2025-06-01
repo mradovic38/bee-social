@@ -23,21 +23,8 @@ public class PutUnlockHandler implements MessageHandler {
                 return;
             }
 
-            int storerId = Integer.parseInt(clientMessage.getMessageText());
-
-
-            // to smo mi -> unlock
-            if(AppConfig.chordState.isKeyMine(storerId)){
-                AppConfig.timestampedStandardPrint("-------" + storerId + " key is mine -> unlock--------");
-                AppConfig.chordState.mutex.unlock();
-            }
-            // nismo mi -> propagiraj dalje
-            else{
-                Message newMsg = new PutUnlockMessage(clientMessage.getSenderPort(),
-                        AppConfig.chordState.getNextNodeForKey(storerId).getListenerPort(), clientMessage.getMessageText());
-                MessageUtil.sendMessage(newMsg);
-            }
-
+            AppConfig.chordState.mutex.unlock();
+            AppConfig.timestampedStandardPrint("Put unlock released lock");
 
         } catch (Exception e) {
             e.printStackTrace();

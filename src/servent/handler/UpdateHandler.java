@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import app.AppConfig;
+import app.ImageEntry;
 import app.ServentInfo;
 import servent.message.Message;
 import servent.message.MessageType;
@@ -46,12 +47,12 @@ public class UpdateHandler implements MessageHandler {
 					newRns.add(Math.max(rn, rnReceived));
 				}
 
-				// Azuriraj fajlove TODO: izmeniti svuda da valuemap ima image
-				Map<Integer, Integer> updatedFiles =  AppConfig.chordState.getValueMap();
+				// Azuriraj fajlove
+				Map<Integer, Map<String, ImageEntry>> updatedFiles =  AppConfig.chordState.getValueMap();
 
-				for (Map.Entry<Integer, Integer> entry : updateMessage.getFiles().entrySet()){
+				for (Map.Entry<Integer, Map<String, ImageEntry>> entry : updateMessage.getFiles().entrySet()){
 					if (updatedFiles.containsKey(entry.getKey())) {
-						updatedFiles.put(entry.getKey(), entry.getValue());
+						updatedFiles.get(entry.getKey()).putAll(entry.getValue());
 					} else {
 						updatedFiles.put(entry.getKey(), entry.getValue());
 					}
@@ -81,11 +82,13 @@ public class UpdateHandler implements MessageHandler {
 					AppConfig.chordState.mutex.RN.set(i, Math.max(rn, rnReceived));
 				}
 
-				// sacuvaj slike koje su moje, TODO: izmeniti svuda da valuemap ima image
-				for (Map.Entry<Integer, Integer> entry : updateMessage.getFiles().entrySet()) {
-					if(AppConfig.chordState.isKeyMine(entry.getKey()))
+				// sacuvaj slike koje su moje
+				for (Map.Entry<Integer, Map<String, ImageEntry>> entry : updateMessage.getFiles().entrySet()){
+					if (AppConfig.chordState.getValueMap().containsKey(entry.getKey())) {
+						AppConfig.chordState.getValueMap().get(entry.getKey()).putAll(entry.getValue());
+					} else {
 						AppConfig.chordState.getValueMap().put(entry.getKey(), entry.getValue());
-
+					}
 				}
 
 				AppConfig.chordState.mutex.unlock();

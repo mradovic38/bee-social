@@ -1,13 +1,15 @@
-17:57:54 - Starting servent [24|localhost|1400]
-17:57:54 - Pausing for 5000 ms
-17:57:54 - Waiting for lock
-Will send token request to: [1200]
-17:57:54 - Acquired lock
-17:57:54 - Unlocked
-17:57:54 - Sending token to: 1300
-17:57:59 - Pausing for 10000 ms
-17:57:59 - Sada cu da putujem
-17:57:59 - Sent put to [28|localhost|1100]
-17:57:59 - Dont have token, Forwarding to: [] new visited: [48, 0, 24, 28]
-17:58:09 - Pausing for 100000 ms
-17:58:09 - Dont have token, Forwarding to: [[28|localhost|1100]] new visited: [48, 0, 24, 28]
+22:05:14 - Starting servent [24|localhost|1400]
+22:05:15 - Pausing for 5000 ms
+22:05:15 - Waiting for lock
+22:05:16 - Acquired lock
+22:05:16 - Unlocked
+22:05:20 - Pausing for 10000 ms
+22:05:20 - Sent put to [28|localhost|1100] for llama.jpg
+22:05:20 - Sent put to [28|localhost|1100] for dog.jpg
+22:05:21 - Added: brod.jpg at key 24
+22:05:21 - Sent put unlock to 1100
+22:05:30 - Waiting for lock
+22:05:30 - Acquired lock
+22:05:30 - Unlocked
+22:05:30 - Retrieved the following images: [brod.jpg]
+22:05:30 - Pausing for 15000 ms

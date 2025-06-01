@@ -1,15 +1,26 @@
-17:57:54 - Starting servent [28|localhost|1100]
-17:57:54 - Pausing for 5000 ms
-17:57:55 - Waiting for lock
-Will send token request to: [1200, 1300, 1400]
-17:57:55 - Acquired lock
-17:57:56 - Sending token to: 1600
-17:57:56 - Unlocked
-Sada cu da odradim dht_put
-17:57:59 - Waiting for lock
-Will send token request to: [1200, 1600]
-17:57:59 - Sada cu da putujem
-17:57:59 - added: 3 at key 25
-VALUE MAP AFTER PUT: {25=3}
-17:57:59 - Sent put unlock to [48|localhost|1200]
-17:58:09 - Dont have token, Forwarding to: [] new visited: [48, 0, 24, 28]
+22:05:14 - Starting servent [28|localhost|1100]
+22:05:15 - Pausing for 5000 ms
+22:05:16 - Waiting for lock
+22:05:16 - Acquired lock
+22:05:17 - Unlocked
+22:05:20 - Public set to: false
+22:05:20 - Waiting for lock
+22:05:20 - Sent put to [48|localhost|1200] for llama.jpg
+22:05:20 - Added: llama.jpg to successorBackup
+22:05:21 - Sent put to [48|localhost|1200] for dog.jpg
+22:05:21 - Added: dog.jpg to successorBackup
+22:05:21 - Acquired lock
+22:05:21 - Upload acquired lock
+22:05:21 - Sent put to [48|localhost|1200] for brod.jpg
+22:05:21 - Pausing for 5000 ms
+22:05:21 - Added: brod.jpg to predecessorBackup
+22:05:21 - Unlocked
+22:05:21 - Put unlock released lock
+22:05:26 - Pending follows: [1200]
+22:05:26 - Pausing for 20 ms
+22:05:26 - Follow request accepted from: 1200
+22:05:26 - Waiting for lock
+22:05:26 - Acquired lock
+22:05:26 - Please wait...
+22:05:26 - Pausing for 10000 ms
+22:05:26 - Unlocked

@@ -16,19 +16,19 @@ public class PutHandler implements MessageHandler {
 	public void run() {
 		if (clientMessage.getMessageType() == MessageType.PUT) {
 			String[] kvStorerSplit = clientMessage.getMessageText().split("#");
-			int storerId = Integer.parseInt(kvStorerSplit[1]);
+			int storerPort = Integer.parseInt(kvStorerSplit[1]);
 
 			String[] splitText = kvStorerSplit[0].split(":");
 
 			if (splitText.length == 2) {
 				int key = 0;
-				int value = 0;
+				String path = "";
 				
 				try {
 					key = Integer.parseInt(splitText[0]);
-					value = Integer.parseInt(splitText[1]);
-					
-					AppConfig.chordState.putValue(key, value, storerId);
+					path = splitText[1];
+
+					AppConfig.chordState.putValue(key, path, storerPort);
 				} catch (NumberFormatException e) {
 					AppConfig.timestampedErrorPrint("Got put message with bad text: " + clientMessage.getMessageText());
 				}

@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import app.AppConfig;
 import app.ChordState;
+import app.ServentInfo;
 
 /**
  * A default message implementation. This should cover most situations.
@@ -20,7 +21,19 @@ public class BasicMessage implements Message {
 	private final int senderPort;
 	private final int receiverPort;
 	private final String messageText;
-	
+
+	private ServentInfo nextReceiver = null;
+
+
+
+	public void setNextReceiver(ServentInfo nextReceiver) {
+		this.nextReceiver = nextReceiver;
+	}
+
+	public ServentInfo getNextReceiver() {
+		return nextReceiver;
+	}
+
 	//This gives us a unique id - incremented in every natural constructor.
 	private static AtomicInteger messageCounter = new AtomicInteger(0);
 	private final int messageId;

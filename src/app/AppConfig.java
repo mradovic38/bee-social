@@ -1,12 +1,12 @@
 package app;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -49,10 +49,14 @@ public class AppConfig {
 	public static int BOOTSTRAP_PORT;
 	public static int SERVENT_COUNT;
 
-	public static String rootDir;
+	public static String ROOT_DIR;
+	public static String CACHE_DIR;
+
+	public static int STRONG_LIMIT;
+	public static int WEAK_LIMIT;
 	
 	public static ChordState chordState;
-	
+
 	/**
 	 * Reads a config file. Should be called once at start of app.
 	 * The config file should be of the following format:
@@ -110,9 +114,24 @@ public class AppConfig {
 		}
 
 		try {
-			rootDir = properties.getProperty("root");
+			ROOT_DIR = properties.getProperty("root");
 		} catch (NullPointerException e) {
 			timestampedErrorPrint("Problem reading root dir. Exiting...");
+			System.exit(0);
+		}
+		try{
+			CACHE_DIR = properties.getProperty("cache");
+			clearDirectory(CACHE_DIR);
+		}
+		catch (NullPointerException e){
+			CACHE_DIR = null;
+		}
+
+		try {
+			STRONG_LIMIT = Integer.parseInt(properties.getProperty("strong_limit"));
+			WEAK_LIMIT = Integer.parseInt(properties.getProperty("weak_limit"));
+		} catch (NullPointerException e) {
+			timestampedErrorPrint("Problem reading strong_limit and hard_limit. Exiting...");
 			System.exit(0);
 		}
 
@@ -129,6 +148,70 @@ public class AppConfig {
 		}
 		
 		myServentInfo = new ServentInfo("localhost", serventPort);
+
+
+
+
+
+
+	}
+
+	public static List<String> saveImages(Map<Integer, Map<String, ImageEntry>> images){
+		List<String> collectedPaths = new ArrayList<>();
+		try {
+
+			for (Map.Entry<Integer, Map<String, ImageEntry>> entry : images.entrySet()) {
+				for (Map.Entry<String, ImageEntry> imageEntryEntry : entry.getValue().entrySet()) {
+					ImageEntry imageEntry = imageEntryEntry.getValue();
+
+					if(CACHE_DIR != null) {
+						File outputFile = new File(CACHE_DIR + "/" + imageEntry.getPath()  + " (on key: " + entry.getKey()+ ") - uploaded by " + imageEntry.getStorerPort() + ".jpg");
+
+						boolean success = ImageIO.write(imageEntry.getBufferedImage(), "jpg", outputFile);
+
+						if (!success) {
+							AppConfig.timestampedErrorPrint("Error writing image to: " + outputFile);
+						}
+					}
+
+					collectedPaths.add(imageEntryEntry.getKey());
+				}
+			}
+			AppConfig.timestampedStandardPrint("Retrieved the following images: " + collectedPaths);
+		}
+		catch (IOException e) {
+			timestampedErrorPrint("Problem saving images");
+		}
+
+		return collectedPaths;
+
+	}
+
+
+	private static boolean clearDirectory(String path) {
+
+		File directory = new File(path);
+
+		if (!directory.exists() || !directory.isDirectory()) {
+			System.err.println("Invalid directory: " + directory.getAbsolutePath());
+			return false;
+		}
+
+		File[] files = directory.listFiles();
+		if (files == null) {
+			System.err.println("Failed to list files in: " + directory.getAbsolutePath());
+			return false;
+		}
+
+		boolean success = true;
+		for (File file : files) {
+			if (file.isDirectory()) {
+				success &= clearDirectory(file.getPath()); // recursively clear subdirectory
+			}
+			success &= file.delete(); // delete file or now-empty directory
+		}
+
+		return success;
 	}
 	
 }
