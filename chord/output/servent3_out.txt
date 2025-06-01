@@ -1,9 +1,14 @@
-03:42:18 - Starting servent [24|localhost|1400]
-03:42:18 - Pausing for 5000 ms
-03:42:19 - Waiting for lock
-03:42:20 - Acquired lock
-03:42:21 - Unlocked
-03:42:23 - Pausing for 10000 ms
-03:42:23 - Sada cu da putujem
-03:42:23 - Sent put to [28|localhost|1100]
-03:42:33 - Pausing for 100000 ms
+17:08:32 - Starting servent [24|localhost|1400]
+17:08:32 - Pausing for 5000 ms
+17:08:33 - Waiting for lock
+17:08:33 - Acquired lock
+17:08:34 - Unlocked
+17:08:37 - Pausing for 10000 ms
+17:08:37 - Sent put to [28|localhost|1100]
+17:08:38 - added: brod.jpg at key 24
+17:08:38 - Sent put unlock to 1100
+17:08:47 - Waiting for lock
+17:08:47 - Acquired lock
+17:08:47 - Unlocked
+17:08:47 - Retrieved the following images: [brod.jpg]
+17:08:47 - Pausing for 100000 ms

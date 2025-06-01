@@ -16,7 +16,7 @@ public class UploadCommand implements CLICommand {
 
 	@Override
 	public void execute(String path) {
-		System.out.println("Sada cu da odradim upload");
+
 
 		// uzmi hash path-a da bi znali na koji key da ga stavimo
 		
@@ -26,7 +26,8 @@ public class UploadCommand implements CLICommand {
 			// LOCK
 			AppConfig.chordState.mutex.lock(new HashSet<>(AppConfig.chordState.getAllNodeInfo().stream().map(ServentInfo::getListenerPort).toList()));
 
-			AppConfig.chordState.putValue(key, path, AppConfig.myServentInfo.getChordId());
+			AppConfig.timestampedStandardPrint("Upload acquired lock");
+			AppConfig.chordState.putValue(key, path, AppConfig.myServentInfo.getListenerPort());
 
 		} else {
 			AppConfig.timestampedErrorPrint("Invalid arguments for put");

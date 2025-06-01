@@ -39,7 +39,7 @@ public class PongHandler implements MessageHandler {
                 AppConfig.chordState.heartbeat.getSuccessorNodeHealthInfo().setTimestamp(System.currentTimeMillis());
             }
             else if(AppConfig.chordState.getSuccessorTable()[0] != null || AppConfig.chordState.getPredecessor() != null){
-                AppConfig.timestampedStandardPrint("Pong got from node that is neither successor or predecessor: " + pongMsg.getMarkThisPort()
+                AppConfig.timestampedStandardPrint("Pong got from node that is neither successor nor predecessor: " + pongMsg.getMarkThisPort()
                 + " (predecessor: " + AppConfig.chordState.getPredecessor()+ ", successor: " +
                         AppConfig.chordState.getSuccessorTable()[0] + ")");
             }

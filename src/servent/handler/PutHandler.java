@@ -16,7 +16,7 @@ public class PutHandler implements MessageHandler {
 	public void run() {
 		if (clientMessage.getMessageType() == MessageType.PUT) {
 			String[] kvStorerSplit = clientMessage.getMessageText().split("#");
-			int storerId = Integer.parseInt(kvStorerSplit[1]);
+			int storerPort = Integer.parseInt(kvStorerSplit[1]);
 
 			String[] splitText = kvStorerSplit[0].split(":");
 
@@ -27,8 +27,8 @@ public class PutHandler implements MessageHandler {
 				try {
 					key = Integer.parseInt(splitText[0]);
 					path = splitText[1];
-					
-					AppConfig.chordState.putValue(key, path, storerId);
+
+					AppConfig.chordState.putValue(key, path, storerPort);
 				} catch (NumberFormatException e) {
 					AppConfig.timestampedErrorPrint("Got put message with bad text: " + clientMessage.getMessageText());
 				}

@@ -1,23 +1,19 @@
-03:42:18 - Starting servent [0|localhost|1600]
-03:42:18 - Pausing for 5000 ms
-03:42:18 - Waiting for lock
-03:42:19 - Acquired lock
-03:42:19 - Unlocked
-Sada cu da odradim dht_put
-03:42:23 - Waiting for lock
-03:42:23 - Acquired lock
-03:42:23 - Sada cu da putujem
-03:42:23 - Sent put to [0|localhost|1600]
-03:42:23 - Pausing for 4000 ms
-03:42:23 - -------0 key is mine -> unlock--------
-03:42:23 - Unlocked
-03:42:23 - Sada cu da putujem
-03:42:23 - Sent put to [24|localhost|1400]
-03:42:27 - Waiting for lock
-03:42:27 - Acquired lock
-03:42:27 - Get value got lock...
-03:42:27 - Please wait...
-03:42:27 - Pausing for 6000 ms
-03:42:27 - Unlocked
-03:42:27 - DHT_GET Response: 25:3
-03:42:33 - Pausing for 100000 ms
+17:08:32 - Starting servent [0|localhost|1600]
+17:08:32 - Pausing for 5000 ms
+17:08:34 - Waiting for lock
+17:08:34 - Acquired lock
+17:08:35 - Unlocked
+17:08:37 - Waiting for lock
+17:08:37 - Acquired lock
+17:08:37 - Upload acquired lock
+17:08:37 - Sent put to [24|localhost|1400]
+17:08:37 - Pausing for 4000 ms
+17:08:37 - Unlocked
+17:08:37 - Put unlock released lock
+17:08:38 - Sent put to [4|localhost|1300]
+17:08:41 - Waiting for lock
+17:08:41 - Acquired lock
+17:08:41 - Unlocked
+17:08:41 - Retrieved the following images: []
+17:08:41 - Pausing for 6000 ms
+17:08:47 - Pausing for 100000 ms

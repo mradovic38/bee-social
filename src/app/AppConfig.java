@@ -50,6 +50,7 @@ public class AppConfig {
 	public static int SERVENT_COUNT;
 
 	public static String ROOT_DIR;
+	public static String CACHE_DIR;
 
 	public static int STRONG_LIMIT;
 	public static int WEAK_LIMIT;
@@ -118,6 +119,13 @@ public class AppConfig {
 			timestampedErrorPrint("Problem reading root dir. Exiting...");
 			System.exit(0);
 		}
+		try{
+			CACHE_DIR = properties.getProperty("cache");
+			clearDirectory(CACHE_DIR);
+		}
+		catch (NullPointerException e){
+			CACHE_DIR = null;
+		}
 
 		try {
 			STRONG_LIMIT = Integer.parseInt(properties.getProperty("strong_limit"));
@@ -156,9 +164,15 @@ public class AppConfig {
 				for (Map.Entry<String, ImageEntry> imageEntryEntry : entry.getValue().entrySet()) {
 					ImageEntry imageEntry = imageEntryEntry.getValue();
 
-					File outputFile = new File(imageEntry.getPath() + "-" + imageEntry.getStorerId() + ".png");
+					if(CACHE_DIR != null) {
+						File outputFile = new File(CACHE_DIR + "/" + imageEntry.getPath() + "-" + imageEntry.getStorerId() + ".jpg");
 
-					ImageIO.write(imageEntry.getBufferedImage(), "png", outputFile);
+						boolean success = ImageIO.write(imageEntry.getBufferedImage(), "jpg", outputFile);
+
+						if (!success) {
+							AppConfig.timestampedErrorPrint("Error writing image to: " + outputFile);
+						}
+					}
 
 					collectedPaths.add(imageEntryEntry.getKey());
 				}
@@ -171,6 +185,33 @@ public class AppConfig {
 
 		return collectedPaths;
 
+	}
+
+
+	private static boolean clearDirectory(String path) {
+
+		File directory = new File(path);
+
+		if (!directory.exists() || !directory.isDirectory()) {
+			System.err.println("Invalid directory: " + directory.getAbsolutePath());
+			return false;
+		}
+
+		File[] files = directory.listFiles();
+		if (files == null) {
+			System.err.println("Failed to list files in: " + directory.getAbsolutePath());
+			return false;
+		}
+
+		boolean success = true;
+		for (File file : files) {
+			if (file.isDirectory()) {
+				success &= clearDirectory(file.getPath()); // recursively clear subdirectory
+			}
+			success &= file.delete(); // delete file or now-empty directory
+		}
+
+		return success;
 	}
 	
 }

@@ -4,6 +4,7 @@ import app.AppConfig;
 import app.ServentInfo;
 import servent.message.AskGetMessage;
 import servent.message.Message;
+import servent.message.util.MessageUtil;
 
 import java.util.stream.Collectors;
 
@@ -33,10 +34,13 @@ public class ListFilesCommand implements CLICommand {
 				return;
 			}
 
+			AppConfig.timestampedStandardPrint("Please wait...");
+
 			// salji poruku cvoru cije slike trazis
 			Message askGet = new AskGetMessage(AppConfig.myServentInfo.getListenerPort(), port);
+			MessageUtil.sendMessage(askGet);
 
-			AppConfig.timestampedStandardPrint("Please wait...");
+
 
 		} catch (NumberFormatException e) {
 			AppConfig.timestampedErrorPrint("Invalid argument for upload: " + args + ". Should be port, which is an int.");

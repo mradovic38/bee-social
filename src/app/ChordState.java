@@ -393,27 +393,27 @@ public class ChordState {
 	/**
 	 * The Chord put operation. Stores locally if key is ours, otherwise sends it on.
 	 */
-	public void putValue(int key, String path, int storerId) {
-		AppConfig.timestampedStandardPrint("Sada cu da putujem");
+	public void putValue(int key, String path, int storerPort) {
+
 		if (isKeyMine(key)) {
-			putIntoMap(key, path, storerId);
+			putIntoMap(key, path, storerPort);
 			AppConfig.timestampedStandardPrint("added: " + path + " at key " + key );
 
 			// nasa slika => unlock
-			if(storerId == AppConfig.myServentInfo.getChordId()) {
+			if(storerPort == AppConfig.myServentInfo.getListenerPort()) {
 				mutex.unlock();
 			}
 			// nije nasa slika => put unlock i to ga propagiraj da dodje najbrzim putem
 			else{
-				AppConfig.timestampedStandardPrint("Sent put unlock to " + getNextNodeForKey(storerId));
+				AppConfig.timestampedStandardPrint("Sent put unlock to " + storerPort);
 				Message puMsg = new PutUnlockMessage(AppConfig.myServentInfo.getListenerPort(),
-						getNextNodeForKey(storerId).getListenerPort(), String.valueOf(storerId));
+						storerPort);
 				MessageUtil.sendMessage(puMsg);
 			}
 		} else {
-			AppConfig.timestampedStandardPrint("Sent put to " + getNextNodeForKey(storerId));
+			AppConfig.timestampedStandardPrint("Sent put to " + getNextNodeForKey(key));
 			ServentInfo nextNode = getNextNodeForKey(key);
-			PutMessage pm = new PutMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), key, path, storerId);
+			PutMessage pm = new PutMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), key, path, storerPort);
 			MessageUtil.sendMessage(pm);
 		}
 	}
@@ -427,50 +427,18 @@ public class ChordState {
 			ImageEntry entry = new ImageEntry(path, storerId, img);
 			map.putIfAbsent(path, entry);
 
+			// TODO: poslati komsijama za backup
 			return entry;
 
 		} catch (IOException e) {
+			e.printStackTrace();
             throw new RuntimeException(e);
         }
 
 
 	}
-	
-	/**
-	 * The chord get operation. Gets the value locally if key is ours, otherwise asks someone else to give us the value.
-	 * @return <ul>
-	 *			<li>The value, if we have it</li>
-	 *			<li>-1 if we own the key, but there is nothing there</li>
-	 *			<li>-2 if we asked someone else</li>
-	 *		   </ul>
-	 */
-	public int getValue(int key) {
-		// udji u kriticnu sekciju
-//		AppConfig.timestampedStandardPrint("Get value requesting lock...");
-		return -1;
-//		Set<Integer> broadcastTo = new HashSet<>();
-//		for (ServentInfo serventInfo : allNodeInfo) {
-//			broadcastTo.add(serventInfo.getListenerPort());
-//		}
-//		mutex.lock(broadcastTo);
-//		AppConfig.timestampedStandardPrint("Get value got lock...");
-//		if (isKeyMine(key)) {
-//			// izadji iz nje
-//			mutex.unlock();
-//
-//			if (valueMap.containsKey(key) && valueMap.get(key).containsKey(path)) {
-//				return valueMap.get(key).get(path);
-//			} else {
-//				return -1;
-//			}
-//		}
-//
-//		ServentInfo nextNode = getNextNodeForKey(key);
-//		AskGetMessage agMsg = new AskGetMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), String.valueOf(key));
-//		MessageUtil.sendMessage(agMsg);
-//
-//		return -2;
-	}
+
+
 
 	public void deleteValue(String path){
 		// TODO: implement

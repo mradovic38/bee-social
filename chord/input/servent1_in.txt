@@ -1,6 +1,6 @@
 pause 5000
 pause 10000
-dht_get 2
+list_files localhost:1100
 pause 5000
 pause 100000
 stop
