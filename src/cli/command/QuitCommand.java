@@ -45,6 +45,7 @@ public class QuitCommand implements CLICommand{
         if (AppConfig.chordState.getPredecessor() == null && AppConfig.chordState.getSuccessorTable()[0] == null){
             AppConfig.timestampedStandardPrint("Quitting the system...");
             simpleServentListener.stop();
+            AppConfig.chordState.heartbeat.stop();
             return;
         }
 

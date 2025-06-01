@@ -1,23 +1,23 @@
-03:04:59 - Starting servent [0|localhost|1600]
-03:04:59 - Pausing for 5000 ms
-03:04:59 - Waiting for lock
-03:04:59 - Acquired lock
-03:05:00 - Unlocked
+03:42:18 - Starting servent [0|localhost|1600]
+03:42:18 - Pausing for 5000 ms
+03:42:18 - Waiting for lock
+03:42:19 - Acquired lock
+03:42:19 - Unlocked
 Sada cu da odradim dht_put
-03:05:04 - Waiting for lock
-03:05:04 - Sada cu da putujem
-03:05:04 - Sent put to [24|localhost|1400]
-03:05:05 - Acquired lock
-03:05:05 - Sada cu da putujem
-03:05:05 - Sent put to [0|localhost|1600]
-03:05:05 - Pausing for 4000 ms
-03:05:05 - -------0 key is mine -> unlock--------
-03:05:05 - Unlocked
-03:05:09 - Waiting for lock
-03:05:09 - Acquired lock
-03:05:09 - Get value got lock...
-03:05:09 - Please wait...
-03:05:09 - Pausing for 6000 ms
-03:05:09 - Unlocked
-03:05:09 - DHT_GET Response: 25:3
-03:05:15 - Pausing for 100000 ms
+03:42:23 - Waiting for lock
+03:42:23 - Acquired lock
+03:42:23 - Sada cu da putujem
+03:42:23 - Sent put to [0|localhost|1600]
+03:42:23 - Pausing for 4000 ms
+03:42:23 - -------0 key is mine -> unlock--------
+03:42:23 - Unlocked
+03:42:23 - Sada cu da putujem
+03:42:23 - Sent put to [24|localhost|1400]
+03:42:27 - Waiting for lock
+03:42:27 - Acquired lock
+03:42:27 - Get value got lock...
+03:42:27 - Please wait...
+03:42:27 - Pausing for 6000 ms
+03:42:27 - Unlocked
+03:42:27 - DHT_GET Response: 25:3
+03:42:33 - Pausing for 100000 ms

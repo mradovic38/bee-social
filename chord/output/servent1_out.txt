@@ -1,16 +1,13 @@
-03:04:59 - Starting servent [48|localhost|1200]
-03:04:59 - Pausing for 5000 ms
-03:05:00 - Waiting for lock
-03:05:00 - Acquired lock
-03:05:00 - Unlocked
-03:05:04 - Pausing for 10000 ms
-03:05:04 - Sada cu da putujem
-03:05:04 - Sent put to [0|localhost|1600]
-03:05:14 - Waiting for lock
-03:05:14 - Acquired lock
-03:05:14 - Get value got lock...
-03:05:14 - Please wait...
-03:05:14 - Pausing for 5000 ms
-03:05:14 - Unlocked
-03:05:14 - DHT_GET Response: 2:5
-03:05:19 - Pausing for 100000 ms
+03:42:18 - Starting servent [48|localhost|1200]
+03:42:18 - Pausing for 5000 ms
+03:42:18 - First node in Chord system.
+03:42:23 - Pausing for 10000 ms
+03:42:23 - Sada cu da putujem
+03:42:23 - Sent put to [0|localhost|1600]
+03:42:33 - Waiting for lock
+03:42:33 - Acquired lock
+03:42:33 - Get value got lock...
+03:42:33 - Please wait...
+03:42:33 - Pausing for 5000 ms
+03:42:33 - Unlocked
+03:42:33 - DHT_GET Response: 2:5

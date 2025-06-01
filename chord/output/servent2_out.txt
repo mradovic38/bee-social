@@ -1,11 +1,11 @@
-03:04:59 - Starting servent [4|localhost|1300]
-03:04:59 - Pausing for 5000 ms
-03:05:01 - Waiting for lock
-03:05:01 - Acquired lock
-03:05:02 - Unlocked
-03:05:04 - Pausing for 10000 ms
-03:05:05 - Sada cu da putujem
-03:05:05 - added: 5 at key 2
+03:42:18 - Starting servent [4|localhost|1300]
+03:42:18 - Pausing for 5000 ms
+03:42:18 - Waiting for lock
+03:42:18 - Acquired lock
+03:42:18 - Unlocked
+03:42:23 - Pausing for 10000 ms
+03:42:23 - Sada cu da putujem
+03:42:23 - added: 5 at key 2
 VALUE MAP AFTER PUT: {2=5}
-03:05:05 - Sent put unlock to [24|localhost|1400]
-03:05:14 - Pausing for 100000 ms
+03:42:23 - Sent put unlock to [24|localhost|1400]
+03:42:33 - Pausing for 100000 ms

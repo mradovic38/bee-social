@@ -3,22 +3,30 @@ package fault_tolerance;
 import app.AppConfig;
 import app.Cancellable;
 import app.ServentInfo;
+import mutex.suzuki_kasami.SuzukiKasamiToken;
 import servent.message.Message;
+import servent.message.fault_tolerance.AskHasTokenMessage;
 import servent.message.fault_tolerance.PingMessage;
 import servent.message.fault_tolerance.SusAskMessage;
 import servent.message.fault_tolerance.UpdateAfterDeathMessage;
 import servent.message.util.MessageUtil;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 // sluzi da pinguje da vidi da li su zivi sledbenik i prethodnik
 public class Heartbeat implements Runnable, Cancellable{
     private volatile boolean working = true;
 
-    private static final int PING_INTERVAL_MS = 2000;
+    private static final int PING_INTERVAL_MS = 1000;
 
     private NodeHealthInfo predecessorNodeHealthInfo;
     private NodeHealthInfo successorNodeHealthInfo;
+
+    public AtomicInteger noTokenCount = new AtomicInteger(0);
+    public AtomicBoolean someoneHasToken = new AtomicBoolean(false);
 
     public Heartbeat() {
         this.predecessorNodeHealthInfo = new NodeHealthInfo();
@@ -80,9 +88,43 @@ public class Heartbeat implements Runnable, Cancellable{
         if (System.currentTimeMillis() - nodeHealthInfo.getTimestamp() > AppConfig.STRONG_LIMIT
                 && nodeHealthInfo.getNodeStatus() == NodeStatus.SUS) {
 
-            // uzmi lock
+            // da li je node koji je nestao imao lock. ako zauvek cekamo moramo da napravimo novi token
+            // TODO: ispraviti broadcast da ne gadja direktno
+            int totalCnt = 0;
+            noTokenCount = new AtomicInteger(0);
+            someoneHasToken = new AtomicBoolean(false);
+
+            for (ServentInfo serventInfo : AppConfig.chordState.getAllNodeInfo()) {
+                if(serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort()){
+                    Message askMsg = new AskHasTokenMessage(AppConfig.myServentInfo.getListenerPort(), serventInfo.getListenerPort());
+                    MessageUtil.sendMessage(askMsg);
+                    totalCnt++;
+                }
+            }
+            // ako se desi neki edge case da se ne ceka zauvek
+            int wait = 10000;
+            // sacekaj da dobijes odg od svih
+            AppConfig.timestampedStandardPrint("Waiting to get if the token is in the system");
+            while(noTokenCount.get() < totalCnt && wait >= 0){
+                try {
+                    wait -= 30;
+                    Thread.sleep(30);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // ako je imao (niko nije vratio da je imao) => napravi novi token
+            if(!someoneHasToken.get()){
+                AppConfig.timestampedStandardPrint("Token dissapeared. Creating new...");
+                AppConfig.chordState.mutex.setToken(new SuzukiKasamiToken());
+            }
+
+            //  uzmi lock
             AppConfig.chordState.mutex.lock(AppConfig.chordState.getAllNodeInfo().stream()
                     .map(ServentInfo::getListenerPort).collect(Collectors.toSet()));
+
 
             AppConfig.timestampedStandardPrint("Node on port: " + checkInfo.getListenerPort() + " has died :(");
 

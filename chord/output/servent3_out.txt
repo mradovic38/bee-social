@@ -1,9 +1,9 @@
-03:04:59 - Starting servent [24|localhost|1400]
-03:04:59 - Pausing for 5000 ms
-03:05:00 - Waiting for lock
-03:05:01 - Acquired lock
-03:05:01 - Unlocked
-03:05:04 - Pausing for 10000 ms
-03:05:05 - Sada cu da putujem
-03:05:05 - Sent put to [28|localhost|1100]
-03:05:14 - Pausing for 100000 ms
+03:42:18 - Starting servent [24|localhost|1400]
+03:42:18 - Pausing for 5000 ms
+03:42:19 - Waiting for lock
+03:42:20 - Acquired lock
+03:42:21 - Unlocked
+03:42:23 - Pausing for 10000 ms
+03:42:23 - Sada cu da putujem
+03:42:23 - Sent put to [28|localhost|1100]
+03:42:33 - Pausing for 100000 ms

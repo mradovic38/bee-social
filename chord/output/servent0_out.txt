@@ -1,16 +1,18 @@
-03:04:59 - Starting servent [28|localhost|1100]
-03:04:59 - Pausing for 5000 ms
-03:04:59 - First node in Chord system.
+03:42:18 - Starting servent [28|localhost|1100]
+03:42:18 - Pausing for 5000 ms
+03:42:19 - Waiting for lock
+03:42:19 - Acquired lock
+03:42:20 - Unlocked
 Sada cu da odradim dht_put
-03:05:04 - Waiting for lock
-03:05:04 - Acquired lock
-03:05:04 - Sada cu da putujem
-03:05:04 - Sent put to [28|localhost|1100]
-03:05:04 - Pausing for 10000 ms
-03:05:05 - -------28 key is mine -> unlock--------
-03:05:05 - Unlocked
-03:05:05 - Sada cu da putujem
-03:05:05 - added: 3 at key 25
+03:42:23 - Waiting for lock
+03:42:23 - Sada cu da putujem
+03:42:23 - added: 3 at key 25
 VALUE MAP AFTER PUT: {25=3}
-03:05:05 - Sent put unlock to [48|localhost|1200]
-03:05:14 - Pausing for 100000 ms
+03:42:23 - Sent put unlock to [48|localhost|1200]
+03:42:23 - Acquired lock
+03:42:23 - Sada cu da putujem
+03:42:23 - Sent put to [28|localhost|1100]
+03:42:23 - Pausing for 10000 ms
+03:42:24 - -------28 key is mine -> unlock--------
+03:42:24 - Unlocked
+03:42:33 - Pausing for 100000 ms
