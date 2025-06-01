@@ -1,19 +1,23 @@
-17:08:32 - Starting servent [28|localhost|1100]
-17:08:32 - Pausing for 5000 ms
-17:08:32 - Waiting for lock
-17:08:33 - Acquired lock
-17:08:33 - Unlocked
-17:08:37 - Waiting for lock
-17:08:37 - Sent put to [48|localhost|1200]
-17:08:37 - Acquired lock
-17:08:37 - Upload acquired lock
-17:08:37 - Sent put to [48|localhost|1200]
-17:08:37 - Pausing for 3000 ms
-17:08:38 - Unlocked
-17:08:38 - Put unlock released lock
-17:08:40 - Waiting for lock
-17:08:40 - Acquired lock
-17:08:40 - Please wait...
-17:08:40 - Pausing for 10000 ms
-17:08:41 - Unlocked
-17:08:50 - Pausing for 100000 ms
+18:05:25 - Starting servent [28|localhost|1100]
+18:05:25 - Pausing for 5000 ms
+18:05:26 - Waiting for lock
+18:05:26 - Acquired lock
+18:05:27 - Unlocked
+18:05:30 - Public set to: false
+18:05:30 - Waiting for lock
+18:05:31 - Sent put to [48|localhost|1200]
+18:05:31 - Acquired lock
+18:05:31 - Upload acquired lock
+18:05:31 - Sent put to [48|localhost|1200]
+18:05:31 - Pausing for 5000 ms
+18:05:31 - Unlocked
+18:05:31 - Put unlock released lock
+18:05:36 - Pending follows: [1200]
+18:05:36 - Pausing for 20 ms
+18:05:36 - Follow request accepted from: 1200
+18:05:36 - Waiting for lock
+18:05:36 - Acquired lock
+18:05:36 - Please wait...
+18:05:36 - Pausing for 10000 ms
+18:05:36 - Unlocked
+18:05:46 - Pausing for 100000 ms

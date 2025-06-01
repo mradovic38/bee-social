@@ -9,6 +9,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -67,9 +70,9 @@ public class ChordState {
 
 	public Heartbeat heartbeat = new Heartbeat();
 
-	public Queue<Integer> pendingFollows = new LinkedList<>();
+	public Map<Integer, Object> pendingFollows = new ConcurrentHashMap<>();
 
-	public List<Integer> followers = new ArrayList<>();
+	public Map<Integer, Object> followers = new ConcurrentHashMap<>();
 
 	private AtomicBoolean isPublic = new AtomicBoolean(true);
 
@@ -461,6 +464,7 @@ public class ChordState {
 	}
 
 	public void setPublic(boolean isPublic){
+		AppConfig.timestampedStandardPrint("Public set to: " + isPublic);
 		this.isPublic.set(isPublic);
 	}
 

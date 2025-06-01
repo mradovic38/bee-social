@@ -21,7 +21,10 @@ public class AskGetHandler implements MessageHandler {
 			Message tellGet;
 
 			// privatan i nije ti follower, ne salji
-			if(!AppConfig.chordState.isPublic() && AppConfig.chordState.followers.contains(clientMessage.getSenderPort())){
+//			System.out.println("ISPUBLIC:"+ AppConfig.chordState.isPublic());
+//			System.out.println("FOLLOWERS:"+ AppConfig.chordState.followers.toString());
+			if(!AppConfig.chordState.isPublic() && !AppConfig.chordState.followers.containsKey(clientMessage.getSenderPort())){
+//				System.out.println("Ne mozes da dobijes jer sam private i nisi mi follower");
 				tellGet = new TellGetMessage(AppConfig.myServentInfo.getListenerPort(), clientMessage.getSenderPort());
 			}
 			// public => salji slike

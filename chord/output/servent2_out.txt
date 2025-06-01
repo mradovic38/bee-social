@@ -1,8 +1,7 @@
-17:08:32 - Starting servent [4|localhost|1300]
-17:08:32 - Pausing for 5000 ms
-17:08:32 - Waiting for lock
-17:08:32 - Acquired lock
-17:08:33 - Unlocked
-17:08:37 - Pausing for 10000 ms
-17:08:38 - Sent put to [24|localhost|1400]
-17:08:47 - Pausing for 100000 ms
+18:05:25 - Starting servent [4|localhost|1300]
+18:05:25 - Pausing for 5000 ms
+18:05:25 - First node in Chord system.
+18:05:30 - Public set to: false
+18:05:30 - Pausing for 10000 ms
+18:05:31 - Sent put to [24|localhost|1400]
+18:05:40 - Pausing for 100000 ms

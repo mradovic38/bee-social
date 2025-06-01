@@ -165,7 +165,7 @@ public class AppConfig {
 					ImageEntry imageEntry = imageEntryEntry.getValue();
 
 					if(CACHE_DIR != null) {
-						File outputFile = new File(CACHE_DIR + "/" + imageEntry.getPath() + "-" + imageEntry.getStorerId() + ".jpg");
+						File outputFile = new File(CACHE_DIR + "/" + imageEntry.getPath()  + " (on key: " + entry.getKey()+ ") - uploaded by " + imageEntry.getStorerPort() + ".jpg");
 
 						boolean success = ImageIO.write(imageEntry.getBufferedImage(), "jpg", outputFile);
 

@@ -13,6 +13,7 @@ public class VisibilityCommand implements CLICommand {
     @Override
     public void execute(String args) {
         if(args.trim().equalsIgnoreCase("public")){
+
             AppConfig.chordState.setPublic(true);
         }
         else if(args.trim().equalsIgnoreCase("private")){

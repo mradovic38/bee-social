@@ -1,14 +1,18 @@
-17:08:32 - Starting servent [48|localhost|1200]
-17:08:32 - Pausing for 5000 ms
-17:08:32 - First node in Chord system.
-17:08:37 - Pausing for 10000 ms
-17:08:37 - added: llama.jpg at key 40
-17:08:37 - Sent put unlock to 1600
-17:08:38 - Sent put to [0|localhost|1600]
-17:08:47 - Waiting for lock
-17:08:47 - Acquired lock
-17:08:47 - Please wait...
-17:08:47 - Pausing for 5000 ms
-17:08:47 - Unlocked
-17:08:47 - Retrieved the following images: []
-17:08:52 - Pausing for 100000 ms
+18:05:25 - Starting servent [48|localhost|1200]
+18:05:25 - Pausing for 5000 ms
+18:05:27 - Waiting for lock
+18:05:27 - Acquired lock
+18:05:28 - Unlocked
+18:05:28 - Pong got from node that is neither successor nor predecessor: 1300 (predecessor: [28|localhost|1100], successor: [0|localhost|1600])
+18:05:30 - Sent follow request to: 1100
+18:05:30 - Pausing for 10000 ms
+18:05:31 - added: dog.jpg at key 47
+18:05:31 - Sent put unlock to 1600
+18:05:31 - Sent put to [0|localhost|1600]
+18:05:40 - Waiting for lock
+18:05:41 - Acquired lock
+18:05:41 - Please wait...
+18:05:41 - Pausing for 5000 ms
+18:05:41 - Unlocked
+18:05:41 - Retrieved the following images: []
+18:05:46 - Pausing for 100000 ms

@@ -9,13 +9,13 @@ public class ImageEntry implements Serializable {
     private static final long serialVersionUID = 12234L;
 
     private final String path;
-    private final int storerId;
+    private final int storerPort;
     private transient Image image; // mora transient slike nisu serializable, ali bajtovi jesu
     private byte[] imageBytes;
 
     public ImageEntry(String path, int storerId, Image image) {
         this.path = path;
-        this.storerId = storerId;
+        this.storerPort = storerId;
         this.image = image;
         this.imageBytes = imageToBytes(image); // serialize-ready
     }
@@ -24,8 +24,8 @@ public class ImageEntry implements Serializable {
         return path;
     }
 
-    public int getStorerId() {
-        return storerId;
+    public int getStorerPort() {
+        return storerPort;
     }
 
     public Image getImage() {

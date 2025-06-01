@@ -1,5 +1,5 @@
 pause 5000
-upload llama.jpg
+upload dog.jpg
 pause 4000
 list_files localhost:1600
 pause 6000

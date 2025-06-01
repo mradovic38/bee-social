@@ -11,6 +11,8 @@ import app.AppConfig;
 import app.Cancellable;
 import servent.handler.*;
 import servent.handler.fault_tolerance.*;
+import servent.handler.follow.FollowAcceptHandler;
+import servent.handler.follow.FollowRequestHandler;
 import servent.handler.mutex.PutUnlockHandler;
 import servent.handler.mutex.SuzukiKasamiRequestTokenHandler;
 import servent.handler.mutex.SuzukiKasamiSendTokenHandler;
@@ -108,6 +110,13 @@ public class SimpleServentListener implements Runnable, Cancellable {
 						break;
 					case TELL_HAS_TOKEN:
 						messageHandler = new TellHasTokenHandler(clientMessage);
+						break;
+
+					case FOLLOW_REQ:
+						messageHandler = new FollowRequestHandler(clientMessage);
+						break;
+					case FOLLOW_ACC:
+						messageHandler = new FollowAcceptHandler(clientMessage);
 						break;
 
 					case NEW_NODE:

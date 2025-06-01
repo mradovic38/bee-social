@@ -12,7 +12,7 @@ public class PendingCommand implements CLICommand {
 
     @Override
     public void execute(String args) {
-        AppConfig.timestampedStandardPrint("Pending follows: " +  AppConfig.chordState.pendingFollows.toString());
+        AppConfig.timestampedStandardPrint("Pending follows: " +  AppConfig.chordState.pendingFollows.keySet().toString());
 
     }
 

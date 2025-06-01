@@ -1,6 +1,10 @@
 pause 5000
+visibility private
 upload brod.jpg
-pause 3000
+pause 5000
+pending
+pause 20
+accept localhost:1200
 list_files localhost:1200
 pause 10000
 pause 100000
