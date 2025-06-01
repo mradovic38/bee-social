@@ -1,10 +1,16 @@
 package app;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import fault_tolerance.Heartbeat;
 import mutex.suzuki_kasami.SuzukiKasamiMutex;
@@ -14,6 +20,8 @@ import servent.message.PutMessage;
 import servent.message.WelcomeMessage;
 import servent.message.mutex.PutUnlockMessage;
 import servent.message.util.MessageUtil;
+
+import javax.imageio.ImageIO;
 
 /**
  * This class implements all the logic required for Chord to function.
@@ -53,11 +61,17 @@ public class ChordState {
 	//we DO NOT use this to send messages, but only to construct the successor table
 	private List<ServentInfo> allNodeInfo;
 	
-	private Map<Integer, Integer> valueMap;
+	private Map<Integer, Map<String, ImageEntry>> valueMap;
 
 	public SuzukiKasamiMutex mutex = new SuzukiKasamiMutex();
 
 	public Heartbeat heartbeat = new Heartbeat();
+
+	public Queue<Integer> pendingFollows = new LinkedList<>();
+
+	public List<Integer> followers = new ArrayList<>();
+
+	private AtomicBoolean isPublic = new AtomicBoolean(true);
 
 
 
@@ -133,14 +147,14 @@ public class ChordState {
 		this.predecessorInfo = newNodeInfo;
 	}
 
-	public Map<Integer, Integer> getValueMap() {
+	public Map<Integer, Map<String, ImageEntry>> getValueMap() {
 		return valueMap;
 	}
-	
-	public void setValueMap(Map<Integer, Integer> valueMap) {
+
+	public void setValueMap(Map<Integer, Map<String, ImageEntry>> valueMap) {
 		this.valueMap = valueMap;
 	}
-	
+
 	public boolean isCollision(int chordId) {
 		if (chordId == AppConfig.myServentInfo.getChordId()) {
 			return true;
@@ -379,12 +393,11 @@ public class ChordState {
 	/**
 	 * The Chord put operation. Stores locally if key is ours, otherwise sends it on.
 	 */
-	public void putValue(int key, int value, int storerId) {
+	public void putValue(int key, String path, int storerId) {
 		AppConfig.timestampedStandardPrint("Sada cu da putujem");
 		if (isKeyMine(key)) {
-			valueMap.put(key, value);
-			AppConfig.timestampedStandardPrint("added: " + value + " at key " + key );
-			System.out.println("VALUE MAP AFTER PUT: " + valueMap.toString());
+			putIntoMap(key, path, storerId);
+			AppConfig.timestampedStandardPrint("added: " + path + " at key " + key );
 
 			// nasa slika => unlock
 			if(storerId == AppConfig.myServentInfo.getChordId()) {
@@ -400,9 +413,27 @@ public class ChordState {
 		} else {
 			AppConfig.timestampedStandardPrint("Sent put to " + getNextNodeForKey(storerId));
 			ServentInfo nextNode = getNextNodeForKey(key);
-			PutMessage pm = new PutMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), key, value, storerId);
+			PutMessage pm = new PutMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), key, path, storerId);
 			MessageUtil.sendMessage(pm);
 		}
+	}
+
+	public ImageEntry putIntoMap(int key, String path, int storerId) {
+		try{
+			File imgFile = new File(AppConfig.ROOT_DIR + "/" + path);
+			Image img = ImageIO.read(imgFile);
+
+			Map<String, ImageEntry> map = valueMap.computeIfAbsent(key, k -> new HashMap<>());
+			ImageEntry entry = new ImageEntry(path, storerId, img);
+			map.putIfAbsent(path, entry);
+
+			return entry;
+
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
 	}
 	
 	/**
@@ -416,28 +447,33 @@ public class ChordState {
 	public int getValue(int key) {
 		// udji u kriticnu sekciju
 //		AppConfig.timestampedStandardPrint("Get value requesting lock...");
-		Set<Integer> broadcastTo = new HashSet<>();
-		for (ServentInfo serventInfo : allNodeInfo) {
-			broadcastTo.add(serventInfo.getListenerPort());
-		}
-		mutex.lock(broadcastTo);
-		AppConfig.timestampedStandardPrint("Get value got lock...");
-		if (isKeyMine(key)) {
-			// izadji iz nje
-			mutex.unlock();
+		return -1;
+//		Set<Integer> broadcastTo = new HashSet<>();
+//		for (ServentInfo serventInfo : allNodeInfo) {
+//			broadcastTo.add(serventInfo.getListenerPort());
+//		}
+//		mutex.lock(broadcastTo);
+//		AppConfig.timestampedStandardPrint("Get value got lock...");
+//		if (isKeyMine(key)) {
+//			// izadji iz nje
+//			mutex.unlock();
+//
+//			if (valueMap.containsKey(key) && valueMap.get(key).containsKey(path)) {
+//				return valueMap.get(key).get(path);
+//			} else {
+//				return -1;
+//			}
+//		}
+//
+//		ServentInfo nextNode = getNextNodeForKey(key);
+//		AskGetMessage agMsg = new AskGetMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), String.valueOf(key));
+//		MessageUtil.sendMessage(agMsg);
+//
+//		return -2;
+	}
 
-			if (valueMap.containsKey(key)) {
-				return valueMap.get(key);
-			} else {
-				return -1;
-			}
-		}
-
-		ServentInfo nextNode = getNextNodeForKey(key);
-		AskGetMessage agMsg = new AskGetMessage(AppConfig.myServentInfo.getListenerPort(), nextNode.getListenerPort(), String.valueOf(key));
-		MessageUtil.sendMessage(agMsg);
-
-		return -2;
+	public void deleteValue(String path){
+		// TODO: implement
 	}
 
 	public Integer getPortOfNode(int nodeId){
@@ -451,4 +487,15 @@ public class ChordState {
 	public List<ServentInfo> getAllNodeInfo() {
 		return allNodeInfo;
 	}
+
+	public boolean isPublic(){
+		return isPublic.get();
+	}
+
+	public void setPublic(boolean isPublic){
+		this.isPublic.set(isPublic);
+	}
+
+
+
 }

@@ -1,10 +1,6 @@
 package servent.handler;
 
-import java.util.Map;
-
 import app.AppConfig;
-import app.ServentInfo;
-import servent.message.AskGetMessage;
 import servent.message.Message;
 import servent.message.MessageType;
 import servent.message.TellGetMessage;
@@ -21,28 +17,19 @@ public class AskGetHandler implements MessageHandler {
 	@Override
 	public void run() {
 		if (clientMessage.getMessageType() == MessageType.ASK_GET) {
-			try {
-				int key = Integer.parseInt(clientMessage.getMessageText());
-				if (AppConfig.chordState.isKeyMine(key)) {
-					Map<Integer, Integer> valueMap = AppConfig.chordState.getValueMap(); 
-					int value = -1;
-					
-					if (valueMap.containsKey(key)) {
-						value = valueMap.get(key);
-					}
-					
-					TellGetMessage tgm = new TellGetMessage(AppConfig.myServentInfo.getListenerPort(), clientMessage.getSenderPort(),
-															key, value);
-					MessageUtil.sendMessage(tgm);
-				} else {
-					ServentInfo nextNode = AppConfig.chordState.getNextNodeForKey(key);
-					AskGetMessage agm = new AskGetMessage(clientMessage.getSenderPort(), nextNode.getListenerPort(), clientMessage.getMessageText());
-					MessageUtil.sendMessage(agm);
-				}
-			} catch (NumberFormatException e) {
-				AppConfig.timestampedErrorPrint("Got ask get with bad text: " + clientMessage.getMessageText());
+
+			Message tellGet;
+
+			// privatan i nije ti follower, ne salji
+			if(!AppConfig.chordState.isPublic() && AppConfig.chordState.followers.contains(clientMessage.getSenderPort())){
+				tellGet = new TellGetMessage(clientMessage.getSenderPort(), AppConfig.myServentInfo.getListenerPort());
 			}
-			
+			// public => salji slike
+			else{
+				tellGet = new TellGetMessage(clientMessage.getSenderPort(), AppConfig.myServentInfo.getListenerPort(), AppConfig.chordState.getValueMap());
+			}
+			MessageUtil.sendMessage(tellGet);
+
 		} else {
 			AppConfig.timestampedErrorPrint("Ask get handler got a message that is not ASK_GET");
 		}

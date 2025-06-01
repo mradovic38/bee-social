@@ -3,6 +3,7 @@ package servent.handler;
 import app.AppConfig;
 import servent.message.Message;
 import servent.message.MessageType;
+import servent.message.TellGetMessage;
 
 public class TellGetHandler implements MessageHandler {
 
@@ -16,26 +17,18 @@ public class TellGetHandler implements MessageHandler {
 	public void run() {
 		if (clientMessage.getMessageType() == MessageType.TELL_GET) {
 
+			TellGetMessage tellGetMessage =  (TellGetMessage) clientMessage;
+
 			// unlock
 			AppConfig.chordState.mutex.unlock();
 
-			String[] parts = clientMessage.getMessageText().split(":");
-			
-			if (parts.length == 2) {
-				try {
-					int key = Integer.parseInt(parts[0]);
-					int value = Integer.parseInt(parts[1]);
-					if (value == -1) {
-						AppConfig.timestampedStandardPrint("No such key: " + key);
-					} else {
-						AppConfig.timestampedStandardPrint("DHT_GET Response: " + clientMessage.getMessageText());
-					}
-				} catch (NumberFormatException e) {
-					AppConfig.timestampedErrorPrint("Got TELL_GET message with bad text: " + clientMessage.getMessageText());
-				}
-			} else {
-				AppConfig.timestampedErrorPrint("Got TELL_GET message with bad text: " + clientMessage.getMessageText());
+			if(tellGetMessage.isPrivate()){
+				AppConfig.timestampedStandardPrint("You do not have access to this site's images </3");
 			}
+			else {
+				AppConfig.saveImages(tellGetMessage.getValues());
+			}
+
 		} else {
 			AppConfig.timestampedErrorPrint("Tell get handler got a message that is not TELL_GET");
 		}

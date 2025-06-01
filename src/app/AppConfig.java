@@ -1,12 +1,12 @@
 package app;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -141,6 +141,35 @@ public class AppConfig {
 		
 		myServentInfo = new ServentInfo("localhost", serventPort);
 
+
+
+
+
+
+	}
+
+	public static List<String> saveImages(Map<Integer, Map<String, ImageEntry>> images){
+		List<String> collectedPaths = new ArrayList<>();
+		try {
+
+			for (Map.Entry<Integer, Map<String, ImageEntry>> entry : images.entrySet()) {
+				for (Map.Entry<String, ImageEntry> imageEntryEntry : entry.getValue().entrySet()) {
+					ImageEntry imageEntry = imageEntryEntry.getValue();
+
+					File outputFile = new File(imageEntry.getPath() + "-" + imageEntry.getStorerId() + ".png");
+
+					ImageIO.write(imageEntry.getBufferedImage(), "png", outputFile);
+
+					collectedPaths.add(imageEntryEntry.getKey());
+				}
+			}
+			AppConfig.timestampedStandardPrint("Retrieved the following images: " + collectedPaths);
+		}
+		catch (IOException e) {
+			timestampedErrorPrint("Problem saving images");
+		}
+
+		return collectedPaths;
 
 	}
 	

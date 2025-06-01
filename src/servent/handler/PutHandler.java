@@ -22,13 +22,13 @@ public class PutHandler implements MessageHandler {
 
 			if (splitText.length == 2) {
 				int key = 0;
-				int value = 0;
+				String path = "";
 				
 				try {
 					key = Integer.parseInt(splitText[0]);
-					value = Integer.parseInt(splitText[1]);
+					path = splitText[1];
 					
-					AppConfig.chordState.putValue(key, value, storerId);
+					AppConfig.chordState.putValue(key, path, storerId);
 				} catch (NumberFormatException e) {
 					AppConfig.timestampedErrorPrint("Got put message with bad text: " + clientMessage.getMessageText());
 				}
