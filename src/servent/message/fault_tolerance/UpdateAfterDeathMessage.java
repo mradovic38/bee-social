@@ -1,5 +1,7 @@
 package servent.message.fault_tolerance;
 
+import app.AppConfig;
+import app.ChordState;
 import app.ServentInfo;
 import servent.message.BasicMessage;
 import servent.message.MessageType;
@@ -13,6 +15,7 @@ public class UpdateAfterDeathMessage extends BasicMessage {
     public UpdateAfterDeathMessage(int senderPort, int receiverPort, ServentInfo deadServentInfo) {
         super(MessageType.UPDATE_AFTER_DEATH, senderPort, receiverPort);
         this.deadServentInfo = deadServentInfo;
+        setNextReceiver(AppConfig.chordState.getNextNodeForKey(ChordState.chordHash(receiverPort)));
     }
 
     public ServentInfo getDeadServentInfo() {

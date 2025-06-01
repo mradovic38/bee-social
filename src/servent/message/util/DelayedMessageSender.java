@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import app.AppConfig;
+import servent.message.BasicMessage;
 import servent.message.Message;
 import servent.message.MessageType;
 
@@ -39,7 +40,13 @@ public class DelayedMessageSender implements Runnable {
 		}
 		
 		try {
-			Socket sendSocket = new Socket(messageToSend.getReceiverIpAddress(), messageToSend.getReceiverPort());
+			Socket sendSocket;
+			if(messageToSend instanceof BasicMessage && ((BasicMessage)messageToSend).getNextReceiver() != null){
+				sendSocket = new Socket(messageToSend.getReceiverIpAddress(), ((BasicMessage) messageToSend).getNextReceiver().getListenerPort());
+			}
+			else {
+				sendSocket = new Socket(messageToSend.getReceiverIpAddress(), messageToSend.getReceiverPort());
+			}
 			
 			ObjectOutputStream oos = new ObjectOutputStream(sendSocket.getOutputStream());
 			oos.writeObject(messageToSend);
