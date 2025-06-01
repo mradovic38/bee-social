@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 import app.AppConfig;
 import app.Cancellable;
 import servent.handler.*;
+import servent.handler.fault_tolerance.PingHandler;
+import servent.handler.fault_tolerance.PongHandler;
 import servent.handler.mutex.PutUnlockHandler;
 import servent.handler.mutex.SuzukiKasamiRequestTokenHandler;
 import servent.handler.mutex.SuzukiKasamiSendTokenHandler;
@@ -82,6 +84,13 @@ public class SimpleServentListener implements Runnable, Cancellable {
 						break;
 					case CONFIRM_QUIT:
 						messageHandler = new ConfirmQuitHandler(clientMessage);
+						break;
+
+					case PING:
+						messageHandler = new PingHandler(clientMessage);
+						break;
+					case PONG:
+						messageHandler = new PongHandler(clientMessage);
 						break;
 
 					case NEW_NODE:

@@ -3,14 +3,27 @@ package fault_tolerance;
 import app.AppConfig;
 import app.Cancellable;
 import app.ServentInfo;
+import servent.message.Message;
 import servent.message.fault_tolerance.PingMessage;
+import servent.message.fault_tolerance.SusAskMessage;
+import servent.message.fault_tolerance.UpdateAfterDeathMessage;
 import servent.message.util.MessageUtil;
+
+import java.util.stream.Collectors;
 
 // sluzi da pinguje da vidi da li su zivi sledbenik i prethodnik
 public class Heartbeat implements Runnable, Cancellable{
     private volatile boolean working = true;
 
     private static final int PING_INTERVAL_MS = 2000;
+
+    private NodeHealthInfo predecessorNodeHealthInfo;
+    private NodeHealthInfo successorNodeHealthInfo;
+
+    public Heartbeat() {
+        this.predecessorNodeHealthInfo = new NodeHealthInfo();
+        this.successorNodeHealthInfo = new NodeHealthInfo();
+    }
 
     @Override
     public void stop() {
@@ -24,11 +37,9 @@ public class Heartbeat implements Runnable, Cancellable{
                 ServentInfo predecessor = AppConfig.chordState.getPredecessor();
                 ServentInfo successor = AppConfig.chordState.getSuccessorTable()[0];
 
-                if (predecessor == null || successor == null) continue;
-
-                // Check both buddies (can separate these in real-world)
-                checkBuddy(predecessor, successor);
-                checkBuddy(successor, predecessor);
+                // proveri successor i predecessor-a
+                checkBuddy(predecessor, successor,  predecessorNodeHealthInfo);
+                checkBuddy(successor, successor, predecessorNodeHealthInfo);
 
                 Thread.sleep(PING_INTERVAL_MS);
             } catch (InterruptedException e) {
@@ -38,7 +49,69 @@ public class Heartbeat implements Runnable, Cancellable{
         }
     }
 
-    private void checkBuddy(ServentInfo target, ServentInfo helper) {
+    private void checkBuddy(ServentInfo checkInfo, ServentInfo buddyInfo, NodeHealthInfo nodeHealthInfo) {
+
+        if(checkInfo == null || buddyInfo == null){
+            // mrtav :(
+            nodeHealthInfo.setNodeStatus(NodeStatus.DEAD);
+            nodeHealthInfo.setTimestamp(System.currentTimeMillis());
+            nodeHealthInfo.setFinishedBroadcasting(false);
+            return;
+        }
+
+        // pinguj predesesora
+        Message pingMessage = new PingMessage(AppConfig.myServentInfo.getListenerPort(), checkInfo.getListenerPort());
+        MessageUtil.sendMessage(pingMessage);
+
+        // ako je ako je proslo vise od WEAK_LIMIT vremena, stavi na sus i broadcast na true, znaci saljemo buddyju da ga pinguje
+        if (System.currentTimeMillis() - nodeHealthInfo.getTimestamp() > AppConfig.WEAK_LIMIT
+                && !nodeHealthInfo.isFinishedBroadcasting()) {
+            nodeHealthInfo.setNodeStatus(NodeStatus.SUS);
+            nodeHealthInfo.setFinishedBroadcasting(true);
+
+            // reci buddy-ju da proveri
+            Message saMsg = new SusAskMessage(AppConfig.myServentInfo.getListenerPort(),
+                    buddyInfo.getListenerPort(), checkInfo.getListenerPort());
+
+            MessageUtil.sendMessage(saMsg);
+        }
+
+        // proslo je vise od STRONG_LIMIT vremena i SUS je => MRTAV - salji na reorganizaciju
+        if (System.currentTimeMillis() - nodeHealthInfo.getTimestamp() > AppConfig.STRONG_LIMIT
+                && nodeHealthInfo.getNodeStatus() == NodeStatus.SUS) {
+
+            // uzmi lock
+            AppConfig.chordState.mutex.lock(AppConfig.chordState.getAllNodeInfo().stream()
+                    .map(ServentInfo::getListenerPort).collect(Collectors.toSet()));
+
+            AppConfig.timestampedStandardPrint("Node on port: " + checkInfo.getListenerPort() + " has died :(");
+
+            nodeHealthInfo.setNodeStatus(NodeStatus.DEAD);
+
+            // BRISI
+            AppConfig.chordState.removeNode(checkInfo.getChordId());
+            // BRISI IZ QUEUE AKO JE BILO
+            AppConfig.chordState.mutex.getToken().Q.remove(checkInfo.getListenerPort());
+
+            // TODO: ispraviti broadcast da ne gadja direktno
+            // Broadcastuj drugima da urade update
+            for (ServentInfo serventInfo : AppConfig.chordState.getAllNodeInfo()) {
+                if (serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort()) {
+                    Message uadMsg = new UpdateAfterDeathMessage(AppConfig.myServentInfo.getListenerPort(), serventInfo.getListenerPort(), checkInfo);
+
+                    MessageUtil.sendMessage(uadMsg);
+                }
+            }
+
+            // stavi alive jer smo ga sredili
+            nodeHealthInfo.setNodeStatus(NodeStatus.ALIVE);
+            nodeHealthInfo.setFinishedBroadcasting(false);
+
+            // otkljucaj
+            AppConfig.chordState.mutex.unlock();
+
+        }
+
 //        long lastSeen = AppConfig.buddyStatus.getLastSeen(target);
 //        long now = System.currentTimeMillis();
 //
@@ -85,4 +158,20 @@ public class Heartbeat implements Runnable, Cancellable{
 //        }
     }
 
+
+    public NodeHealthInfo getPredecessorNodeHealthInfo() {
+        return predecessorNodeHealthInfo;
+    }
+
+    public void setPredecessorNodeHealthInfo(NodeHealthInfo predecessorNodeHealthInfo) {
+        this.predecessorNodeHealthInfo = predecessorNodeHealthInfo;
+    }
+
+    public NodeHealthInfo getSuccessorNodeHealthInfo() {
+        return successorNodeHealthInfo;
+    }
+
+    public void setSuccessorNodeHealthInfo(NodeHealthInfo successorNodeHealthInfo) {
+        this.successorNodeHealthInfo = successorNodeHealthInfo;
+    }
 }

@@ -365,6 +365,14 @@ public class ChordState {
 			return;
 		}
 
+		// zbog reorganizacije dobicemo novog predecessora i successore pa treba resetovati vreme
+		if(predecessorInfo.getChordId() == nodeToRemove){
+			heartbeat.getPredecessorNodeHealthInfo().setTimestamp(System.currentTimeMillis());
+		}
+		else if (successorTable[0] == null || successorTable[0].getChordId() == nodeToRemove){
+			heartbeat.getSuccessorNodeHealthInfo().setTimestamp(System.currentTimeMillis());
+		}
+
 		updateSuccessorTable();
 	}
 

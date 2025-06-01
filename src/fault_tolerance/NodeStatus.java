@@ -1,5 +1,5 @@
 package fault_tolerance;
 
-public class NodeStatus {
-
+public enum NodeStatus {
+    ALIVE, SUS, DEAD
 }
