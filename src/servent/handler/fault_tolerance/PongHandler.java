@@ -29,13 +29,13 @@ public class PongHandler implements MessageHandler {
             // resetuj predecessora
             if(AppConfig.chordState.getPredecessor() != null && pongMsg.getMarkThisPort() == AppConfig.chordState.getPredecessor().getListenerPort()){
                 AppConfig.chordState.heartbeat.getPredecessorNodeHealthInfo().setNodeStatus(NodeStatus.ALIVE);
-                AppConfig.chordState.heartbeat.getPredecessorNodeHealthInfo().setFinishedBroadcasting(true);
+                AppConfig.chordState.heartbeat.getPredecessorNodeHealthInfo().setFinishedBroadcasting(false);
                 AppConfig.chordState.heartbeat.getPredecessorNodeHealthInfo().setTimestamp(System.currentTimeMillis());
             }
             // resetuj successora
             else if(AppConfig.chordState.getSuccessorTable()[0] != null && pongMsg.getMarkThisPort() == AppConfig.chordState.getSuccessorTable()[0].getListenerPort()) {
                 AppConfig.chordState.heartbeat.getSuccessorNodeHealthInfo().setNodeStatus(NodeStatus.ALIVE);
-                AppConfig.chordState.heartbeat.getSuccessorNodeHealthInfo().setFinishedBroadcasting(true);
+                AppConfig.chordState.heartbeat.getSuccessorNodeHealthInfo().setFinishedBroadcasting(false);
                 AppConfig.chordState.heartbeat.getSuccessorNodeHealthInfo().setTimestamp(System.currentTimeMillis());
             }
             else if(AppConfig.chordState.getSuccessorTable()[0] != null || AppConfig.chordState.getPredecessor() != null){

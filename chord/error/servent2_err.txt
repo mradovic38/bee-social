@@ -1,5 +1,1 @@
-17:18:50 - Couldn't send message: [1300|91||PING|1600]
-17:18:51 - Couldn't send message: [1300|94||PING|1600]
-17:18:52 - Couldn't send message: [1300|97||PING|1600]
-17:18:53 - Couldn't send message: [1300|100||PING|1600]
-17:18:54 - Couldn't send message: [1300|103||PING|1600]
+17:45:33 - Couldn't send message: [1300|116||PING|1600]

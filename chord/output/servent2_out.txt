@@ -1,47 +1,47 @@
-17:18:32 - Starting servent [4|localhost|1300]
-17:18:32 - Heartbeat started <3
-17:18:32 - Pausing for 5000 ms
-17:18:33 - Waiting for lock
-17:18:33 - =================JA IMAM TOKEN SADA==================
-17:18:33 - Acquired lock
-17:18:33 - Predecessor: [0|localhost|1600]
-17:18:33 - Successor: [24|localhost|1400]
-17:18:33 - =================NEMAM VISE TOKEN==================
-17:18:33 - Unlocked
-17:18:34 - Predecessor: [0|localhost|1600]
-17:18:34 - Successor: [24|localhost|1400]
-17:18:35 - Predecessor: [0|localhost|1600]
-17:18:35 - Successor: [24|localhost|1400]
-17:18:37 - Public set to: true
-17:18:37 - Waiting for lock
-17:18:37 - Broadcast 26 TOKEN_REQUEST to: 1400
-17:18:37 - Broadcast 26 TOKEN_REQUEST to: 1200
-17:18:38 - Broadcast 26 TOKEN_REQUEST to: 1400
-17:18:38 - Broadcast 26 TOKEN_REQUEST to: 1200
-17:18:38 - Broadcast 23 TOKEN_REQUEST to: 1400
-17:18:38 - Sent put to [24|localhost|1400] for brod.jpg
-17:18:38 - Added: brod.jpg to successorBackup
-17:18:38 - Added: tornado.jpg to predecessorBackup
-17:18:38 - =================JA IMAM TOKEN SADA==================
-17:18:39 - Acquired lock
-17:18:39 - Upload acquired lock
-17:18:39 - Sent put to [24|localhost|1400] for llama.jpg
-17:18:39 - Pausing for 10000 ms
-17:18:39 - =================NEMAM VISE TOKEN==================
-17:18:39 - Unlocked
-17:18:39 - Put unlock released lock
-17:18:43 - Broadcast 41 TOKEN_REQUEST to: 1400
-17:18:43 - Broadcast 41 TOKEN_REQUEST to: 1200
-17:18:43 - Broadcast 65 TOKEN_REQUEST to: 1400
-17:18:43 - Broadcast 65 TOKEN_REQUEST to: 1200
-17:18:48 - Broadcast 81 TOKEN_REQUEST to: 1200
-17:18:48 - Broadcast 85 TOKEN_REQUEST to: 1400
-17:18:49 - Waiting for lock
-17:18:49 - Broadcast 87 TOKEN_REQUEST to: 1400
-17:18:49 - Broadcast 87 TOKEN_REQUEST to: 1200
-17:18:49 - =================JA IMAM TOKEN SADA==================
-17:18:49 - Acquired lock
-17:18:49 - Please wait...
-17:18:49 - Pausing for 5000 ms
-17:18:49 - Unlocked
-17:18:54 - Stopping...
+17:45:09 - Starting servent [4|localhost|1300]
+17:45:09 - Heartbeat started <3
+17:45:09 - Pausing for 5000 ms
+17:45:09 - First node in Chord system.
+17:45:09 - =================JA IMAM TOKEN SADA==================
+17:45:09 - =================NEMAM VISE TOKEN==================
+17:45:10 - Predecessor: [24|localhost|1400]
+17:45:10 - Successor: [24|localhost|1400]
+17:45:10 - Predecessor: [48|localhost|1200]
+17:45:10 - Successor: [24|localhost|1400]
+17:45:11 - Predecessor: [48|localhost|1200]
+17:45:11 - Successor: [24|localhost|1400]
+17:45:12 - Predecessor: [0|localhost|1600]
+17:45:12 - Successor: [24|localhost|1400]
+17:45:14 - Public set to: true
+17:45:14 - Waiting for lock
+17:45:14 - Broadcast 27 TOKEN_REQUEST to: 1400
+17:45:14 - Broadcast 27 TOKEN_REQUEST to: 1200
+17:45:15 - Sent put to [24|localhost|1400] for brod.jpg
+17:45:15 - Added: brod.jpg to successorBackup
+17:45:16 - Added: tornado.jpg to predecessorBackup
+17:45:18 - Broadcast 38 TOKEN_REQUEST to: 1400
+17:45:18 - Broadcast 38 TOKEN_REQUEST to: 1200
+17:45:19 - =================JA IMAM TOKEN SADA==================
+17:45:19 - Acquired lock
+17:45:19 - Upload acquired lock
+17:45:19 - Sent put to [24|localhost|1400] for llama.jpg
+17:45:19 - Pausing for 10000 ms
+17:45:19 - =================NEMAM VISE TOKEN==================
+17:45:19 - Unlocked
+17:45:19 - Put unlock released lock
+17:45:19 - =================JA IMAM TOKEN SADA==================
+17:45:20 - =================NEMAM VISE TOKEN==================
+17:45:25 - =================JA IMAM TOKEN SADA==================
+17:45:25 - =================NEMAM VISE TOKEN==================
+17:45:26 - Broadcast 92 TOKEN_REQUEST to: 1400
+17:45:29 - Waiting for lock
+17:45:29 - Broadcast 96 TOKEN_REQUEST to: 1400
+17:45:29 - Broadcast 96 TOKEN_REQUEST to: 1200
+17:45:29 - =================JA IMAM TOKEN SADA==================
+17:45:29 - Acquired lock
+17:45:29 - Please wait...
+17:45:29 - Pausing for 5000 ms
+17:45:29 - =================NEMAM VISE TOKEN==================
+17:45:29 - Unlocked
+17:45:29 - =================JA IMAM TOKEN SADA==================
+17:45:34 - Stopping...

@@ -50,13 +50,15 @@ public class SuzukiKasamiMutex implements Mutex {
     public void lock(boolean urgent){
         while(!reentrancyLock.compareAndSet(false, true)){
             try {
-                if(urgent)
+                if(urgent || !AppConfig.isAlive.get())
                     break;
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        if(!AppConfig.isAlive.get())
+            return;
 
         AppConfig.timestampedStandardPrint("Waiting for lock");
         // ako nema token, a zeli da udje u kriticku sekciju
@@ -102,13 +104,15 @@ public class SuzukiKasamiMutex implements Mutex {
 
         while(!reentrancyLock.compareAndSet(false, true)){
             try {
-                if(urgent)
+                if(urgent || !AppConfig.isAlive.get())
                     break;
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        if(!AppConfig.isAlive.get())
+            return;
 
         AppConfig.timestampedStandardPrint("Waiting for lock");
         // ako nema token, a zeli da udje u kriticku sekciju

@@ -24,8 +24,8 @@ public class Heartbeat implements Runnable, Cancellable{
     private static final int PING_INTERVAL_MS = 1000;
     private static final int SOMEONE_HAS_TOKEN_WAIT = 7000;
 
-    private NodeHealthInfo predecessorNodeHealthInfo;
-    private NodeHealthInfo successorNodeHealthInfo;
+    private final NodeHealthInfo predecessorNodeHealthInfo;
+    private final NodeHealthInfo successorNodeHealthInfo;
 
     public AtomicBoolean someoneHasToken = new AtomicBoolean(false);
 
@@ -71,7 +71,7 @@ public class Heartbeat implements Runnable, Cancellable{
             return;
         }
 
-        // pinguj predesesora
+        // pinguj
         Message pingMessage = new PingMessage(AppConfig.myServentInfo.getListenerPort(), checkInfo.getListenerPort());
         MessageUtil.sendMessage(pingMessage);
 
@@ -185,15 +185,8 @@ public class Heartbeat implements Runnable, Cancellable{
         return predecessorNodeHealthInfo;
     }
 
-    public void setPredecessorNodeHealthInfo(NodeHealthInfo predecessorNodeHealthInfo) {
-        this.predecessorNodeHealthInfo = predecessorNodeHealthInfo;
-    }
 
     public NodeHealthInfo getSuccessorNodeHealthInfo() {
         return successorNodeHealthInfo;
-    }
-
-    public void setSuccessorNodeHealthInfo(NodeHealthInfo successorNodeHealthInfo) {
-        this.successorNodeHealthInfo = successorNodeHealthInfo;
     }
 }
