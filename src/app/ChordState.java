@@ -119,8 +119,7 @@ public class ChordState {
 			bsSocket.close();
 
 
-			Thread heartbeatThread = new Thread(heartbeat);
-			heartbeatThread.start();
+
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

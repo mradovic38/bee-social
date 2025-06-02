@@ -58,6 +58,9 @@ public class ServentMain {
 		ServentInitializer serventInitializer = new ServentInitializer();
 		Thread initializerThread = new Thread(serventInitializer);
 		initializerThread.start();
+
+		Thread heartbeatThread = new Thread(AppConfig.chordState.heartbeat);
+		heartbeatThread.start();
 		
 	}
 }

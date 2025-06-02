@@ -33,7 +33,6 @@ public class TellHasTokenHandler implements MessageHandler {
                 AppConfig.chordState.heartbeat.someoneHasToken.set(true);
             }
 
-            AppConfig.chordState.heartbeat.noTokenCount.incrementAndGet();
 
 
         } catch (Exception e) {

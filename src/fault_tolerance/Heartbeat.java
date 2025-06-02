@@ -22,11 +22,11 @@ public class Heartbeat implements Runnable, Cancellable{
     private volatile boolean working = true;
 
     private static final int PING_INTERVAL_MS = 1000;
+    private static final int SOMEONE_HAS_TOKEN_WAIT = 7000;
 
     private NodeHealthInfo predecessorNodeHealthInfo;
     private NodeHealthInfo successorNodeHealthInfo;
 
-    public AtomicInteger noTokenCount = new AtomicInteger(0);
     public AtomicBoolean someoneHasToken = new AtomicBoolean(false);
 
     public Heartbeat() {
@@ -41,17 +41,16 @@ public class Heartbeat implements Runnable, Cancellable{
 
     @Override
     public void run() {
+        AppConfig.timestampedStandardPrint("Heartbeat started <3");
         while (working) {
             try {
-                if(!AppConfig.isAlive.get())
-                    return;
 
                 ServentInfo predecessor = AppConfig.chordState.getPredecessor();
                 ServentInfo successor = AppConfig.chordState.getSuccessorTable()[0];
 
                 // proveri successor i predecessor-a
                 checkBuddy(predecessor, successor,  predecessorNodeHealthInfo, AppConfig.chordState.predecessorBackup);
-                checkBuddy(successor, predecessor, predecessorNodeHealthInfo, AppConfig.chordState.successorBackup);
+                checkBuddy(successor, predecessor, successorNodeHealthInfo, AppConfig.chordState.successorBackup);
 
                 Thread.sleep(PING_INTERVAL_MS);
             } catch (InterruptedException e) {
@@ -96,19 +95,16 @@ public class Heartbeat implements Runnable, Cancellable{
             AppConfig.timestampedStandardPrint(buddyInfo.getListenerPort() + " might be dead !?");
 
             // da li je node koji je nestao imao lock. ako zauvek cekamo moramo da napravimo novi token
-            int totalCnt = 0;
-            noTokenCount = new AtomicInteger(0);
             someoneHasToken = new AtomicBoolean(false);
-
 
             BasicMessage askMsg = new AskHasTokenMessage(AppConfig.myServentInfo.getListenerPort(), AppConfig.myServentInfo.getListenerPort());
             Broadcast.broadcastMessage(askMsg);
 
             // ako se desi neki edge case da se ne ceka zauvek
-            int wait = 10000;
+            int wait = SOMEONE_HAS_TOKEN_WAIT;
             // sacekaj da dobijes odg od svih
             AppConfig.timestampedStandardPrint("Waiting to get if the token is in the system");
-            while(totalCnt != 0 && noTokenCount.get() < totalCnt && wait >= 0 && !someoneHasToken.get()){
+            while(wait >= 0 && !someoneHasToken.get() && AppConfig.isAlive.get()){
                 try {
                     wait -= 30;
                     Thread.sleep(30);
@@ -117,6 +113,9 @@ public class Heartbeat implements Runnable, Cancellable{
                     e.printStackTrace();
                 }
             }
+
+            if(!AppConfig.isAlive.get())
+                return;
 
             // ako je imao (niko nije vratio da je imao) => napravi novi token
             if(!someoneHasToken.get()){

@@ -1,43 +1,46 @@
-16:39:57 - Starting servent [24|localhost|1400]
-16:39:57 - Pausing for 5000 ms
-16:39:58 - Waiting for lock
-16:39:58 - =================JA IMAM TOKEN SADA==================
-16:39:58 - Acquired lock
-16:39:59 - Predecessor: [4|localhost|1300]
-16:39:59 - Successor: [48|localhost|1200]
-16:39:59 - =================NEMAM VISE TOKEN==================
-16:39:59 - Predecessor: [4|localhost|1300]
-16:39:59 - Successor: [48|localhost|1200]
-16:40:00 - Predecessor: [4|localhost|1300]
-16:40:00 - Successor: [28|localhost|1100]
-16:40:02 - Pausing for 10000 ms
-16:40:02 - Broadcast 22 TOKEN_REQUEST to: 1100
-16:40:02 - Broadcast 22 TOKEN_REQUEST to: 1200
-16:40:02 - Broadcast 22 TOKEN_REQUEST to: 1600
-16:40:02 - Broadcast 17 TOKEN_REQUEST to: 1100
-16:40:02 - Broadcast 17 TOKEN_REQUEST to: 1600
-16:40:02 - Broadcast 16 TOKEN_REQUEST to: 1100
-16:40:02 - Broadcast 16 TOKEN_REQUEST to: 1200
-16:40:03 - Added: brod.jpg at key 24
-16:40:03 - Sent put unlock to 1100
-16:40:03 - Sent put to [28|localhost|1100] for llama.jpg
-16:40:04 - Sent put to [28|localhost|1100] for dog.jpg
-16:40:08 - Broadcast 31 TOKEN_REQUEST to: 1200
-16:40:08 - Broadcast 31 TOKEN_REQUEST to: 1600
-16:40:08 - Broadcast 48 TOKEN_REQUEST to: 1100
-16:40:08 - Broadcast 48 TOKEN_REQUEST to: 1200
-16:40:12 - Waiting for lock
-16:40:12 - Broadcast 75 TOKEN_REQUEST to: 1100
-16:40:12 - Broadcast 75 TOKEN_REQUEST to: 1200
-16:40:12 - Broadcast 75 TOKEN_REQUEST to: 1600
-16:40:13 - =================JA IMAM TOKEN SADA==================
-16:40:13 - Acquired lock
-16:40:13 - Unlocked
-16:40:13 - Retrieved the following images: [brod.jpg]
-16:40:13 - Pausing for 15000 ms
-16:40:13 - =================NEMAM VISE TOKEN==================
-16:40:13 - Broadcast 58 TOKEN_REQUEST to: 1100
-16:40:13 - Broadcast 58 TOKEN_REQUEST to: 1600
-16:40:13 - Broadcast 81 TOKEN_REQUEST to: 1100
-16:40:13 - Broadcast 81 TOKEN_REQUEST to: 1200
-16:40:13 - Broadcast 81 TOKEN_REQUEST to: 1600
+17:18:32 - Starting servent [24|localhost|1400]
+17:18:32 - Heartbeat started <3
+17:18:32 - Pausing for 5000 ms
+17:18:32 - First node in Chord system.
+17:18:32 - =================JA IMAM TOKEN SADA==================
+17:18:33 - =================NEMAM VISE TOKEN==================
+17:18:33 - Predecessor: [0|localhost|1600]
+17:18:33 - Successor: [0|localhost|1600]
+17:18:33 - Predecessor: [4|localhost|1300]
+17:18:33 - Successor: [0|localhost|1600]
+17:18:34 - Predecessor: [4|localhost|1300]
+17:18:34 - Successor: [48|localhost|1200]
+17:18:35 - Predecessor: [4|localhost|1300]
+17:18:35 - Successor: [28|localhost|1100]
+17:18:37 - Pausing for 10000 ms
+17:18:38 - Broadcast 26 TOKEN_REQUEST to: 1100
+17:18:38 - Broadcast 26 TOKEN_REQUEST to: 1200
+17:18:38 - Broadcast 23 TOKEN_REQUEST to: 1100
+17:18:38 - Broadcast 23 TOKEN_REQUEST to: 1600
+17:18:38 - Broadcast 26 TOKEN_REQUEST to: 1100
+17:18:38 - Broadcast 26 TOKEN_REQUEST to: 1200
+17:18:38 - Broadcast 26 TOKEN_REQUEST to: 1600
+17:18:38 - Added: brod.jpg at key 24
+17:18:38 - Sent put unlock to 1100
+17:18:39 - Sent put to [28|localhost|1100] for llama.jpg
+17:18:39 - Sent put to [28|localhost|1100] for dog.jpg
+17:18:43 - Broadcast 41 TOKEN_REQUEST to: 1200
+17:18:43 - Broadcast 41 TOKEN_REQUEST to: 1600
+17:18:43 - Broadcast 65 TOKEN_REQUEST to: 1100
+17:18:43 - Broadcast 65 TOKEN_REQUEST to: 1200
+17:18:47 - Waiting for lock
+17:18:47 - Broadcast 81 TOKEN_REQUEST to: 1100
+17:18:47 - Broadcast 81 TOKEN_REQUEST to: 1200
+17:18:47 - Broadcast 81 TOKEN_REQUEST to: 1600
+17:18:48 - =================JA IMAM TOKEN SADA==================
+17:18:48 - Acquired lock
+17:18:48 - Unlocked
+17:18:48 - Retrieved the following images: [brod.jpg]
+17:18:48 - Pausing for 15000 ms
+17:18:48 - =================NEMAM VISE TOKEN==================
+17:18:48 - Broadcast 85 TOKEN_REQUEST to: 1100
+17:18:48 - Broadcast 85 TOKEN_REQUEST to: 1600
+17:18:49 - Broadcast 87 TOKEN_REQUEST to: 1100
+17:18:49 - Broadcast 87 TOKEN_REQUEST to: 1200
+17:18:49 - Broadcast 87 TOKEN_REQUEST to: 1600
+17:19:03 - Stopping...
