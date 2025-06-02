@@ -83,14 +83,12 @@ public class UpdateHandler implements MessageHandler {
 				}
 
 				// sacuvaj slike koje su moje
-				for (Map.Entry<Integer, Map<String, ImageEntry>> entry : updateMessage.getFiles().entrySet()){
-					if (AppConfig.chordState.getValueMap().containsKey(entry.getKey())) {
-						AppConfig.chordState.getValueMap().get(entry.getKey()).putAll(entry.getValue());
-					} else {
+				for (Map.Entry<Integer, Map<String, ImageEntry>> entry :  updateMessage.getFiles().entrySet()) {
+					if(AppConfig.chordState.isKeyMine(entry.getKey()))
 						AppConfig.chordState.getValueMap().put(entry.getKey(), entry.getValue());
-					}
 				}
 
+				// unlock
 				AppConfig.chordState.mutex.unlock();
 			}
 		} else {

@@ -1,47 +1,92 @@
-17:45:09 - Starting servent [4|localhost|1300]
-17:45:09 - Heartbeat started <3
-17:45:09 - Pausing for 5000 ms
-17:45:09 - First node in Chord system.
-17:45:09 - =================JA IMAM TOKEN SADA==================
-17:45:09 - =================NEMAM VISE TOKEN==================
-17:45:10 - Predecessor: [24|localhost|1400]
-17:45:10 - Successor: [24|localhost|1400]
-17:45:10 - Predecessor: [48|localhost|1200]
-17:45:10 - Successor: [24|localhost|1400]
-17:45:11 - Predecessor: [48|localhost|1200]
-17:45:11 - Successor: [24|localhost|1400]
-17:45:12 - Predecessor: [0|localhost|1600]
-17:45:12 - Successor: [24|localhost|1400]
-17:45:14 - Public set to: true
-17:45:14 - Waiting for lock
-17:45:14 - Broadcast 27 TOKEN_REQUEST to: 1400
-17:45:14 - Broadcast 27 TOKEN_REQUEST to: 1200
-17:45:15 - Sent put to [24|localhost|1400] for brod.jpg
-17:45:15 - Added: brod.jpg to successorBackup
-17:45:16 - Added: tornado.jpg to predecessorBackup
-17:45:18 - Broadcast 38 TOKEN_REQUEST to: 1400
-17:45:18 - Broadcast 38 TOKEN_REQUEST to: 1200
-17:45:19 - =================JA IMAM TOKEN SADA==================
-17:45:19 - Acquired lock
-17:45:19 - Upload acquired lock
-17:45:19 - Sent put to [24|localhost|1400] for llama.jpg
-17:45:19 - Pausing for 10000 ms
-17:45:19 - =================NEMAM VISE TOKEN==================
-17:45:19 - Unlocked
-17:45:19 - Put unlock released lock
-17:45:19 - =================JA IMAM TOKEN SADA==================
-17:45:20 - =================NEMAM VISE TOKEN==================
-17:45:25 - =================JA IMAM TOKEN SADA==================
-17:45:25 - =================NEMAM VISE TOKEN==================
-17:45:26 - Broadcast 92 TOKEN_REQUEST to: 1400
-17:45:29 - Waiting for lock
-17:45:29 - Broadcast 96 TOKEN_REQUEST to: 1400
-17:45:29 - Broadcast 96 TOKEN_REQUEST to: 1200
-17:45:29 - =================JA IMAM TOKEN SADA==================
-17:45:29 - Acquired lock
-17:45:29 - Please wait...
-17:45:29 - Pausing for 5000 ms
-17:45:29 - =================NEMAM VISE TOKEN==================
-17:45:29 - Unlocked
-17:45:29 - =================JA IMAM TOKEN SADA==================
-17:45:34 - Stopping...
+01:56:25 - Starting servent [4|localhost|1300]
+01:56:25 - Heartbeat started <3
+01:56:25 - Pausing for 5000 ms
+01:56:25 - First node in Chord system.
+01:56:25 - =================JA IMAM TOKEN SADA==================
+01:56:25 - =================NEMAM VISE TOKEN==================
+01:56:26 - Predecessor: [0|localhost|1600]
+01:56:26 - Successor: [0|localhost|1600]
+01:56:26 - Predecessor: [0|localhost|1600]
+01:56:26 - Successor: [28|localhost|1100]
+01:56:27 - Predecessor: [0|localhost|1600]
+01:56:27 - Successor: [24|localhost|1400]
+01:56:27 - Pong got from node that is neither successor nor predecessor: 1100 (predecessor: [0|localhost|1600], successor: [24|localhost|1400])
+01:56:28 - Predecessor: [0|localhost|1600]
+01:56:28 - Successor: [24|localhost|1400]
+01:56:30 - Public set to: true
+01:56:30 - Waiting for lock
+01:56:30 - Broadcast 25 TOKEN_REQUEST to: 1400
+01:56:30 - Broadcast 25 TOKEN_REQUEST to: 1200
+01:56:30 - Broadcast 26 TOKEN_REQUEST to: 1400
+01:56:30 - Broadcast 26 TOKEN_REQUEST to: 1200
+01:56:30 - Broadcast 22 TOKEN_REQUEST to: 1400
+01:56:30 - Broadcast 22 TOKEN_REQUEST to: 1200
+01:56:30 - Added: tornado.jpg to predecessorBackup
+01:56:30 - =================JA IMAM TOKEN SADA==================
+01:56:30 - Acquired lock
+01:56:30 - Upload acquired lock
+01:56:30 - Sent put to [24|localhost|1400] for llama.jpg
+01:56:30 - Pausing for 10000 ms
+01:56:31 - =================NEMAM VISE TOKEN==================
+01:56:31 - Unlocked
+01:56:31 - Put unlock released lock
+01:56:32 - Sent put to [24|localhost|1400] for brod.jpg
+01:56:32 - Added: brod.jpg to successorBackup
+01:56:32 - =================JA IMAM TOKEN SADA==================
+01:56:35 - =================NEMAM VISE TOKEN==================
+01:56:37 - =================JA IMAM TOKEN SADA==================
+01:56:37 - =================NEMAM VISE TOKEN==================
+01:56:40 - =================JA IMAM TOKEN SADA==================
+01:56:40 - =================NEMAM VISE TOKEN==================
+01:56:40 - Broadcast 68 TOKEN_REQUEST to: 1400
+01:56:40 - Waiting for lock
+01:56:40 - Broadcast 81 TOKEN_REQUEST to: 1400
+01:56:40 - Broadcast 81 TOKEN_REQUEST to: 1200
+01:56:52 - 1400 might be dead !?
+01:56:52 - Broadcast 121 ASK_HAS_TOKEN to: 1400
+01:56:52 - Broadcast 121 ASK_HAS_TOKEN to: 1200
+01:56:52 - Waiting to get if the token is in the system
+01:56:59 - Token dissapeared. Creating new...
+01:56:59 - =================JA IMAM TOKEN SADA==================
+01:56:59 - Waiting for lock
+01:56:59 - Acquired lock
+01:56:59 - Quit finalized!
+01:56:59 - Node on port: 1600 has died :(
+01:56:59 - Predecessor: [48|localhost|1200]
+01:56:59 - Successor: [24|localhost|1400]
+01:56:59 - Added: tornado.jpg at key 56
+01:56:59 - Unlocked
+01:56:59 - Broadcast 132 UPDATE_AFTER_DEATH to: 1400
+01:56:59 - Broadcast 132 UPDATE_AFTER_DEATH to: 1200
+01:56:59 - Unlocked
+01:56:59 - Predecessor: [48|localhost|1200]
+01:56:59 - Successor: [24|localhost|1400]
+01:56:59 - Acquired lock
+01:56:59 - Broadcast 119 UPDATE_AFTER_DEATH to: 1400
+01:56:59 - Please wait...
+01:56:59 - Pausing for 5000 ms
+01:56:59 - Added: tornado.jpg at key 56
+01:56:59 - Sent put unlock to 1200
+01:56:59 - Predecessor: [48|localhost|1200]
+01:56:59 - Successor: [24|localhost|1400]
+01:56:59 - Unlocked
+01:57:00 - 1400 might be dead !?
+01:57:00 - Broadcast 145 ASK_HAS_TOKEN to: 1400
+01:57:00 - Broadcast 145 ASK_HAS_TOKEN to: 1200
+01:57:00 - Waiting to get if the token is in the system
+01:57:00 - Waiting for lock
+01:57:00 - Acquired lock
+01:57:00 - Quit finalized!
+01:57:00 - Node on port: 1200 has died :(
+01:57:00 - Predecessor: [28|localhost|1100]
+01:57:00 - Successor: [24|localhost|1400]
+01:57:00 - Broadcast 149 UPDATE_AFTER_DEATH to: 1400
+01:57:00 - Unlocked
+01:57:00 - Pong got from node that is neither successor nor predecessor: 1200 (predecessor: [28|localhost|1100], successor: [24|localhost|1400])
+01:57:00 - Predecessor: [24|localhost|1400]
+01:57:00 - Successor: [24|localhost|1400]
+01:57:00 - Broadcast 129 UPDATE_AFTER_DEATH to: 1400
+01:57:00 - Predecessor: [24|localhost|1400]
+01:57:00 - Successor: [24|localhost|1400]
+01:57:00 - Pong got from node that is neither successor nor predecessor: 1200 (predecessor: [24|localhost|1400], successor: [24|localhost|1400])
+01:57:04 - Stopping...
