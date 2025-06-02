@@ -26,6 +26,15 @@ public class BasicMessage implements Message {
 
 
 
+	public void setMessageId(int messageId) {
+		this.messageId = messageId;
+	}
+
+
+
+
+
+
 	public void setNextReceiver(ServentInfo nextReceiver) {
 		this.nextReceiver = nextReceiver;
 	}
@@ -36,8 +45,9 @@ public class BasicMessage implements Message {
 
 	//This gives us a unique id - incremented in every natural constructor.
 	private static AtomicInteger messageCounter = new AtomicInteger(0);
-	private final int messageId;
-	
+	private int messageId;
+
+
 	public BasicMessage(MessageType type, int senderPort, int receiverPort) {
 		this.type = type;
 		this.senderPort = senderPort;

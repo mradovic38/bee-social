@@ -24,7 +24,9 @@ public class UploadCommand implements CLICommand {
 			int key = Math.abs(path.hashCode() % ChordState.CHORD_SIZE);
 
 			// LOCK
-			AppConfig.chordState.mutex.lock(new HashSet<>(AppConfig.chordState.getAllNodeInfo().stream().map(ServentInfo::getListenerPort).toList()));
+			AppConfig.chordState.mutex.lock();
+			if(!AppConfig.isAlive.get())
+				return;
 
 			AppConfig.timestampedStandardPrint("Upload acquired lock");
 			AppConfig.chordState.putValue(key, path, AppConfig.myServentInfo.getListenerPort());

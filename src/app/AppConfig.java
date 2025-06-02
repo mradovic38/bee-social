@@ -20,6 +20,8 @@ public class AppConfig {
 	 * Convenience access for this servent's information
 	 */
 	public static ServentInfo myServentInfo;
+
+	public static AtomicBoolean isAlive = new AtomicBoolean(true);
 	
 	/**
 	 * Print a message to stdout with a timestamp

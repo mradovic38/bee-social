@@ -1,7 +1,9 @@
 package servent.handler.fault_tolerance;
 
 import app.AppConfig;
+import app.Broadcast;
 import servent.handler.MessageHandler;
+import servent.message.BasicMessage;
 import servent.message.Message;
 import servent.message.MessageType;
 import servent.message.fault_tolerance.PongMessage;
@@ -25,10 +27,17 @@ public class AskHasTokenHandler implements MessageHandler {
                 return;
             }
 
+            boolean hasToken = AppConfig.chordState.mutex.hasToken();
+
             // posalji tell
             Message tellMsg = new TellHasTokenMessage(AppConfig.myServentInfo.getListenerPort(),
-                    clientMessage.getSenderPort(), AppConfig.chordState.mutex.hasToken());
+                    clientMessage.getSenderPort(), hasToken);
             MessageUtil.sendMessage(tellMsg);
+
+            // rebroadcast
+            if(!hasToken) {
+                Broadcast.broadcastMessage((BasicMessage) clientMessage);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

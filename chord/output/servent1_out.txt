@@ -1,26 +1,48 @@
-22:05:14 - Starting servent [48|localhost|1200]
-22:05:15 - Pausing for 5000 ms
-22:05:15 - Waiting for lock
-22:05:15 - Acquired lock
-22:05:15 - Unlocked
-22:05:16 - Pong got from node that is neither successor nor predecessor: 1400 (predecessor: [28|localhost|1100], successor: [0|localhost|1600])
-22:05:20 - Sent follow request to: 1100
-22:05:20 - Waiting for lock
-22:05:20 - Added: llama.jpg at key 40
-22:05:20 - Sent put unlock to 1300
-22:05:20 - Acquired lock
-22:05:20 - Upload acquired lock
-22:05:20 - Sent put to [0|localhost|1600] for tornado.jpg
-22:05:20 - Pausing for 10000 ms
-22:05:20 - Unlocked
-22:05:20 - Put unlock released lock
-22:05:20 - Added: tornado.jpg to successorBackup
-22:05:21 - Added: dog.jpg at key 47
-22:05:21 - Sent put unlock to 1600
-22:05:21 - Sent put to [0|localhost|1600] for brod.jpg
-22:05:30 - Waiting for lock
-22:05:30 - Acquired lock
-22:05:30 - Unlocked
-22:05:30 - Retrieved the following images: [llama.jpg, dog.jpg]
-22:05:30 - Pausing for 5000 ms
-22:05:35 - Stopping...
+16:39:57 - Starting servent [48|localhost|1200]
+16:39:57 - Pausing for 5000 ms
+16:39:57 - First node in Chord system.
+16:39:57 - =================JA IMAM TOKEN SADA==================
+16:39:58 - =================NEMAM VISE TOKEN==================
+16:39:58 - Predecessor: [4|localhost|1300]
+16:39:58 - Successor: [4|localhost|1300]
+16:39:59 - Predecessor: [24|localhost|1400]
+16:39:59 - Successor: [4|localhost|1300]
+16:39:59 - Predecessor: [24|localhost|1400]
+16:39:59 - Successor: [0|localhost|1600]
+16:40:00 - Predecessor: [28|localhost|1100]
+16:40:00 - Successor: [0|localhost|1600]
+16:40:02 - Sent follow request to: 1100
+16:40:02 - Waiting for lock
+16:40:02 - Broadcast 17 TOKEN_REQUEST to: 1600
+16:40:02 - Broadcast 17 TOKEN_REQUEST to: 1400
+16:40:02 - Broadcast 22 TOKEN_REQUEST to: 1600
+16:40:02 - Broadcast 22 TOKEN_REQUEST to: 1400
+16:40:02 - Broadcast 16 TOKEN_REQUEST to: 1400
+16:40:02 - Sent put to [0|localhost|1600] for brod.jpg
+16:40:03 - =================JA IMAM TOKEN SADA==================
+16:40:03 - Acquired lock
+16:40:03 - Upload acquired lock
+16:40:03 - Sent put to [0|localhost|1600] for tornado.jpg
+16:40:03 - Pausing for 10000 ms
+16:40:03 - Added: tornado.jpg to successorBackup
+16:40:03 - =================NEMAM VISE TOKEN==================
+16:40:04 - Added: llama.jpg at key 40
+16:40:04 - Sent put unlock to 1300
+16:40:04 - Added: dog.jpg at key 47
+16:40:04 - Sent put unlock to 1600
+16:40:07 - Broadcast 31 TOKEN_REQUEST to: 1600
+16:40:07 - Broadcast 31 TOKEN_REQUEST to: 1400
+16:40:08 - Broadcast 48 TOKEN_REQUEST to: 1400
+16:40:12 - Broadcast 75 TOKEN_REQUEST to: 1600
+16:40:13 - Waiting for lock
+16:40:13 - Broadcast 58 TOKEN_REQUEST to: 1600
+16:40:13 - Broadcast 58 TOKEN_REQUEST to: 1400
+16:40:13 - =================JA IMAM TOKEN SADA==================
+16:40:13 - Acquired lock
+16:40:13 - Unlocked
+16:40:13 - Retrieved the following images: [llama.jpg, dog.jpg]
+16:40:13 - Pausing for 5000 ms
+16:40:13 - =================NEMAM VISE TOKEN==================
+16:40:14 - Broadcast 81 TOKEN_REQUEST to: 1600
+16:40:14 - Broadcast 81 TOKEN_REQUEST to: 1400
+16:40:18 - Stopping...

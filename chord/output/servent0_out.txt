@@ -1,26 +1,36 @@
-22:05:14 - Starting servent [28|localhost|1100]
-22:05:15 - Pausing for 5000 ms
-22:05:16 - Waiting for lock
-22:05:16 - Acquired lock
-22:05:17 - Unlocked
-22:05:20 - Public set to: false
-22:05:20 - Waiting for lock
-22:05:20 - Sent put to [48|localhost|1200] for llama.jpg
-22:05:20 - Added: llama.jpg to successorBackup
-22:05:21 - Sent put to [48|localhost|1200] for dog.jpg
-22:05:21 - Added: dog.jpg to successorBackup
-22:05:21 - Acquired lock
-22:05:21 - Upload acquired lock
-22:05:21 - Sent put to [48|localhost|1200] for brod.jpg
-22:05:21 - Pausing for 5000 ms
-22:05:21 - Added: brod.jpg to predecessorBackup
-22:05:21 - Unlocked
-22:05:21 - Put unlock released lock
-22:05:26 - Pending follows: [1200]
-22:05:26 - Pausing for 20 ms
-22:05:26 - Follow request accepted from: 1200
-22:05:26 - Waiting for lock
-22:05:26 - Acquired lock
-22:05:26 - Please wait...
-22:05:26 - Pausing for 10000 ms
-22:05:26 - Unlocked
+16:39:57 - Starting servent [28|localhost|1100]
+16:39:57 - Pausing for 5000 ms
+16:39:59 - Waiting for lock
+16:40:00 - =================JA IMAM TOKEN SADA==================
+16:40:00 - Acquired lock
+16:40:00 - Predecessor: [24|localhost|1400]
+16:40:00 - Successor: [48|localhost|1200]
+16:40:02 - Public set to: false
+16:40:02 - Waiting for lock
+16:40:02 - Acquired lock
+16:40:02 - Upload acquired lock
+16:40:02 - Sent put to [48|localhost|1200] for brod.jpg
+16:40:02 - Pausing for 5000 ms
+16:40:03 - Added: brod.jpg to predecessorBackup
+16:40:03 - =================NEMAM VISE TOKEN==================
+16:40:04 - Sent put to [48|localhost|1200] for llama.jpg
+16:40:04 - Added: llama.jpg to successorBackup
+16:40:04 - Sent put to [48|localhost|1200] for dog.jpg
+16:40:04 - Added: dog.jpg to successorBackup
+16:40:07 - Pending follows: [1200]
+16:40:07 - Pausing for 20 ms
+16:40:07 - Follow request accepted from: 1200
+16:40:07 - Waiting for lock
+16:40:07 - Broadcast 31 TOKEN_REQUEST to: 1200
+16:40:07 - Broadcast 31 TOKEN_REQUEST to: 1600
+16:40:08 - =================JA IMAM TOKEN SADA==================
+16:40:08 - Acquired lock
+16:40:08 - Please wait...
+16:40:08 - Pausing for 10000 ms
+16:40:08 - =================NEMAM VISE TOKEN==================
+16:40:12 - Broadcast 75 TOKEN_REQUEST to: 1200
+16:40:12 - Broadcast 75 TOKEN_REQUEST to: 1600
+16:40:13 - Broadcast 58 TOKEN_REQUEST to: 1600
+16:40:14 - Broadcast 81 TOKEN_REQUEST to: 1200
+16:40:14 - Broadcast 81 TOKEN_REQUEST to: 1600
+16:40:18 - Stopping...

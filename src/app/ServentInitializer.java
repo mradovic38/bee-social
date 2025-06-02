@@ -98,6 +98,8 @@ public class ServentInitializer implements Runnable {
 			// novi node -> lock
 
 			AppConfig.chordState.mutex.lock(broadcastPorts);
+			if(!AppConfig.isAlive.get())
+				return;
 
 
 			NewNodeMessage nnm = new NewNodeMessage(AppConfig.myServentInfo.getListenerPort(), someServentPort);

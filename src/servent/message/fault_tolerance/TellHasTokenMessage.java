@@ -9,7 +9,7 @@ public class TellHasTokenMessage extends BasicMessage {
 
     private final boolean hasToken;
     public TellHasTokenMessage(int senderPort, int receiverPort, boolean hasToken) {
-        super(MessageType.PING, senderPort, receiverPort);
+        super(MessageType.TELL_HAS_TOKEN, senderPort, receiverPort);
         this.hasToken = hasToken;
     }
 

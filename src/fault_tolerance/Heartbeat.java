@@ -1,10 +1,8 @@
 package fault_tolerance;
 
-import app.AppConfig;
-import app.Cancellable;
-import app.ImageEntry;
-import app.ServentInfo;
+import app.*;
 import mutex.suzuki_kasami.SuzukiKasamiToken;
+import servent.message.BasicMessage;
 import servent.message.Message;
 import servent.message.fault_tolerance.AskHasTokenMessage;
 import servent.message.fault_tolerance.PingMessage;
@@ -45,6 +43,9 @@ public class Heartbeat implements Runnable, Cancellable{
     public void run() {
         while (working) {
             try {
+                if(!AppConfig.isAlive.get())
+                    return;
+
                 ServentInfo predecessor = AppConfig.chordState.getPredecessor();
                 ServentInfo successor = AppConfig.chordState.getSuccessorTable()[0];
 
@@ -99,14 +100,9 @@ public class Heartbeat implements Runnable, Cancellable{
             noTokenCount = new AtomicInteger(0);
             someoneHasToken = new AtomicBoolean(false);
 
-            for (ServentInfo serventInfo : AppConfig.chordState.getAllNodeInfo()) {
-                if(serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort()
-                        && serventInfo.getListenerPort() != checkInfo.getListenerPort()){
-                    Message askMsg = new AskHasTokenMessage(AppConfig.myServentInfo.getListenerPort(), serventInfo.getListenerPort());
-                    MessageUtil.sendMessage(askMsg);
-                    totalCnt++;
-                }
-            }
+
+            BasicMessage askMsg = new AskHasTokenMessage(AppConfig.myServentInfo.getListenerPort(), AppConfig.myServentInfo.getListenerPort());
+            Broadcast.broadcastMessage(askMsg);
 
             // ako se desi neki edge case da se ne ceka zauvek
             int wait = 10000;
@@ -129,8 +125,10 @@ public class Heartbeat implements Runnable, Cancellable{
             }
 
             //  uzmi lock
-            AppConfig.chordState.mutex.lock(AppConfig.chordState.getAllNodeInfo().stream()
-                    .map(ServentInfo::getListenerPort).collect(Collectors.toSet()));
+
+            AppConfig.chordState.mutex.urgentLock();
+            if(!AppConfig.isAlive.get())
+                return;
 
             // SALJI BOOTSTRAPU DA OBRISE
             informBootstrap(checkInfo.getListenerPort());
@@ -155,14 +153,8 @@ public class Heartbeat implements Runnable, Cancellable{
             backup.clear();
 
             // Broadcastuj drugima da urade update
-            for (ServentInfo serventInfo : AppConfig.chordState.getAllNodeInfo()) {
-                if (serventInfo.getListenerPort() != AppConfig.myServentInfo.getListenerPort() &&
-                    checkInfo.getListenerPort() != serventInfo.getListenerPort()) {
-                    Message uadMsg = new UpdateAfterDeathMessage(AppConfig.myServentInfo.getListenerPort(), serventInfo.getListenerPort(), checkInfo);
-
-                    MessageUtil.sendMessage(uadMsg);
-                }
-            }
+            BasicMessage uadMsg = new UpdateAfterDeathMessage(AppConfig.myServentInfo.getListenerPort(), AppConfig.myServentInfo.getListenerPort(), checkInfo);
+            Broadcast.broadcastMessage(uadMsg);
 
             // stavi alive jer smo ga sredili
             nodeHealthInfo.setNodeStatus(NodeStatus.ALIVE);

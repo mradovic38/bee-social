@@ -1,7 +1,5 @@
 package servent.message.mutex;
 
-import app.AppConfig;
-import app.ChordState;
 import servent.message.BasicMessage;
 import servent.message.MessageType;
 
@@ -18,13 +16,17 @@ public class SuzukiKasamiRequestTokenMessage extends BasicMessage {
 
     }
 
-    public SuzukiKasamiRequestTokenMessage(int senderPort, int receiverPort, int rnVal, boolean isNew) {
-        super(MessageType.TOKEN_REQUEST, senderPort, receiverPort);
-        this.rnVal = rnVal;
-        setNextReceiver(AppConfig.chordState.getNextNodeForKey(ChordState.chordHash(getReceiverPort())));
-    }
 
     public int getRnVal() {
         return rnVal;
     }
+
+    public BasicMessage deepCopy(){
+        BasicMessage msg = new SuzukiKasamiRequestTokenMessage(getSenderPort(), getReceiverPort(), rnVal);
+        msg.setNextReceiver(getNextReceiver());
+        msg.setMessageId(getMessageId());
+
+        return msg;
+    }
+
 }

@@ -17,6 +17,14 @@ public class UpdateAfterDeathMessage extends BasicMessage {
         this.deadServentInfo = deadServentInfo;
         setNextReceiver(AppConfig.chordState.getNextNodeForKey(ChordState.chordHash(receiverPort)));
     }
+    public BasicMessage deepCopy() {
+        BasicMessage newMsg = new UpdateAfterDeathMessage(getSenderPort(), getReceiverPort(), deadServentInfo);
+        newMsg.setMessageId(this.getMessageId());
+        newMsg.setNextReceiver(this.getNextReceiver());
+
+        return newMsg;
+    }
+
 
     public ServentInfo getDeadServentInfo() {
         return deadServentInfo;

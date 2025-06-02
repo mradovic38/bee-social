@@ -1,21 +1,49 @@
-22:05:14 - Starting servent [0|localhost|1600]
-22:05:15 - Pausing for 5000 ms
-22:05:15 - First node in Chord system.
-22:05:20 - Waiting for lock
-22:05:20 - Added: llama.jpg to predecessorBackup
-22:05:20 - Added: tornado.jpg at key 56
-22:05:20 - Sent put unlock to 1200
-22:05:20 - Acquired lock
-22:05:20 - Upload acquired lock
-22:05:20 - Sent put to [24|localhost|1400] for dog.jpg
-22:05:20 - Pausing for 4000 ms
-22:05:21 - Unlocked
-22:05:21 - Put unlock released lock
-22:05:21 - Added: dog.jpg to predecessorBackup
-22:05:21 - Sent put to [4|localhost|1300] for brod.jpg
-22:05:24 - Waiting for lock
-22:05:25 - Acquired lock
-22:05:25 - Unlocked
-22:05:25 - Retrieved the following images: [tornado.jpg]
-22:05:25 - Pausing for 6000 ms
-22:05:31 - Stopping...
+16:39:57 - Starting servent [0|localhost|1600]
+16:39:57 - Pausing for 5000 ms
+16:39:59 - Waiting for lock
+16:39:59 - =================JA IMAM TOKEN SADA==================
+16:39:59 - Acquired lock
+16:39:59 - Predecessor: [48|localhost|1200]
+16:39:59 - Successor: [4|localhost|1300]
+16:39:59 - =================NEMAM VISE TOKEN==================
+16:40:00 - Predecessor: [48|localhost|1200]
+16:40:00 - Successor: [4|localhost|1300]
+16:40:02 - Waiting for lock
+16:40:02 - Broadcast 16 TOKEN_REQUEST to: 1300
+16:40:02 - Broadcast 16 TOKEN_REQUEST to: 1400
+16:40:02 - Broadcast 16 TOKEN_REQUEST to: 1200
+16:40:02 - Broadcast 17 TOKEN_REQUEST to: 1300
+16:40:02 - Broadcast 17 TOKEN_REQUEST to: 1400
+16:40:03 - Broadcast 22 TOKEN_REQUEST to: 1400
+16:40:03 - Broadcast 22 TOKEN_REQUEST to: 1200
+16:40:03 - Sent put to [4|localhost|1300] for brod.jpg
+16:40:03 - Added: tornado.jpg at key 56
+16:40:03 - Sent put unlock to 1200
+16:40:04 - Added: llama.jpg to predecessorBackup
+16:40:04 - =================JA IMAM TOKEN SADA==================
+16:40:04 - Acquired lock
+16:40:04 - Upload acquired lock
+16:40:04 - Sent put to [24|localhost|1400] for dog.jpg
+16:40:04 - Pausing for 4000 ms
+16:40:04 - Added: dog.jpg to predecessorBackup
+16:40:07 - =================NEMAM VISE TOKEN==================
+16:40:08 - Broadcast 31 TOKEN_REQUEST to: 1300
+16:40:08 - Broadcast 31 TOKEN_REQUEST to: 1400
+16:40:08 - Broadcast 31 TOKEN_REQUEST to: 1200
+16:40:08 - Waiting for lock
+16:40:08 - Broadcast 48 TOKEN_REQUEST to: 1300
+16:40:08 - Broadcast 48 TOKEN_REQUEST to: 1400
+16:40:08 - Broadcast 48 TOKEN_REQUEST to: 1200
+16:40:08 - =================JA IMAM TOKEN SADA==================
+16:40:08 - Acquired lock
+16:40:08 - Unlocked
+16:40:08 - Retrieved the following images: [tornado.jpg]
+16:40:08 - Pausing for 6000 ms
+16:40:12 - =================NEMAM VISE TOKEN==================
+16:40:13 - Broadcast 75 TOKEN_REQUEST to: 1300
+16:40:13 - Broadcast 75 TOKEN_REQUEST to: 1200
+16:40:13 - Broadcast 58 TOKEN_REQUEST to: 1300
+16:40:13 - Broadcast 58 TOKEN_REQUEST to: 1400
+16:40:14 - Broadcast 81 TOKEN_REQUEST to: 1400
+16:40:14 - Broadcast 81 TOKEN_REQUEST to: 1200
+16:40:14 - Stopping...

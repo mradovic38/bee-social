@@ -51,7 +51,9 @@ public class QuitCommand implements CLICommand{
 
 
         // udji u kriticnu sekciju
-        AppConfig.chordState.mutex.lock(new HashSet<>(AppConfig.chordState.getAllNodeInfo().stream().map(ServentInfo::getListenerPort).toList()));
+        AppConfig.chordState.mutex.lock();
+        if(!AppConfig.isAlive.get())
+            return;
 
         // Sad je token kod nas, treba da ga se otarasimo tako sto cemo ga poslati kroz poruku
         SuzukiKasamiToken token = AppConfig.chordState.mutex.getToken();

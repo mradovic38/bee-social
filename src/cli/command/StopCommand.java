@@ -25,6 +25,7 @@ public class StopCommand implements CLICommand {
 		parser.stop();
 		listener.stop();
 		AppConfig.chordState.heartbeat.stop();
+		AppConfig.isAlive.set(false);
 	}
 
 }

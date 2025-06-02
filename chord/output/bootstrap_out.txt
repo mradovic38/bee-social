@@ -1,16 +1,16 @@
-22:05:12 - Bootstrap server started on port: 2000
-22:05:15 - Added first servent: 1600
-22:05:15 - join lock released
-22:05:15 - join lock acquired for node on port: 1200
-22:05:15 - Added 1200
-22:05:15 - join lock released
-22:05:15 - join lock acquired for node on port: 1400
-22:05:16 - Added 1400
-22:05:16 - join lock released
-22:05:16 - join lock acquired for node on port: 1100
-22:05:16 - Added 1100
-22:05:16 - join lock released
-22:05:17 - join lock acquired for node on port: 1300
-22:05:17 - Added 1300
-22:05:17 - join lock released
+16:39:55 - Bootstrap server started on port: 2000
+16:39:57 - Added first servent: 1200
+16:39:57 - join lock released
+16:39:57 - join lock acquired for node on port: 1300
+16:39:58 - Added 1300
+16:39:58 - join lock released
+16:39:58 - join lock acquired for node on port: 1400
+16:39:58 - Added 1400
+16:39:58 - join lock released
+16:39:59 - join lock acquired for node on port: 1600
+16:39:59 - Added 1600
+16:39:59 - join lock released
+16:39:59 - join lock acquired for node on port: 1100
+16:40:00 - Added 1100
+16:40:00 - join lock released
 No more input. Exiting CLIWorker.

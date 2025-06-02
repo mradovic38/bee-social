@@ -22,7 +22,10 @@ public class ListFilesCommand implements CLICommand {
 
 			int port = Integer.parseInt(data[1]);
 
-			AppConfig.chordState.mutex.lock(AppConfig.chordState.getAllNodeInfo().stream().map(ServentInfo::getListenerPort).collect(Collectors.toSet()));
+			AppConfig.chordState.mutex.lock();
+
+			if(!AppConfig.isAlive.get())
+				return;
 
 			// trazili smo nase, vrati nase ne moras da saljes poruku
 			if(port == AppConfig.myServentInfo.getListenerPort()){

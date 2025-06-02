@@ -1,16 +1,12 @@
 package servent.handler.mutex;
 
 import app.AppConfig;
+import app.Broadcast;
 import app.ChordState;
-import app.ServentInfo;
 import servent.handler.MessageHandler;
 import servent.message.Message;
 import servent.message.MessageType;
 import servent.message.mutex.SuzukiKasamiRequestTokenMessage;
-import servent.message.util.MessageUtil;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
 
@@ -37,8 +33,12 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
                 return;
             }
 
+
+
             // dohvati podatke iz poruke
             SuzukiKasamiRequestTokenMessage reqMessage = (SuzukiKasamiRequestTokenMessage) clientMessage;
+
+
 
             int senderRNVal = reqMessage.getRnVal();
             int senderId = ChordState.chordHash(clientMessage.getSenderPort());
@@ -62,6 +62,11 @@ public class SuzukiKasamiRequestTokenHandler implements MessageHandler {
                 if (!AppConfig.chordState.mutex.inCritialSection()){
                     AppConfig.chordState.mutex.checkQueue();
                 }
+            }
+            // rebroadcast
+            else if(reqMessage.getNextReceiver() != null){
+//                AppConfig.timestampedStandardPrint("Re");
+                Broadcast.broadcastMessage(reqMessage);
             }
 
 

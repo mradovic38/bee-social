@@ -1,8 +1,10 @@
 package servent.handler.fault_tolerance;
 
 import app.AppConfig;
+import app.Broadcast;
 import app.ChordState;
 import servent.handler.MessageHandler;
+import servent.message.BasicMessage;
 import servent.message.Message;
 import servent.message.MessageType;
 import servent.message.fault_tolerance.PongMessage;
@@ -29,6 +31,10 @@ public class UpdateAfterDeathHandler implements MessageHandler {
             UpdateAfterDeathMessage updateAfterDeathMessage = (UpdateAfterDeathMessage) clientMessage;
 
             AppConfig.chordState.removeNode(updateAfterDeathMessage.getDeadServentInfo().getChordId());
+
+            // rebroadcast
+            Broadcast.broadcastMessage((BasicMessage) clientMessage);
+
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -290,6 +290,9 @@ public class ChordState {
 				}
 			}
 		}
+
+		AppConfig.timestampedStandardPrint("Predecessor: " + predecessorInfo);
+		AppConfig.timestampedStandardPrint("Successor: " + successorTable[0]);
 		
 	}
 
@@ -326,9 +329,9 @@ public class ChordState {
 		allNodeInfo.addAll(newList);
 		allNodeInfo.addAll(newList2);
 		if (newList2.size() > 0) {
-			predecessorInfo = newList2.get(newList2.size()-1);
+			predecessorInfo = newList2.getLast();
 		} else {
-			predecessorInfo = newList.get(newList.size()-1);
+			predecessorInfo = newList.getLast();
 		}
 		
 		updateSuccessorTable();
