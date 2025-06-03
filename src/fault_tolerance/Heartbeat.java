@@ -173,7 +173,6 @@ public class Heartbeat implements Runnable, Cancellable{
             bsWriter.write("Quit\n" + port + "\n");
             bsWriter.flush();
             bsSocket.close();
-            AppConfig.timestampedStandardPrint("Quit finalized!");
         }
         catch (Exception e) {
             e.printStackTrace();
