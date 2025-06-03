@@ -1,102 +1,46 @@
-02:07:26 - Starting servent [24|localhost|1400]
-02:07:26 - Heartbeat started <3
-02:07:26 - Pausing for 5000 ms
-02:07:26 - Waiting for lock
-02:07:26 - =================JA IMAM TOKEN SADA==================
-02:07:26 - Acquired lock
-02:07:26 - Predecessor: [4|localhost|1300]
-02:07:26 - Successor: [4|localhost|1300]
-02:07:26 - Unlocked
-02:07:27 - =================NEMAM VISE TOKEN==================
-02:07:27 - Predecessor: [4|localhost|1300]
-02:07:27 - Successor: [28|localhost|1100]
-02:07:28 - Predecessor: [4|localhost|1300]
-02:07:28 - Successor: [28|localhost|1100]
-02:07:28 - Predecessor: [4|localhost|1300]
-02:07:28 - Successor: [28|localhost|1100]
-02:07:31 - Pausing for 10000 ms
-02:07:31 - Sent put to [28|localhost|1100] for dog.jpg
-02:07:31 - Broadcast 27 TOKEN_REQUEST to: 1100
-02:07:31 - Broadcast 27 TOKEN_REQUEST to: 1200
-02:07:31 - Broadcast 27 TOKEN_REQUEST to: 1600
-02:07:31 - Broadcast 22 TOKEN_REQUEST to: 1100
-02:07:31 - Broadcast 22 TOKEN_REQUEST to: 1600
-02:07:31 - Broadcast 18 TOKEN_REQUEST to: 1200
-02:07:31 - Broadcast 18 TOKEN_REQUEST to: 1600
-02:07:32 - Added: brod.jpg at key 24
-02:07:32 - Sent put unlock to 1100
-02:07:35 - Broadcast 38 TOKEN_REQUEST to: 1100
-02:07:35 - Broadcast 38 TOKEN_REQUEST to: 1200
-02:07:37 - Broadcast 52 TOKEN_REQUEST to: 1200
-02:07:37 - Broadcast 52 TOKEN_REQUEST to: 1600
-02:07:37 - Sent put to [28|localhost|1100] for llama.jpg
-02:07:41 - Waiting for lock
-02:07:41 - Broadcast 79 TOKEN_REQUEST to: 1100
-02:07:41 - Broadcast 79 TOKEN_REQUEST to: 1200
-02:07:41 - Broadcast 79 TOKEN_REQUEST to: 1600
-02:07:41 - Broadcast 87 TOKEN_REQUEST to: 1100
-02:07:41 - Broadcast 87 TOKEN_REQUEST to: 1600
-02:07:47 - Broadcast 104 TOKEN_REQUEST to: 1100
-02:07:47 - Broadcast 104 TOKEN_REQUEST to: 1200
-02:07:47 - Broadcast 104 TOKEN_REQUEST to: 1600
-02:07:58 - Broadcast 140 ASK_HAS_TOKEN to: 1100
-02:07:58 - Broadcast 140 ASK_HAS_TOKEN to: 1200
-02:07:58 - Broadcast 140 ASK_HAS_TOKEN to: 1600
-02:07:58 - Broadcast 144 ASK_HAS_TOKEN to: 1100
-02:07:58 - Broadcast 144 ASK_HAS_TOKEN to: 1600
-02:08:02 - 1300 might be dead !?
-02:08:02 - Broadcast 170 ASK_HAS_TOKEN to: 1100
-02:08:02 - Broadcast 170 ASK_HAS_TOKEN to: 1200
-02:08:02 - Broadcast 170 ASK_HAS_TOKEN to: 1600
-02:08:02 - Waiting to get if the token is in the system
-02:08:05 - Predecessor: [4|localhost|1300]
-02:08:05 - Successor: [28|localhost|1100]
-02:08:05 - Broadcast 154 UPDATE_AFTER_DEATH to: 1100
-02:08:05 - Broadcast 154 UPDATE_AFTER_DEATH to: 1300
-02:08:05 - Added: tornado.jpg to predecessorBackup
-02:08:05 - Predecessor: [4|localhost|1300]
-02:08:05 - Successor: [28|localhost|1100]
-02:08:05 - Broadcast 150 UPDATE_AFTER_DEATH to: 1100
-02:08:05 - Broadcast 150 UPDATE_AFTER_DEATH to: 1200
-02:08:05 - Predecessor: [4|localhost|1300]
-02:08:05 - Successor: [28|localhost|1100]
-02:08:05 - Added: tornado.jpg to predecessorBackup
-02:08:05 - Predecessor: [4|localhost|1300]
-02:08:05 - Successor: [28|localhost|1100]
-02:08:06 - Broadcast 160 ASK_HAS_TOKEN to: 1100
-02:08:06 - Broadcast 160 ASK_HAS_TOKEN to: 1300
-02:08:06 - Broadcast 162 ASK_HAS_TOKEN to: 1100
-02:08:06 - Broadcast 162 ASK_HAS_TOKEN to: 1200
-02:08:06 - Predecessor: [4|localhost|1300]
-02:08:06 - Successor: [48|localhost|1200]
-02:08:06 - Broadcast 165 UPDATE_AFTER_DEATH to: 1300
-02:08:06 - Predecessor: [4|localhost|1300]
-02:08:06 - Successor: [4|localhost|1300]
-02:08:06 - Predecessor: [4|localhost|1300]
-02:08:06 - Successor: [4|localhost|1300]
-02:08:07 - Broadcast 173 ASK_HAS_TOKEN to: 1300
-02:08:09 - Token dissapeared. Creating new...
-02:08:09 - =================JA IMAM TOKEN SADA==================
-02:08:09 - Waiting for lock
-02:08:09 - Acquired lock
-02:08:09 - Quit finalized!
-02:08:09 - Node on port: 1100 has died :(
-02:08:09 - Predecessor: [4|localhost|1300]
-02:08:09 - Successor: [4|localhost|1300]
-02:08:09 - Broadcast 195 UPDATE_AFTER_DEATH to: 1300
-02:08:09 - Unlocked
-02:08:09 - Acquired lock
-02:08:09 - Unlocked
-02:08:09 - Retrieved the following images: [brod.jpg]
-02:08:09 - Pausing for 15000 ms
-02:08:17 - 1300 might be dead !?
-02:08:17 - Broadcast 216 ASK_HAS_TOKEN to: 1300
-02:08:17 - Waiting to get if the token is in the system
-02:08:24 - Token dissapeared. Creating new...
-02:08:24 - =================JA IMAM TOKEN SADA==================
-02:08:24 - Waiting for lock
-02:08:24 - Acquired lock
-02:08:24 - Quit finalized!
-02:08:24 - Node on port: 1300 has died :(
-02:08:24 - Unlocked
-02:08:24 - Stopping...
+10:27:15 - Starting servent [24|localhost|1400]
+10:27:15 - Heartbeat started <3
+10:27:15 - Pausing for 5000 ms
+10:27:17 - Waiting for lock
+10:27:18 - =================JA IMAM TOKEN SADA==================
+10:27:18 - Acquired lock
+10:27:18 - Predecessor: [4|localhost|1300]
+10:27:18 - Successor: [28|localhost|1100]
+10:27:18 - Unlocked
+10:27:20 - Pausing for 10000 ms
+10:27:21 - =================NEMAM VISE TOKEN==================
+10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1100
+10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1200
+10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1600
+10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1100
+10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1600
+10:27:21 - Broadcast 23 TOKEN_REQUEST to: 1100
+10:27:21 - Broadcast 23 TOKEN_REQUEST to: 1200
+10:27:21 - Broadcast 21 TOKEN_REQUEST to: 1200
+10:27:21 - Broadcast 21 TOKEN_REQUEST to: 1600
+10:27:21 - Sent put to [28|localhost|1100] for dog.jpg
+10:27:22 - Sent put to [28|localhost|1100] for llama.jpg
+10:27:22 - Added: brod.jpg at key 24
+10:27:22 - Sent put unlock to 1100
+10:27:25 - Broadcast 59 TOKEN_REQUEST to: 1100
+10:27:25 - Broadcast 59 TOKEN_REQUEST to: 1200
+10:27:27 - Broadcast 59 TOKEN_REQUEST to: 1200
+10:27:27 - Broadcast 59 TOKEN_REQUEST to: 1600
+10:27:30 - Waiting for lock
+10:27:30 - Broadcast 73 TOKEN_REQUEST to: 1100
+10:27:30 - Broadcast 73 TOKEN_REQUEST to: 1200
+10:27:30 - Broadcast 73 TOKEN_REQUEST to: 1600
+10:27:31 - =================JA IMAM TOKEN SADA==================
+10:27:31 - Acquired lock
+10:27:31 - Unlocked
+10:27:31 - Retrieved the following images: [brod.jpg]
+10:27:31 - Pausing for 15000 ms
+10:27:32 - =================NEMAM VISE TOKEN==================
+10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1100
+10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1200
+10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1600
+10:27:33 - Broadcast 101 TOKEN_REQUEST to: 1100
+10:27:33 - Broadcast 101 TOKEN_REQUEST to: 1600
+10:27:42 - Broadcast 128 ASK_HAS_TOKEN to: 1100
+10:27:42 - Broadcast 128 ASK_HAS_TOKEN to: 1600
+10:27:46 - Stopping...

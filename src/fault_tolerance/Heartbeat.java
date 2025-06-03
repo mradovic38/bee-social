@@ -94,33 +94,36 @@ public class Heartbeat implements Runnable, Cancellable{
 
             AppConfig.timestampedStandardPrint(buddyInfo.getListenerPort() + " might be dead !?");
 
-            // da li je node koji je nestao imao lock. ako zauvek cekamo moramo da napravimo novi token
-            someoneHasToken = new AtomicBoolean(false);
+            // ako mi nemamo lock
+            if(!AppConfig.chordState.mutex.hasToken()) {
 
-            BasicMessage askMsg = new AskHasTokenMessage(AppConfig.myServentInfo.getListenerPort(), AppConfig.myServentInfo.getListenerPort());
-            Broadcast.broadcastMessage(askMsg);
+                // da li je node koji je nestao imao lock. ako zauvek cekamo moramo da napravimo novi token
+                someoneHasToken = new AtomicBoolean(false);
 
-            // ako se desi neki edge case da se ne ceka zauvek
-            int wait = SOMEONE_HAS_TOKEN_WAIT;
-            // sacekaj da dobijes odg od svih
-            AppConfig.timestampedStandardPrint("Waiting to get if the token is in the system");
-            while(wait >= 0 && !someoneHasToken.get() && AppConfig.isAlive.get()){
-                try {
-                    wait -= 30;
-                    Thread.sleep(30);
+                BasicMessage askMsg = new AskHasTokenMessage(AppConfig.myServentInfo.getListenerPort(), AppConfig.myServentInfo.getListenerPort());
+                Broadcast.broadcastMessage(askMsg);
+
+                // ako se desi neki edge case da se ne ceka zauvek
+                int wait = SOMEONE_HAS_TOKEN_WAIT;
+                // sacekaj da dobijes odg od svih
+                AppConfig.timestampedStandardPrint("Waiting to get if the token is in the system");
+                while (wait >= 0 && !someoneHasToken.get() && AppConfig.isAlive.get()) {
+                    try {
+                        wait -= 30;
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
+
+                if (!AppConfig.isAlive.get())
+                    return;
+
+                // ako je imao (niko nije vratio da je imao) => napravi novi token
+                if (!someoneHasToken.get()) {
+                    AppConfig.timestampedStandardPrint("Token dissapeared. Creating new...");
+                    AppConfig.chordState.mutex.setToken(new SuzukiKasamiToken());
                 }
-            }
-
-            if(!AppConfig.isAlive.get())
-                return;
-
-            // ako je imao (niko nije vratio da je imao) => napravi novi token
-            if(!someoneHasToken.get()){
-                AppConfig.timestampedStandardPrint("Token dissapeared. Creating new...");
-                AppConfig.chordState.mutex.setToken(new SuzukiKasamiToken());
             }
 
             //  uzmi lock
