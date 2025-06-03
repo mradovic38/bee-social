@@ -1,92 +1,87 @@
-01:56:25 - Starting servent [4|localhost|1300]
-01:56:25 - Heartbeat started <3
-01:56:25 - Pausing for 5000 ms
-01:56:25 - First node in Chord system.
-01:56:25 - =================JA IMAM TOKEN SADA==================
-01:56:25 - =================NEMAM VISE TOKEN==================
-01:56:26 - Predecessor: [0|localhost|1600]
-01:56:26 - Successor: [0|localhost|1600]
-01:56:26 - Predecessor: [0|localhost|1600]
-01:56:26 - Successor: [28|localhost|1100]
-01:56:27 - Predecessor: [0|localhost|1600]
-01:56:27 - Successor: [24|localhost|1400]
-01:56:27 - Pong got from node that is neither successor nor predecessor: 1100 (predecessor: [0|localhost|1600], successor: [24|localhost|1400])
-01:56:28 - Predecessor: [0|localhost|1600]
-01:56:28 - Successor: [24|localhost|1400]
-01:56:30 - Public set to: true
-01:56:30 - Waiting for lock
-01:56:30 - Broadcast 25 TOKEN_REQUEST to: 1400
-01:56:30 - Broadcast 25 TOKEN_REQUEST to: 1200
-01:56:30 - Broadcast 26 TOKEN_REQUEST to: 1400
-01:56:30 - Broadcast 26 TOKEN_REQUEST to: 1200
-01:56:30 - Broadcast 22 TOKEN_REQUEST to: 1400
-01:56:30 - Broadcast 22 TOKEN_REQUEST to: 1200
-01:56:30 - Added: tornado.jpg to predecessorBackup
-01:56:30 - =================JA IMAM TOKEN SADA==================
-01:56:30 - Acquired lock
-01:56:30 - Upload acquired lock
-01:56:30 - Sent put to [24|localhost|1400] for llama.jpg
-01:56:30 - Pausing for 10000 ms
-01:56:31 - =================NEMAM VISE TOKEN==================
-01:56:31 - Unlocked
-01:56:31 - Put unlock released lock
-01:56:32 - Sent put to [24|localhost|1400] for brod.jpg
-01:56:32 - Added: brod.jpg to successorBackup
-01:56:32 - =================JA IMAM TOKEN SADA==================
-01:56:35 - =================NEMAM VISE TOKEN==================
-01:56:37 - =================JA IMAM TOKEN SADA==================
-01:56:37 - =================NEMAM VISE TOKEN==================
-01:56:40 - =================JA IMAM TOKEN SADA==================
-01:56:40 - =================NEMAM VISE TOKEN==================
-01:56:40 - Broadcast 68 TOKEN_REQUEST to: 1400
-01:56:40 - Waiting for lock
-01:56:40 - Broadcast 81 TOKEN_REQUEST to: 1400
-01:56:40 - Broadcast 81 TOKEN_REQUEST to: 1200
-01:56:52 - 1400 might be dead !?
-01:56:52 - Broadcast 121 ASK_HAS_TOKEN to: 1400
-01:56:52 - Broadcast 121 ASK_HAS_TOKEN to: 1200
-01:56:52 - Waiting to get if the token is in the system
-01:56:59 - Token dissapeared. Creating new...
-01:56:59 - =================JA IMAM TOKEN SADA==================
-01:56:59 - Waiting for lock
-01:56:59 - Acquired lock
-01:56:59 - Quit finalized!
-01:56:59 - Node on port: 1600 has died :(
-01:56:59 - Predecessor: [48|localhost|1200]
-01:56:59 - Successor: [24|localhost|1400]
-01:56:59 - Added: tornado.jpg at key 56
-01:56:59 - Unlocked
-01:56:59 - Broadcast 132 UPDATE_AFTER_DEATH to: 1400
-01:56:59 - Broadcast 132 UPDATE_AFTER_DEATH to: 1200
-01:56:59 - Unlocked
-01:56:59 - Predecessor: [48|localhost|1200]
-01:56:59 - Successor: [24|localhost|1400]
-01:56:59 - Acquired lock
-01:56:59 - Broadcast 119 UPDATE_AFTER_DEATH to: 1400
-01:56:59 - Please wait...
-01:56:59 - Pausing for 5000 ms
-01:56:59 - Added: tornado.jpg at key 56
-01:56:59 - Sent put unlock to 1200
-01:56:59 - Predecessor: [48|localhost|1200]
-01:56:59 - Successor: [24|localhost|1400]
-01:56:59 - Unlocked
-01:57:00 - 1400 might be dead !?
-01:57:00 - Broadcast 145 ASK_HAS_TOKEN to: 1400
-01:57:00 - Broadcast 145 ASK_HAS_TOKEN to: 1200
-01:57:00 - Waiting to get if the token is in the system
-01:57:00 - Waiting for lock
-01:57:00 - Acquired lock
-01:57:00 - Quit finalized!
-01:57:00 - Node on port: 1200 has died :(
-01:57:00 - Predecessor: [28|localhost|1100]
-01:57:00 - Successor: [24|localhost|1400]
-01:57:00 - Broadcast 149 UPDATE_AFTER_DEATH to: 1400
-01:57:00 - Unlocked
-01:57:00 - Pong got from node that is neither successor nor predecessor: 1200 (predecessor: [28|localhost|1100], successor: [24|localhost|1400])
-01:57:00 - Predecessor: [24|localhost|1400]
-01:57:00 - Successor: [24|localhost|1400]
-01:57:00 - Broadcast 129 UPDATE_AFTER_DEATH to: 1400
-01:57:00 - Predecessor: [24|localhost|1400]
-01:57:00 - Successor: [24|localhost|1400]
-01:57:00 - Pong got from node that is neither successor nor predecessor: 1200 (predecessor: [24|localhost|1400], successor: [24|localhost|1400])
-01:57:04 - Stopping...
+02:07:26 - Starting servent [4|localhost|1300]
+02:07:26 - Heartbeat started <3
+02:07:26 - Pausing for 5000 ms
+02:07:26 - First node in Chord system.
+02:07:26 - =================JA IMAM TOKEN SADA==================
+02:07:26 - =================NEMAM VISE TOKEN==================
+02:07:26 - Predecessor: [24|localhost|1400]
+02:07:26 - Successor: [24|localhost|1400]
+02:07:27 - Predecessor: [28|localhost|1100]
+02:07:27 - Successor: [24|localhost|1400]
+02:07:27 - Predecessor: [48|localhost|1200]
+02:07:27 - Successor: [24|localhost|1400]
+02:07:28 - Predecessor: [0|localhost|1600]
+02:07:28 - Successor: [24|localhost|1400]
+02:07:31 - Public set to: true
+02:07:31 - Waiting for lock
+02:07:31 - Broadcast 27 TOKEN_REQUEST to: 1400
+02:07:31 - Broadcast 27 TOKEN_REQUEST to: 1200
+02:07:31 - Added: tornado.jpg to predecessorBackup
+02:07:32 - Sent put to [24|localhost|1400] for brod.jpg
+02:07:32 - Added: brod.jpg to successorBackup
+02:07:35 - Broadcast 38 TOKEN_REQUEST to: 1400
+02:07:35 - Broadcast 38 TOKEN_REQUEST to: 1200
+02:07:37 - =================JA IMAM TOKEN SADA==================
+02:07:37 - =================NEMAM VISE TOKEN==================
+02:07:37 - =================JA IMAM TOKEN SADA==================
+02:07:37 - Acquired lock
+02:07:37 - Upload acquired lock
+02:07:37 - Sent put to [24|localhost|1400] for llama.jpg
+02:07:37 - Pausing for 10000 ms
+02:07:37 - =================NEMAM VISE TOKEN==================
+02:07:37 - Unlocked
+02:07:37 - Put unlock released lock
+02:07:41 - Broadcast 79 TOKEN_REQUEST to: 1200
+02:07:41 - =================JA IMAM TOKEN SADA==================
+02:07:41 - =================NEMAM VISE TOKEN==================
+02:07:47 - Waiting for lock
+02:07:47 - Broadcast 104 TOKEN_REQUEST to: 1400
+02:07:47 - Broadcast 104 TOKEN_REQUEST to: 1200
+02:07:58 - 1400 might be dead !?
+02:07:58 - Broadcast 140 ASK_HAS_TOKEN to: 1400
+02:07:58 - Broadcast 140 ASK_HAS_TOKEN to: 1200
+02:07:58 - Waiting to get if the token is in the system
+02:08:05 - Token dissapeared. Creating new...
+02:08:05 - =================JA IMAM TOKEN SADA==================
+02:08:05 - Waiting for lock
+02:08:05 - Acquired lock
+02:08:05 - Quit finalized!
+02:08:05 - Node on port: 1600 has died :(
+02:08:05 - Predecessor: [48|localhost|1200]
+02:08:05 - Successor: [24|localhost|1400]
+02:08:05 - Added: tornado.jpg at key 56
+02:08:05 - Unlocked
+02:08:05 - Broadcast 150 UPDATE_AFTER_DEATH to: 1400
+02:08:05 - Broadcast 150 UPDATE_AFTER_DEATH to: 1200
+02:08:05 - Unlocked
+02:08:05 - Acquired lock
+02:08:05 - Please wait...
+02:08:05 - Pausing for 5000 ms
+02:08:05 - Added: tornado.jpg at key 56
+02:08:05 - Sent put unlock to 1200
+02:08:05 - Predecessor: [48|localhost|1200]
+02:08:05 - Successor: [24|localhost|1400]
+02:08:05 - Broadcast 154 UPDATE_AFTER_DEATH to: 1400
+02:08:05 - Predecessor: [48|localhost|1200]
+02:08:05 - Successor: [24|localhost|1400]
+02:08:05 - Unlocked
+02:08:06 - 1400 might be dead !?
+02:08:06 - Broadcast 162 ASK_HAS_TOKEN to: 1400
+02:08:06 - Broadcast 162 ASK_HAS_TOKEN to: 1200
+02:08:06 - Waiting to get if the token is in the system
+02:08:06 - Waiting for lock
+02:08:06 - Acquired lock
+02:08:06 - Quit finalized!
+02:08:06 - Node on port: 1200 has died :(
+02:08:06 - Predecessor: [28|localhost|1100]
+02:08:06 - Successor: [24|localhost|1400]
+02:08:06 - Broadcast 167 UPDATE_AFTER_DEATH to: 1400
+02:08:06 - Unlocked
+02:08:06 - Pong got from node that is neither successor nor predecessor: 1200 (predecessor: [28|localhost|1100], successor: [24|localhost|1400])
+02:08:06 - Predecessor: [24|localhost|1400]
+02:08:06 - Successor: [24|localhost|1400]
+02:08:06 - Broadcast 165 UPDATE_AFTER_DEATH to: 1400
+02:08:06 - Pong got from node that is neither successor nor predecessor: 1200 (predecessor: [24|localhost|1400], successor: [24|localhost|1400])
+02:08:06 - Predecessor: [24|localhost|1400]
+02:08:06 - Successor: [24|localhost|1400]
+02:08:10 - Stopping...

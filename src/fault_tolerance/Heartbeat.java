@@ -63,7 +63,7 @@ public class Heartbeat implements Runnable, Cancellable{
     private void checkBuddy(ServentInfo checkInfo, ServentInfo buddyInfo, NodeHealthInfo nodeHealthInfo,
                             Map<Integer, Map<String, ImageEntry>> backup) {
 
-        if(checkInfo == null || buddyInfo == null){
+        if(checkInfo == null){
             // mrtav :(
             nodeHealthInfo.setNodeStatus(NodeStatus.DEAD);
             nodeHealthInfo.setTimestamp(System.currentTimeMillis());
