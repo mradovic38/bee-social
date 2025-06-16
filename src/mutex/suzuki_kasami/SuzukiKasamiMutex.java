@@ -235,12 +235,12 @@ public class SuzukiKasamiMutex implements Mutex {
 
     public void setToken(SuzukiKasamiToken token){
         if (token != null){
-            AppConfig.timestampedStandardPrint("=================JA IMAM TOKEN SADA==================");
+//            AppConfig.timestampedStandardPrint("=================JA IMAM TOKEN SADA==================");
             this.token = token;
             this.hasToken.set(true);
         }
         else{
-            AppConfig.timestampedStandardPrint("=================NEMAM VISE TOKEN==================");
+//            AppConfig.timestampedStandardPrint("=================NEMAM VISE TOKEN==================");
             this.token = null;
             this.hasToken.set(false);
             this.inCriticalSection.set(false);

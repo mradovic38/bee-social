@@ -1,50 +1,42 @@
-10:27:15 - Starting servent [28|localhost|1100]
-10:27:15 - Heartbeat started <3
-10:27:15 - Pausing for 5000 ms
-10:27:17 - Waiting for lock
-10:27:17 - =================JA IMAM TOKEN SADA==================
-10:27:17 - Acquired lock
-10:27:17 - Predecessor: [4|localhost|1300]
-10:27:17 - Successor: [48|localhost|1200]
-10:27:17 - =================NEMAM VISE TOKEN==================
-10:27:17 - Unlocked
-10:27:18 - Predecessor: [24|localhost|1400]
-10:27:18 - Successor: [48|localhost|1200]
-10:27:20 - Public set to: false
-10:27:20 - Waiting for lock
-10:27:20 - Broadcast 21 TOKEN_REQUEST to: 1200
-10:27:20 - Broadcast 21 TOKEN_REQUEST to: 1600
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1200
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1600
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1600
-10:27:21 - Broadcast 23 TOKEN_REQUEST to: 1200
-10:27:21 - Sent put to [48|localhost|1200] for dog.jpg
-10:27:21 - Added: dog.jpg to successorBackup
-10:27:22 - Sent put to [48|localhost|1200] for llama.jpg
-10:27:22 - Added: llama.jpg to successorBackup
-10:27:22 - =================JA IMAM TOKEN SADA==================
-10:27:22 - Acquired lock
-10:27:22 - Upload acquired lock
-10:27:22 - Sent put to [48|localhost|1200] for brod.jpg
-10:27:22 - Pausing for 5000 ms
-10:27:22 - =================NEMAM VISE TOKEN==================
-10:27:22 - Unlocked
-10:27:22 - Put unlock released lock
-10:27:22 - Added: brod.jpg to predecessorBackup
-10:27:25 - Broadcast 59 TOKEN_REQUEST to: 1200
-10:27:27 - Pending follows: [1200]
-10:27:27 - Pausing for 20 ms
-10:27:27 - Follow request accepted from: 1200
-10:27:27 - Waiting for lock
-10:27:27 - Broadcast 59 TOKEN_REQUEST to: 1200
-10:27:27 - Broadcast 59 TOKEN_REQUEST to: 1600
-10:27:27 - =================JA IMAM TOKEN SADA==================
-10:27:27 - Acquired lock
-10:27:27 - Please wait...
-10:27:27 - Pausing for 10000 ms
-10:27:27 - Unlocked
-10:27:31 - =================NEMAM VISE TOKEN==================
-10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1200
-10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1600
-10:27:33 - Broadcast 101 TOKEN_REQUEST to: 1600
-10:27:37 - Stopping...
+15:06:45 - Starting servent [28|localhost|1100]
+15:06:45 - Heartbeat started <3
+15:06:45 - Pausing for 5000 ms
+15:06:47 - Waiting for lock
+15:06:47 - Acquired lock
+15:06:48 - Predecessor: [24|localhost|1400]
+15:06:48 - Successor: [48|localhost|1200]
+15:06:48 - Unlocked
+15:06:48 - Predecessor: [24|localhost|1400]
+15:06:48 - Successor: [48|localhost|1200]
+15:06:50 - Public set to: false
+15:06:50 - Waiting for lock
+15:06:50 - Broadcast 20 TOKEN_REQUEST to: 1200
+15:06:50 - Broadcast 20 TOKEN_REQUEST to: 1600
+15:06:50 - Broadcast 28 TOKEN_REQUEST to: 1600
+15:06:50 - Broadcast 29 TOKEN_REQUEST to: 1200
+15:06:50 - Broadcast 29 TOKEN_REQUEST to: 1600
+15:06:50 - Sent put to [48|localhost|1200] for dog.jpg
+15:06:51 - Added: dog.jpg to successorBackup
+15:06:51 - Acquired lock
+15:06:51 - Upload acquired lock
+15:06:51 - Sent put to [48|localhost|1200] for brod.jpg
+15:06:51 - Pausing for 5000 ms
+15:06:51 - Added: brod.jpg to predecessorBackup
+15:06:51 - Unlocked
+15:06:51 - Put unlock released lock
+15:06:52 - Sent put to [48|localhost|1200] for llama.jpg
+15:06:52 - Added: llama.jpg to successorBackup
+15:06:56 - Pending follows: [1200]
+15:06:56 - Pausing for 20 ms
+15:06:56 - Follow request accepted from: 1200
+15:06:56 - Waiting for lock
+15:06:56 - Broadcast 53 TOKEN_REQUEST to: 1200
+15:06:56 - Broadcast 53 TOKEN_REQUEST to: 1600
+15:07:00 - Broadcast 77 TOKEN_REQUEST to: 1200
+15:07:00 - Broadcast 77 TOKEN_REQUEST to: 1600
+15:07:01 - Acquired lock
+15:07:01 - Please wait...
+15:07:01 - Pausing for 10000 ms
+15:07:01 - Unlocked
+15:07:02 - Broadcast 97 TOKEN_REQUEST to: 1600
+15:07:11 - Stopping...

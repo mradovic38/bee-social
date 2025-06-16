@@ -1,90 +1,92 @@
-10:27:15 - Starting servent [48|localhost|1200]
-10:27:15 - Heartbeat started <3
-10:27:15 - Pausing for 5000 ms
-10:27:15 - First node in Chord system.
-10:27:15 - =================JA IMAM TOKEN SADA==================
-10:27:16 - =================NEMAM VISE TOKEN==================
-10:27:16 - Predecessor: [4|localhost|1300]
-10:27:16 - Successor: [4|localhost|1300]
-10:27:17 - Predecessor: [4|localhost|1300]
-10:27:17 - Successor: [0|localhost|1600]
-10:27:17 - Predecessor: [28|localhost|1100]
-10:27:17 - Successor: [0|localhost|1600]
-10:27:18 - Predecessor: [28|localhost|1100]
-10:27:18 - Successor: [0|localhost|1600]
-10:27:20 - Sent follow request to: 1100
-10:27:20 - Waiting for lock
-10:27:20 - Broadcast 27 TOKEN_REQUEST to: 1600
-10:27:20 - Broadcast 27 TOKEN_REQUEST to: 1400
-10:27:21 - Broadcast 23 TOKEN_REQUEST to: 1400
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1600
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1400
-10:27:21 - Broadcast 21 TOKEN_REQUEST to: 1600
-10:27:21 - Broadcast 21 TOKEN_REQUEST to: 1400
-10:27:21 - =================JA IMAM TOKEN SADA==================
-10:27:21 - =================NEMAM VISE TOKEN==================
-10:27:21 - Added: dog.jpg at key 47
-10:27:21 - Sent put unlock to 1600
-10:27:22 - Added: llama.jpg at key 40
-10:27:22 - Sent put unlock to 1300
-10:27:22 - Sent put to [0|localhost|1600] for brod.jpg
-10:27:22 - =================JA IMAM TOKEN SADA==================
-10:27:23 - Acquired lock
-10:27:23 - Upload acquired lock
-10:27:23 - Sent put to [0|localhost|1600] for tornado.jpg
-10:27:23 - Pausing for 10000 ms
-10:27:23 - Added: tornado.jpg to successorBackup
-10:27:23 - Unlocked
-10:27:23 - Put unlock released lock
-10:27:25 - =================NEMAM VISE TOKEN==================
-10:27:25 - Broadcast 59 TOKEN_REQUEST to: 1400
-10:27:27 - Broadcast 59 TOKEN_REQUEST to: 1600
-10:27:27 - Broadcast 59 TOKEN_REQUEST to: 1400
-10:27:31 - Broadcast 73 TOKEN_REQUEST to: 1600
-10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1600
-10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1400
-10:27:33 - Waiting for lock
-10:27:33 - Broadcast 101 TOKEN_REQUEST to: 1600
-10:27:33 - Broadcast 101 TOKEN_REQUEST to: 1400
-10:27:41 - 1100 might be dead !?
-10:27:41 - Broadcast 128 ASK_HAS_TOKEN to: 1600
-10:27:41 - Broadcast 128 ASK_HAS_TOKEN to: 1400
-10:27:41 - Waiting to get if the token is in the system
-10:27:48 - Token dissapeared. Creating new...
-10:27:48 - =================JA IMAM TOKEN SADA==================
-10:27:48 - Waiting for lock
-10:27:48 - Acquired lock
-10:27:48 - Node on port: 1600 has died :(
-10:27:48 - Predecessor: [28|localhost|1100]
-10:27:48 - Successor: [4|localhost|1300]
-10:27:48 - Sent put to [4|localhost|1300] for tornado.jpg
-10:27:48 - Broadcast 132 UPDATE_AFTER_DEATH to: 1300
-10:27:48 - Broadcast 132 UPDATE_AFTER_DEATH to: 1400
-10:27:48 - Unlocked
-10:27:49 - Acquired lock
-10:27:49 - Unlocked
-10:27:49 - Retrieved the following images: [llama.jpg, dog.jpg]
-10:27:49 - Pausing for 5000 ms
-10:27:49 - 1300 might be dead !?
-10:27:49 - Waiting for lock
-10:27:49 - Acquired lock
-10:27:49 - Node on port: 1100 has died :(
-10:27:49 - Predecessor: [24|localhost|1400]
-10:27:49 - Successor: [4|localhost|1300]
-10:27:49 - Broadcast 136 UPDATE_AFTER_DEATH to: 1300
-10:27:49 - Broadcast 136 UPDATE_AFTER_DEATH to: 1400
-10:27:49 - Unlocked
-10:27:50 - 1300 might be dead !?
-10:27:50 - Waiting for lock
-10:27:50 - Acquired lock
-10:27:50 - Node on port: 1400 has died :(
-10:27:50 - Predecessor: [4|localhost|1300]
-10:27:50 - Successor: [4|localhost|1300]
-10:27:50 - Broadcast 142 UPDATE_AFTER_DEATH to: 1300
-10:27:50 - Unlocked
-10:27:51 - 1300 might be dead !?
-10:27:51 - Waiting for lock
-10:27:51 - Acquired lock
-10:27:52 - Node on port: 1300 has died :(
-10:27:52 - Unlocked
-10:27:54 - Stopping...
+15:06:45 - Starting servent [48|localhost|1200]
+15:06:45 - Heartbeat started <3
+15:06:45 - Pausing for 5000 ms
+15:06:45 - First node in Chord system.
+15:06:46 - Predecessor: [4|localhost|1300]
+15:06:46 - Successor: [4|localhost|1300]
+15:06:47 - Predecessor: [24|localhost|1400]
+15:06:47 - Successor: [4|localhost|1300]
+15:06:47 - Predecessor: [28|localhost|1100]
+15:06:47 - Successor: [4|localhost|1300]
+15:06:48 - Predecessor: [28|localhost|1100]
+15:06:48 - Successor: [0|localhost|1600]
+15:06:48 - Pong got from node that is neither successor nor predecessor: 1300 (predecessor: [28|localhost|1100], successor: [0|localhost|1600])
+15:06:50 - Sent follow request to: 1100
+15:06:50 - Waiting for lock
+15:06:50 - Broadcast 28 TOKEN_REQUEST to: 1600
+15:06:50 - Broadcast 28 TOKEN_REQUEST to: 1400
+15:06:50 - Broadcast 20 TOKEN_REQUEST to: 1600
+15:06:50 - Broadcast 20 TOKEN_REQUEST to: 1400
+15:06:50 - Broadcast 29 TOKEN_REQUEST to: 1600
+15:06:50 - Broadcast 29 TOKEN_REQUEST to: 1400
+15:06:51 - Added: dog.jpg at key 47
+15:06:51 - Sent put unlock to 1600
+15:06:51 - Sent put to [0|localhost|1600] for brod.jpg
+15:06:52 - Acquired lock
+15:06:52 - Upload acquired lock
+15:06:52 - Sent put to [0|localhost|1600] for tornado.jpg
+15:06:52 - Pausing for 10000 ms
+15:06:52 - Added: tornado.jpg to successorBackup
+15:06:52 - Unlocked
+15:06:52 - Put unlock released lock
+15:06:52 - Added: llama.jpg at key 40
+15:06:52 - Sent put unlock to 1300
+15:06:54 - Broadcast 36 TOKEN_REQUEST to: 1400
+15:06:56 - Broadcast 53 TOKEN_REQUEST to: 1600
+15:06:56 - Broadcast 53 TOKEN_REQUEST to: 1400
+15:07:00 - Broadcast 77 TOKEN_REQUEST to: 1600
+15:07:02 - Waiting for lock
+15:07:02 - Broadcast 97 TOKEN_REQUEST to: 1600
+15:07:02 - Broadcast 97 TOKEN_REQUEST to: 1400
+15:07:02 - Broadcast 86 TOKEN_REQUEST to: 1600
+15:07:02 - Broadcast 86 TOKEN_REQUEST to: 1400
+15:07:17 - 1100 might be dead !?
+15:07:17 - Broadcast 150 ASK_HAS_TOKEN to: 1600
+15:07:17 - Broadcast 150 ASK_HAS_TOKEN to: 1400
+15:07:17 - Waiting to get if the token is in the system
+15:07:17 - Broadcast 142 ASK_HAS_TOKEN to: 1600
+15:07:17 - Broadcast 142 ASK_HAS_TOKEN to: 1400
+15:07:21 - Broadcast 166 ASK_HAS_TOKEN to: 1600
+15:07:24 - Token dissapeared. Creating new...
+15:07:24 - Waiting for lock
+15:07:24 - Acquired lock
+15:07:24 - Node on port: 1600 has died :(
+15:07:24 - Predecessor: [28|localhost|1100]
+15:07:24 - Successor: [4|localhost|1300]
+15:07:24 - Sent put to [4|localhost|1300] for tornado.jpg
+15:07:24 - Broadcast 160 UPDATE_AFTER_DEATH to: 1300
+15:07:24 - Broadcast 160 UPDATE_AFTER_DEATH to: 1400
+15:07:24 - Unlocked
+15:07:24 - Acquired lock
+15:07:24 - Unlocked
+15:07:24 - Retrieved the following images: [llama.jpg, dog.jpg]
+15:07:24 - Pausing for 5000 ms
+15:07:24 - Added: tornado.jpg to successorBackup
+15:07:24 - Predecessor: [28|localhost|1100]
+15:07:24 - Successor: [4|localhost|1300]
+15:07:24 - Broadcast 153 UPDATE_AFTER_DEATH to: 1400
+15:07:25 - Added: tornado.jpg to successorBackup
+15:07:25 - Unlocked
+15:07:25 - Put unlock released lock
+15:07:25 - Predecessor: [28|localhost|1100]
+15:07:25 - Successor: [4|localhost|1300]
+15:07:25 - 1300 might be dead !?
+15:07:25 - Waiting for lock
+15:07:25 - Acquired lock
+15:07:25 - Node on port: 1100 has died :(
+15:07:25 - Predecessor: [24|localhost|1400]
+15:07:25 - Successor: [4|localhost|1300]
+15:07:25 - Broadcast 166 UPDATE_AFTER_DEATH to: 1300
+15:07:25 - Broadcast 166 UPDATE_AFTER_DEATH to: 1400
+15:07:25 - Unlocked
+15:07:26 - 1300 might be dead !?
+15:07:26 - Waiting for lock
+15:07:26 - Acquired lock
+15:07:26 - Node on port: 1400 has died :(
+15:07:26 - Predecessor: [4|localhost|1300]
+15:07:26 - Successor: [4|localhost|1300]
+15:07:26 - Broadcast 174 UPDATE_AFTER_DEATH to: 1300
+15:07:26 - Unlocked
+15:07:27 - Pong got from node that is neither successor nor predecessor: 1400 (predecessor: [4|localhost|1300], successor: [4|localhost|1300])
+15:07:27 - Pong got from node that is neither successor nor predecessor: 1400 (predecessor: [4|localhost|1300], successor: [4|localhost|1300])
+15:07:29 - Stopping...

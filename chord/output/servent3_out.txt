@@ -1,46 +1,86 @@
-10:27:15 - Starting servent [24|localhost|1400]
-10:27:15 - Heartbeat started <3
-10:27:15 - Pausing for 5000 ms
-10:27:17 - Waiting for lock
-10:27:18 - =================JA IMAM TOKEN SADA==================
-10:27:18 - Acquired lock
-10:27:18 - Predecessor: [4|localhost|1300]
-10:27:18 - Successor: [28|localhost|1100]
-10:27:18 - Unlocked
-10:27:20 - Pausing for 10000 ms
-10:27:21 - =================NEMAM VISE TOKEN==================
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1100
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1200
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1600
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1100
-10:27:21 - Broadcast 27 TOKEN_REQUEST to: 1600
-10:27:21 - Broadcast 23 TOKEN_REQUEST to: 1100
-10:27:21 - Broadcast 23 TOKEN_REQUEST to: 1200
-10:27:21 - Broadcast 21 TOKEN_REQUEST to: 1200
-10:27:21 - Broadcast 21 TOKEN_REQUEST to: 1600
-10:27:21 - Sent put to [28|localhost|1100] for dog.jpg
-10:27:22 - Sent put to [28|localhost|1100] for llama.jpg
-10:27:22 - Added: brod.jpg at key 24
-10:27:22 - Sent put unlock to 1100
-10:27:25 - Broadcast 59 TOKEN_REQUEST to: 1100
-10:27:25 - Broadcast 59 TOKEN_REQUEST to: 1200
-10:27:27 - Broadcast 59 TOKEN_REQUEST to: 1200
-10:27:27 - Broadcast 59 TOKEN_REQUEST to: 1600
-10:27:30 - Waiting for lock
-10:27:30 - Broadcast 73 TOKEN_REQUEST to: 1100
-10:27:30 - Broadcast 73 TOKEN_REQUEST to: 1200
-10:27:30 - Broadcast 73 TOKEN_REQUEST to: 1600
-10:27:31 - =================JA IMAM TOKEN SADA==================
-10:27:31 - Acquired lock
-10:27:31 - Unlocked
-10:27:31 - Retrieved the following images: [brod.jpg]
-10:27:31 - Pausing for 15000 ms
-10:27:32 - =================NEMAM VISE TOKEN==================
-10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1100
-10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1200
-10:27:32 - Broadcast 85 TOKEN_REQUEST to: 1600
-10:27:33 - Broadcast 101 TOKEN_REQUEST to: 1100
-10:27:33 - Broadcast 101 TOKEN_REQUEST to: 1600
-10:27:42 - Broadcast 128 ASK_HAS_TOKEN to: 1100
-10:27:42 - Broadcast 128 ASK_HAS_TOKEN to: 1600
-10:27:46 - Stopping...
+15:06:45 - Starting servent [24|localhost|1400]
+15:06:45 - Heartbeat started <3
+15:06:45 - Pausing for 5000 ms
+15:06:46 - Waiting for lock
+15:06:46 - Acquired lock
+15:06:47 - Predecessor: [4|localhost|1300]
+15:06:47 - Successor: [48|localhost|1200]
+15:06:47 - Unlocked
+15:06:47 - Predecessor: [4|localhost|1300]
+15:06:47 - Successor: [28|localhost|1100]
+15:06:48 - Predecessor: [4|localhost|1300]
+15:06:48 - Successor: [28|localhost|1100]
+15:06:50 - Pausing for 10000 ms
+15:06:50 - Broadcast 28 TOKEN_REQUEST to: 1100
+15:06:50 - Broadcast 28 TOKEN_REQUEST to: 1600
+15:06:50 - Sent put to [28|localhost|1100] for dog.jpg
+15:06:50 - Broadcast 29 TOKEN_REQUEST to: 1100
+15:06:50 - Broadcast 29 TOKEN_REQUEST to: 1200
+15:06:50 - Broadcast 29 TOKEN_REQUEST to: 1600
+15:06:50 - Broadcast 20 TOKEN_REQUEST to: 1200
+15:06:50 - Broadcast 20 TOKEN_REQUEST to: 1600
+15:06:51 - Added: brod.jpg at key 24
+15:06:51 - Sent put unlock to 1100
+15:06:52 - Sent put to [28|localhost|1100] for llama.jpg
+15:06:54 - Broadcast 36 TOKEN_REQUEST to: 1100
+15:06:54 - Broadcast 36 TOKEN_REQUEST to: 1200
+15:06:56 - Broadcast 53 TOKEN_REQUEST to: 1200
+15:06:56 - Broadcast 53 TOKEN_REQUEST to: 1600
+15:07:00 - Waiting for lock
+15:07:00 - Broadcast 77 TOKEN_REQUEST to: 1100
+15:07:00 - Broadcast 77 TOKEN_REQUEST to: 1200
+15:07:00 - Broadcast 77 TOKEN_REQUEST to: 1600
+15:07:02 - Broadcast 97 TOKEN_REQUEST to: 1100
+15:07:02 - Broadcast 97 TOKEN_REQUEST to: 1600
+15:07:02 - Broadcast 86 TOKEN_REQUEST to: 1100
+15:07:02 - Broadcast 86 TOKEN_REQUEST to: 1200
+15:07:02 - Broadcast 86 TOKEN_REQUEST to: 1600
+15:07:17 - Broadcast 142 ASK_HAS_TOKEN to: 1100
+15:07:17 - Broadcast 142 ASK_HAS_TOKEN to: 1200
+15:07:17 - Broadcast 142 ASK_HAS_TOKEN to: 1600
+15:07:17 - Broadcast 150 ASK_HAS_TOKEN to: 1100
+15:07:17 - Broadcast 150 ASK_HAS_TOKEN to: 1600
+15:07:21 - 1300 might be dead !?
+15:07:21 - Broadcast 166 ASK_HAS_TOKEN to: 1100
+15:07:21 - Broadcast 166 ASK_HAS_TOKEN to: 1200
+15:07:21 - Broadcast 166 ASK_HAS_TOKEN to: 1600
+15:07:21 - Waiting to get if the token is in the system
+15:07:24 - Predecessor: [4|localhost|1300]
+15:07:24 - Successor: [28|localhost|1100]
+15:07:24 - Broadcast 160 UPDATE_AFTER_DEATH to: 1100
+15:07:24 - Broadcast 160 UPDATE_AFTER_DEATH to: 1300
+15:07:24 - Predecessor: [4|localhost|1300]
+15:07:24 - Successor: [28|localhost|1100]
+15:07:24 - Predecessor: [4|localhost|1300]
+15:07:24 - Successor: [28|localhost|1100]
+15:07:24 - Broadcast 153 UPDATE_AFTER_DEATH to: 1100
+15:07:24 - Broadcast 153 UPDATE_AFTER_DEATH to: 1200
+15:07:24 - Added: tornado.jpg to predecessorBackup
+15:07:25 - Predecessor: [4|localhost|1300]
+15:07:25 - Successor: [28|localhost|1100]
+15:07:25 - Added: tornado.jpg to predecessorBackup
+15:07:25 - Predecessor: [4|localhost|1300]
+15:07:25 - Successor: [48|localhost|1200]
+15:07:25 - Broadcast 166 UPDATE_AFTER_DEATH to: 1300
+15:07:25 - Predecessor: [4|localhost|1300]
+15:07:25 - Successor: [4|localhost|1300]
+15:07:26 - Predecessor: [4|localhost|1300]
+15:07:26 - Successor: [4|localhost|1300]
+15:07:28 - Token dissapeared. Creating new...
+15:07:28 - Waiting for lock
+15:07:28 - Acquired lock
+15:07:28 - Node on port: 1100 has died :(
+15:07:28 - Predecessor: [4|localhost|1300]
+15:07:28 - Successor: [4|localhost|1300]
+15:07:28 - Broadcast 183 UPDATE_AFTER_DEATH to: 1300
+15:07:28 - Unlocked
+15:07:28 - Acquired lock
+15:07:28 - Unlocked
+15:07:28 - Retrieved the following images: [brod.jpg]
+15:07:28 - Pausing for 15000 ms
+15:07:36 - 1300 might be dead !?
+15:07:36 - Waiting for lock
+15:07:36 - Acquired lock
+15:07:36 - Node on port: 1300 has died :(
+15:07:36 - Unlocked
+15:07:43 - Stopping...

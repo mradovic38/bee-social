@@ -121,7 +121,7 @@ public class Heartbeat implements Runnable, Cancellable{
 
                 // ako je imao (niko nije vratio da je imao) => napravi novi token
                 if (!someoneHasToken.get()) {
-                    AppConfig.timestampedStandardPrint("Token dissapeared. Creating new...");
+                    AppConfig.timestampedStandardPrint("Token disappeared. Creating new...");
                     AppConfig.chordState.mutex.setToken(new SuzukiKasamiToken());
                 }
             }
