@@ -127,8 +127,6 @@ bee-social/
    java -cp out app.MultipleServentStarter
    ```
 
----
-
 
 ## 📚 Technologies Used
 
