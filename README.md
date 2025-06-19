@@ -127,14 +127,6 @@ bee-social/
    java -cp out app.MultipleServentStarter
    ```
 
-
-## 📚 Technologies Used
-
-* Java 11+
-* Sockets for communication
-* Custom-built CLI parser
-* Threading and timers for failure detection
-
 ## 📖 Resources
 * [Suzuki–Kasami Algorithm for Mutual Exclusion in Distributed System - GeeksForGeeks](https://www.geeksforgeeks.org/operating-systems/suzuki-kasami-algorithm-for-mutual-exclusion-in-distributed-system/)
 * [Deep dive into Chord for Distributed Hash Table - Abhijit Mondal](https://mecha-mind.medium.com/deep-dive-into-chord-for-distributed-hash-table-e54f1b3411b)
